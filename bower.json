@@ -1,0 +1,25 @@
+{
+  "name": "tweetch",
+  "description": "tweetch",
+  "main": "index.js",
+  "authors": [
+    "shokohsc@gmail.com"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "twitch"
+  ],
+  "homepage": "https://github.com/shokohsc/tweetch",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

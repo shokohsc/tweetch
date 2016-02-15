@@ -1,0 +1,43 @@
+{
+  "name": "tweetch",
+  "version": "1.0.0",
+  "description": "tweetch",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "clean": "rm -rf ./web/bundles && mkdir ./web/bundles ./web/bundles/js ./web/bundles/css ./web/bundles/fonts",
+    "concat-js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js -o ./web/bundles/js/assets.js",
+    "concat-css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/css/assets.css",
+    "concat": "npm run concat-js && npm run concat-css",
+    "minify-js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/js/assets.js",
+    "minify-css": "minify --output ./web/bundles/css/assets.min.css ./web/bundles/css/assets.css",
+    "preminify": "npm run concat",
+    "minify": "npm run minify-js && npm run minify-css",
+    "copy": "cp -Rf ./bower_components/bootstrap/dist/fonts/ ./web/bundles/fonts/",
+    "watch": "watch 'npm run build' ./src/AppBundle/Resources/",
+    "build": "npm run clean && npm run minify && npm run copy && bin/console assets:install --symlink",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shokohsc/tweetch.git"
+  },
+  "keywords": [
+    "twitch"
+  ],
+  "author": "shokohsc@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shokohsc/tweetch/issues"
+  },
+  "homepage": "https://github.com/shokohsc/tweetch#readme",
+  "dependencies": {
+    "bower": "^1.7.7",
+    "concat-cli": "^4.0.0",
+    "minifier": "^0.7.1",
+    "riot": "^2.3.15",
+    "watch": "^0.17.1"
+  }
+}
