@@ -12,9 +12,6 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $topGames = $this->get('game.repository')->getTop();
-        dump($topGames);
-
         return $this->render('base.html.twig');
     }
 }

@@ -8,16 +8,30 @@
   },
   "scripts": {
     "clean": "rm -rf ./web/bundles && mkdir ./web/bundles ./web/bundles/js ./web/bundles/css ./web/bundles/fonts",
-    "concat-js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js -o ./web/bundles/js/assets.js",
-    "concat-css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/css/assets.css",
-    "concat": "npm run concat-js && npm run concat-css",
-    "minify-js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/js/assets.js",
-    "minify-css": "minify --output ./web/bundles/css/assets.min.css ./web/bundles/css/assets.css",
+
+    "concat:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js -o ./web/bundles/js/assets.js",
+    "concat:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/css/assets.css",
+    "concat": "npm run concat:js & npm run concat:css",
+
+    "minify:js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/js/assets.js",
+    "minify:css": "minify --output ./web/bundles/css/assets.min.css ./web/bundles/css/assets.css",
+    "minify:app": "minify --output ./web/bundles/js/app.min.js ./src/AppBundle/Resources/js/app.js",
     "preminify": "npm run concat",
-    "minify": "npm run minify-js && npm run minify-css",
+    "minify": "npm run minify:js & npm run minify:css & npm run minify:app",
+    "postminify": "rm ./web/bundles/css/assets.css ./web/bundles/js/assets.js",
+
     "copy": "cp -Rf ./bower_components/bootstrap/dist/fonts/ ./web/bundles/fonts/",
-    "watch": "watch 'npm run build' ./src/AppBundle/Resources/",
-    "build": "npm run clean && npm run minify && npm run copy && bin/console assets:install --symlink",
+
+    "riot": "riot ./src/AppBundle/Resources/tags ./web/bundles/js/tags.js",
+    "assets": "npm run minify & npm run copy",
+    "app": "npm run riot & bin/console assets:install --symlink",
+
+    "watch": "npm run watch:assets & npm run livereload",
+    "watch:assets": "watch 'npm run build' ./src/AppBundle/Resources/ ./app/Resources/",
+    "livereload": "livereload ./web/bundles/js/",
+
+    "build": "npm run clean && npm run assets && npm run app",
+
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -39,5 +53,8 @@
     "minifier": "^0.7.1",
     "riot": "^2.3.15",
     "watch": "^0.17.1"
+  },
+  "devDependencies": {
+    "livereload": "^0.4.1"
   }
 }

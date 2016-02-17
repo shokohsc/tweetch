@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="author" content="Dimitri Pommier">
         <meta name="description" content="{{ 'base.content'|trans }}">
-        <link rel="shortcut icon" href="favicon.png" />
+        <link rel="shortcut icon" href="favicon.ico" />
         <title>Tweetch</title>
 
         <link type="text/css" rel="stylesheet" href="{{ asset('bundles/css/assets.min.css') }}" />
@@ -20,8 +20,14 @@
 
     </head>
     <body>
+        <tweetch-navbar></tweetch-navbar>
         <div id="content" class="container"></div>
 
+        <script type="text/javascript" src="//cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js"></script>
+        <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
+        <script src="{{ url('bazinga_jstranslation_js', {}, true) }}"></script>
         <script src="{{ asset('bundles/js/assets.min.js') }}"></script>
+        <script src="{{ asset('bundles/js/tags.js') }}"></script>
+        <script src="{{ asset('bundles/js/app.min.js') }}"></script>
     </body>
 </html>
