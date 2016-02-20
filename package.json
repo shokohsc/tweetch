@@ -10,7 +10,7 @@
     "clean": "rm -rf ./web/bundles && mkdir ./web/bundles ./web/bundles/js ./web/bundles/css ./web/bundles/fonts",
 
     "concat:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js -o ./web/bundles/js/assets.js",
-    "concat:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/css/assets.css",
+    "concat:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css ./src/AppBundle/Resources/css/style.css -o ./web/bundles/css/assets.css",
     "concat": "npm run concat:js & npm run concat:css",
 
     "minify:js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/js/assets.js",

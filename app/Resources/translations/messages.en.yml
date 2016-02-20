@@ -1,0 +1,44 @@
+base:
+    title: Welcome to Tweetch
+    content: Tweetch
+
+navbar:
+    navigation: Toggle navigation
+    about: About
+
+home: Home
+
+credits:
+    provided: Data provided by
+    powered: Powered by
+
+error:
+    backward: Head back
+    404:
+        title: Tweetch is lost
+        message: Deadpool says you lost your way.
+    500:
+        title: Tweetch stumbled
+        message: Deadpool says we lost our way.
+
+about:
+    title: About bubbles
+    what:
+        question: What is this ?
+        answer: Tweetch is meant to mirror twitch.tv.
+    who:
+        question: Who am I ?
+        answer: I am a 29 years old web developer who lives in France near Paris.
+    why:
+        question: Why did I do that ?
+        answer: "This is Symfony practice, check out my <a href=\"//shokohsc.github.io\">resume</a>."
+    thanks:
+        main: Thanks
+        iThank: I would like to thank
+        heroku: for hosting this project.
+        twitch: for providing an API that I can enjoy while coding.
+        redpanda: for his numerous tips and advices.
+        sensiolabs: for their coding tools.
+        riotjs: for their tiny framework.
+        bootstrap: for their framework.
+        openfonts: for this font.

@@ -1,0 +1,43 @@
+base:
+    title: Bienvenue chez Tweetch
+    content: Tweetch
+
+navbar:
+    navigation: Afficher la navigation
+    about: A propos
+
+home: Accueil
+
+credits:
+    provided: Données obtenues par
+    powered: Propulsé par
+
+error:
+    backward: Page précédente
+    404:
+        title: Tweetch s'est perdu
+        message: Deadpool dit que tu t'es perdu.
+    500:
+        title: Tweetch s'est planté
+        message: Deadpool dit qu'on s'est perdu.
+
+about:
+    title: A propos de Tweetch
+    what:
+        question: Qu'est-ce donc ?
+        answer: Tweetch reflète twitch.tv.
+    who:
+        question: Qui suis-je ?
+        answer: Je suis un développeur de 29 ans qui vit en France près de Paris.
+    why:
+        question: Pourquoi ça ?
+        answer: "C'est un entrainement à Symfony et plus encore, regardez mon <a href=\"//shokohsc.github.io\">cv</a>."
+    thanks:
+        main: Remerciements
+        iThank: J'aimerais remercier
+        heroku: pour héberger ce projet.
+        twitch: pour utliser une API avec laquelle s'amuser.
+        sensiolabs: pour leurs outils avec lesquels coder.
+        riotjs: pour leur mini framework.
+        bootstrap: pour leur framework.
+        openfonts: pour cette police.
