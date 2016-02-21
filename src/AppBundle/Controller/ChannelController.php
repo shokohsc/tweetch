@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class ChannelController extends Controller
 {
     /**
-     * @Route("/{channelId}", name="channel", requirements={"channelId" = "\d+"}, options={"expose"=true})
+     * @Route("/{channelId}", name="channel", options={"expose"=true})
      */
     public function getAction($channelId)
     {

@@ -91,19 +91,19 @@ class AbstractService {
    * Serve ajax call
    * @param  string id
    * @param  string page
-   * @param  string options
+   * @param  string query
    * @return Promise
    */
-  serve(id, page, options) {
+  serve(id, page, query) {
     var self      = this,
-        url       = this.protocol+this.host+this.endpoint+'/'+id,
+        url       = this.protocol+this.host+this.endpoint,
+        url       = (id === undefined) ? url : url+'/'+id,
         url       = (page === undefined) ? url : url+'/'+page,
-        url       = (options === undefined) ? url : url+'/'+options
+        url       = (query === undefined) ? url : url+'?'+query
 
     return $.ajax({
       url: url
-    }).fail(function(xhr) {
-      console.log(xhr.statusText);
+    }).fail(function() {
       mount('tweetch-error')
     })
   }
@@ -185,6 +185,17 @@ class StreamService extends AbstractService{
   fetchStream(id) {
     return this.serve(id)
   }
+
+  /**
+   * Fetch streams
+   * @return Object
+   */
+  fetchStreams() {
+    var query = riot.route.query()
+        query = $.param(query)
+
+    return this.serve(undefined, undefined, query)
+  }
 }
 
 
@@ -231,9 +242,13 @@ routes.home = function(id, action) {
  */
 routes.channels = function(id, action) {
   mount('tweetch-loading')
-  channelService.fetchChannel(id).done(function(channel) {
-    mount('tweetch-channel', {channel: channel})
-  })
+  if (id && !id.match(/=/)) {
+    channelService.fetchChannel(id).done(function(channel) {
+      mount('tweetch-channel', {channel: channel})
+    })
+  } else {
+    mount('tweetch-error')
+  }
 }
 
 /**
@@ -244,9 +259,15 @@ routes.channels = function(id, action) {
  */
 routes.streams = function(id, action) {
   mount('tweetch-loading')
-  streamService.fetchStream(id).done(function(stream) {
-    mount('tweetch-stream', {stream: stream})
-  })
+  if (id && !id.match(/=/)) {
+    streamService.fetchStream(id).done(function(stream) {
+      mount('tweetch-stream', {stream: stream})
+    })
+  } else {
+    streamService.fetchStreams().done(function(streams) {
+      mount('tweetch-streams', {streams: streams})
+    })
+  }
 }
 
 /**
@@ -264,6 +285,6 @@ routes.about = function(id, action) {
 /***********
  * Run app *
  ***********/
-riot.route.start(true)
 riot.mount('*')
 riot.route(handler)
+riot.route.start(true)

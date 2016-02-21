@@ -18,7 +18,11 @@ class GameController extends Controller
     {
         $limit = 28;
         $offset = $limit * $page;
-        $top = $this->get('game.repository')->getTop($limit, $offset);
+        $params = array(
+          'limit' => $limit,
+          'offset' => $offset,
+        );
+        $top = $this->get('game.repository')->getTop($params);
         $top = $this->get('json.serializer')->encode($top);
         $json = json_decode($top);
 
