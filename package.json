@@ -44,8 +44,8 @@
 
     "build": "npm run clean && npm run assets && npm run app",
 
-    "preinstall": "npm run clean",
-    "postinstall": "npm run assets",
+    "preinstall": "rm -rf ./web/bundles && mkdir ./web/bundles ./web/bundles/js ./web/bundles/css ./web/bundles/fonts",
+    "postinstall": "bower install && npm run assets",
 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
