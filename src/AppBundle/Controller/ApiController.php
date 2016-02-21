@@ -6,18 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+/**
+ * @Route("/api")
+ */
 class ApiController extends Controller
 {
     /**
-     * @Route("/")
-     */
-    public function indexAction()
-    {
-        return new JsonResponse([], 200);
-    }
-
-    /**
-     * @Route("/login")
+     * @Route("/login", name="login")
      */
     public function loginAction()
     {
@@ -25,19 +20,10 @@ class ApiController extends Controller
     }
 
     /**
-     * @Route("/logout")
+     * @Route("/logout", name="logout")
      */
     public function logoutAction()
     {
         return new JsonResponse([], 200);
     }
-
-    /**
-     * @Route("/games")
-     */
-    public function gamesAction()
-    {
-        return new JsonResponse([], 200);
-    }
-
 }

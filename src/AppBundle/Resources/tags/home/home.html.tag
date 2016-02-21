@@ -1,3 +1,3 @@
 <tweetch-home>
-  <h1>this is home</h1>
+  <game-list games={ this.opts.top.positions }></game-list>
 </tweetch-home>
