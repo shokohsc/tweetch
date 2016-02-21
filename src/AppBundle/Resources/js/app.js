@@ -3,34 +3,75 @@
 /**************
  * Prototypes *
  **************/
+
+ /**
+  * First letter of any word uppercase, then lowercase
+  * @return string
+  */
  String.prototype.title = function() {
    var string = this.toString().toLowerCase()
    return string.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function($charOne){
      return $charOne.toUpperCase()
    })
  }
+
+ /**
+  * Replace http:// by https:// in String
+  * @return string
+  */
  String.prototype.useHttps = function() {
    var string = this.toString()
    return string.replace('http://', 'https://')
  }
 
+
+
 /******************
  * Routes Handler *
  ******************/
+
+/**
+ * currentTag
+ * @type string
+ */
 var currentTag = null
+
+/**
+ * routes
+ * @type Object
+ */
 var routes = {}
+
+/**
+ * Mount tag
+ * @param  string tag
+ * @param  string options
+ */
 function mount(tag, options) {
   currentTag && currentTag.unmount(true)
   currentTag = riot.mount('#content', tag, options)[0]
 }
+
+/**
+ * Routes handler
+ * @param  string collection
+ * @param  string id
+ * @param  string action
+ */
 function handler(collection, id, action) {
   var fn = routes[collection || 'home']
   fn ? fn(id, action) : mount('tweetch-error')
 }
 
+
+
 /*******************
  * AbstractService *
  *******************/
+
+/**
+ * AbstractService class.
+ */
 class AbstractService {
 
   /**
@@ -65,10 +106,17 @@ class AbstractService {
   }
 }
 
+
+
 /***************
  * GameService *
  ***************/
+
+/**
+ * GameService class.
+ */
 class GameService extends AbstractService{
+
   /**
    * GameService constructor method.
    * @return GameService
@@ -79,33 +127,58 @@ class GameService extends AbstractService{
 
   /**
    * Fetch top games
-   * @param  int page
+   * @param  string page
    * @return Object
    */
   fetchTop(page) {
     var self = this
     this.url = this.url+'/'+page
-    return this.serve('top', '1')
+    return this.serve('top', page)
   }
 }
+
+
 
 /********
  * Home *
  ********/
-var gameService = new GameService()
- routes.home = function(id, action) {
-   mount('tweetch-loading')
-   gameService.fetchTop('1').done(function(top) {
-     mount('tweetch-home', {top: top})
-   })
- }
 
- /*********
-  * About *
-  *********/
-  routes.about = function(id, action) {
+/**
+ * gameService
+ * @type GameService
+ */
+var gameService = new GameService()
+
+/**
+ * Home route definition
+ * @param  string id
+ * @param  string action
+ * @return Object
+ */
+routes.home = function(id, action) {
+  mount('tweetch-loading')
+  gameService.fetchTop('1').done(function(top) {
+    mount('tweetch-home', {top: top})
+  })
+}
+
+
+
+/*********
+ * About *
+ *********/
+
+/**
+ * About route definition
+ * @param  string id
+ * @param  string action
+ * @return Object
+ */
+routes.about = function(id, action) {
     mount('tweetch-about')
-  }
+}
+
+
 
 /***********
  * Run app *
