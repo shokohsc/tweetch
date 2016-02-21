@@ -2,6 +2,7 @@
   <div class="embed-responsive embed-responsive-16by9">
     <iframe
       class="embed-responsive-item"
+      allowfullscreen="true"
       src="https://player.twitch.tv/?channel={ channel.name }">
     </iframe>
   </div>

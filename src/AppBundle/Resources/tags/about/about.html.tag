@@ -20,3 +20,12 @@
     </ul>
   </p>
 </tweetch-about>
+
+<raw>
+  var self = this,
+      updateHTML = function(){
+        self.root.innerHTML = self.opts.html || ""
+      }
+  updateHTML()
+  this.on("updated", updateHTML)
+</raw>
