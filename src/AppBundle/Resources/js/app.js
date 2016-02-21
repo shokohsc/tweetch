@@ -20,7 +20,7 @@
   * Replace http:// by https:// in String
   * @return string
   */
- String.prototype.useHttps = function() {
+ String.prototype.encrypt = function() {
    var string = this.toString()
 
    return string.replace('http://', 'https://')

@@ -2,7 +2,7 @@
   <img
     id="incredible_{ id }"
     class="img-thumbnail"
-    src="{ preview.medium }"
+    src="{ preview.medium.encrypt() }"
     alt="{ id }"
     height="180"
     width="320"
