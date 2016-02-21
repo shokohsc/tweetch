@@ -10,6 +10,7 @@
   */
  String.prototype.title = function() {
    var string = this.toString().toLowerCase()
+
    return string.replace(/(^([a-zA-Z\p{M}]))|([ -][a-zA-Z\p{M}])/g, function($charOne){
      return $charOne.toUpperCase()
    })
@@ -21,6 +22,7 @@
   */
  String.prototype.useHttps = function() {
    var string = this.toString()
+
    return string.replace('http://', 'https://')
  }
 
@@ -76,13 +78,13 @@ class AbstractService {
 
   /**
    * AbstractService constructor method.
-   * @param  string route
+   * @param  string endpoint
    * @return AbstractService
    */
-  constructor(route) {
+  constructor(endpoint) {
     this.protocol  = location.protocol+'//'
     this.host      = location.host+'/'
-    this.endpoint  = 'api/'+route
+    this.endpoint  = 'api/'+endpoint
   }
 
   /**
@@ -133,6 +135,7 @@ class GameService extends AbstractService{
   fetchTop(page) {
     var self = this
     this.url = this.url+'/'+page
+
     return this.serve('top', page)
   }
 }
