@@ -102,7 +102,8 @@ class AbstractService {
 
     return $.ajax({
       url: url
-    }).fail(function() {
+    }).fail(function(xhr) {
+      console.error(xhr.statusText);
       mount('tweetch-error')
     })
   }
@@ -140,6 +141,29 @@ class GameService extends AbstractService{
   }
 }
 
+/**
+ * ChannelService class.
+ */
+class ChannelService extends AbstractService{
+
+  /**
+   * ChannelService constructor method.
+   * @return ChannelService
+   */
+  constructor() {
+    super('channels')
+  }
+
+  /**
+   * Fetch channel
+   * @param string id
+   * @return Object
+   */
+  fetchChannel(id) {
+    return this.serve(id)
+  }
+}
+
 
 
 /********
@@ -162,6 +186,30 @@ routes.home = function(id, action) {
   mount('tweetch-loading')
   gameService.fetchTop('1').done(function(top) {
     mount('tweetch-home', {top: top})
+  })
+}
+
+
+/***********
+ * Channel *
+ ***********/
+
+/**
+ * channelService
+ * @type ChannelService
+ */
+var channelService = new ChannelService()
+
+/**
+ * Channel route definition
+ * @param  string id
+ * @param  string action
+ * @return Object
+ */
+routes.channels = function(id, action) {
+  mount('tweetch-loading')
+  channelService.fetchChannel(id).done(function(channel) {
+    mount('tweetch-channel', {channel: channel})
   })
 }
 
