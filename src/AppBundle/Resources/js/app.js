@@ -103,7 +103,7 @@ class AbstractService {
     return $.ajax({
       url: url
     }).fail(function(xhr) {
-      console.error(xhr.statusText);
+      console.log(xhr.statusText);
       mount('tweetch-error')
     })
   }
@@ -111,9 +111,9 @@ class AbstractService {
 
 
 
-/***************
- * GameService *
- ***************/
+/*********************
+ * Endpoint Services *
+ *********************/
 
 /**
  * GameService class.
@@ -164,17 +164,51 @@ class ChannelService extends AbstractService{
   }
 }
 
+/**
+ * StreamService class.
+ */
+class StreamService extends AbstractService{
+
+  /**
+   * StreamService constructor method.
+   * @return StreamService
+   */
+  constructor() {
+    super('streams')
+  }
+
+  /**
+   * Fetch stream
+   * @param string id
+   * @return Object
+   */
+  fetchStream(id) {
+    return this.serve(id)
+  }
+}
 
 
-/********
- * Home *
- ********/
+/*********************
+ * Route definitions *
+ *********************/
 
 /**
  * gameService
  * @type GameService
  */
 var gameService = new GameService()
+
+/**
+ * channelService
+ * @type ChannelService
+ */
+var channelService = new ChannelService()
+
+/**
+ * streamService
+ * @type StreamService
+ */
+var streamService = new StreamService()
 
 /**
  * Home route definition
@@ -189,17 +223,6 @@ routes.home = function(id, action) {
   })
 }
 
-
-/***********
- * Channel *
- ***********/
-
-/**
- * channelService
- * @type ChannelService
- */
-var channelService = new ChannelService()
-
 /**
  * Channel route definition
  * @param  string id
@@ -213,11 +236,18 @@ routes.channels = function(id, action) {
   })
 }
 
-
-
-/*********
- * About *
- *********/
+/**
+ * Stream route definition
+ * @param  string id
+ * @param  string action
+ * @return Object
+ */
+routes.streams = function(id, action) {
+  mount('tweetch-loading')
+  streamService.fetchStream(id).done(function(stream) {
+    mount('tweetch-stream', {stream: stream})
+  })
+}
 
 /**
  * About route definition
