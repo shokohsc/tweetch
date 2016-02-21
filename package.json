@@ -7,14 +7,14 @@
     "test": "tests"
   },
   "scripts": {
-    "clean": "rm -rf ./web/bundles && mkdir ./web/bundles ./web/bundles/js ./web/bundles/css ./web/bundles/fonts",
+    "clean": "rm -rf ./web/bundles ./web/fonts && mkdir ./web/fonts ./web/bundles ./web/bundles/js ./web/bundles/css",
     "postclean": "bin/console assets:install --symlink",
 
     "concat:assets:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js -o ./web/bundles/assets.js",
     "concat:assets:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/assets.css",
     "concat:assets": "npm run concat:assets:js & npm run concat:assets:css",
 
-    "copy:assets:fonts": "cp -r ./bower_components/bootstrap/dist/fonts ./web/bundles",
+    "copy:assets:fonts": "cp -Rf ./bower_components/bootstrap/dist/fonts/ ./web/fonts",
 
     "minify:assets:js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/assets.js",
     "minify:assets:css": "minify --output ./web/bundles/css/assets.min.css ./web/bundles/assets.css",
