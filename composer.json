@@ -61,8 +61,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
         "compile": [
-            "npm run build",
-            "rm web/app_dev.php"
+            "rm web/app_dev.php",
+            "npm run build"
         ]
     },
     "config": {

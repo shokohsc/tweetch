@@ -10,38 +10,38 @@
     "clean": "rm -rf ./web/bundles && mkdir ./web/bundles ./web/bundles/js ./web/bundles/css ./web/bundles/fonts",
     "postclean": "bin/console assets:install --symlink",
 
-    "concat:assets:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js -o ./web/bundles/js/assets.js",
-    "concat:assets:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/css/assets.css",
+    "concat:assets:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js -o ./web/bundles/assets.js",
+    "concat:assets:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/assets.css",
     "concat:assets": "npm run concat:assets:js & npm run concat:assets:css",
 
     "copy:assets:fonts": "cp -Rf ./bower_components/bootstrap/dist/fonts/ ./web/bundles/fonts/",
 
-    "minify:assets:js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/js/assets.js",
-    "minify:assets:css": "minify --output ./web/bundles/css/assets.min.css ./web/bundles/css/assets.css",
+    "minify:assets:js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/assets.js",
+    "minify:assets:css": "minify --output ./web/bundles/css/assets.min.css ./web/bundles/assets.css",
     "preminify:assets": "npm run concat:assets",
     "minify:assets": "npm run minify:assets:js & npm run minify:assets:css",
-    "postminify:assets": "rm ./web/bundles/css/assets.css ./web/bundles/js/assets.js",
+    "postminify:assets": "rm ./web/bundles/assets.css ./web/bundles/assets.js",
 
     "assets": "npm run minify:assets & npm run copy:assets:fonts",
 
 
 
-    "less": "lessc ./src/AppBundle/Resources/less/style.less ./web/bundles/css/style.css",
-    "babel": "babel ./src/AppBundle/Resources/js/app.js -o ./web/bundles/js/app.js",
-    "minify:app:js": "minify --output ./web/bundles/js/app.min.js ./web/bundles/js/app.js",
-    "minify:app:css": "minify --output ./web/bundles/css/style.min.css ./web/bundles/css/style.css",
+    "less": "lessc ./src/AppBundle/Resources/less/style.less ./web/bundles/style.css",
+    "babel": "babel ./src/AppBundle/Resources/js/app.js -o ./web/bundles/app.js",
+    "minify:app:js": "minify --output ./web/bundles/js/app.min.js ./web/bundles/app.js",
+    "minify:app:css": "minify --output ./web/bundles/css/style.min.css ./web/bundles/style.css",
     "preminify:app": "npm run less & npm run babel",
     "minify:app": "npm run minify:app:js & npm run minify:app:css",
-    "postminify:app": "rm ./web/bundles/css/style.css ./web/bundles/js/app.js",
+    "postminify:app": "rm ./web/bundles/style.css ./web/bundles/app.js",
 
     "riot": "riot ./src/AppBundle/Resources/tags ./web/bundles/js/tags.js",
 
     "preapp": "npm run minify:app",
     "app": "npm run riot",
 
-    "dev": "npm run watch:app & npm run livereload",
-    "watch:app": "watch 'npm run app' ./src/AppBundle/Resources/ ./app/Resources/",
-    "livereload": "livereload ./web/bundles/js/",
+    "dev": "npm run watch & npm run livereload",
+    "watch": "watch 'npm run app' ./src/AppBundle/Resources/ ./app/Resources/",
+    "livereload": "livereload ./web/bundles/js/ ./web/bundles/css/",
 
     "build": "npm run clean && npm run assets && npm run app",
 
