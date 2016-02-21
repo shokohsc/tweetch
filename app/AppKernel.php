@@ -17,6 +17,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
             new Shoko\TwitchApiBundle\TwitchApiBundle(),
+            new FOS\HttpCacheBundle\FOSHttpCacheBundle(),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Bazinga\Bundle\JsTranslationBundle\BazingaJsTranslationBundle(),
         ];
 
