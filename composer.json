@@ -62,7 +62,7 @@
         ],
         "compile": [
             "rm web/app_dev.php",
-            "npm install && bower install && npm run build"
+            "npm run app"
         ]
     },
     "config": {

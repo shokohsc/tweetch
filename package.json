@@ -25,7 +25,6 @@
     "assets": "npm run minify:assets & npm run copy:assets:fonts",
 
 
-
     "less": "lessc ./src/AppBundle/Resources/less/style.less ./web/bundles/style.css",
     "babel": "babel ./src/AppBundle/Resources/js/app.js -o ./web/bundles/app.js",
     "minify:app:js": "minify --output ./web/bundles/js/app.min.js ./web/bundles/app.js",
@@ -44,6 +43,9 @@
     "livereload": "livereload ./web/bundles/js/ ./web/bundles/css/",
 
     "build": "npm run clean && npm run assets && npm run app",
+
+    "preinstall": "npm run clean",
+    "postinstall": "npm run assets",
 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
