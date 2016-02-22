@@ -1,4 +1,5 @@
 <tweetch-channel>
+  <h1 class="text-center">{ channel.name }</h1>
   <div class="embed-responsive embed-responsive-16by9">
     <iframe
       class="embed-responsive-item"
@@ -8,6 +9,6 @@
   </div>
 
   <script>
-    this.channel = this.opts.channel
+    this.channel = this.opts
   </script>
 </tweetch-channel>

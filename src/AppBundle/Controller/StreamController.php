@@ -13,26 +13,22 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class StreamController extends Controller
 {
     /**
-     * @Route("", name="streams", options={"expose"=true})
+     * @Route("/game/{gameId}/{page}", name="game_streams", defaults={"page" = 1}, requirements={"page" = "\d+"}, options={"expose"=true})
      */
-    public function listAction(Request $request)
+    public function gameAction($gameId, $page = 1)
     {
-        $streams = $this->get('stream.repository')->getStreams($request->query->all());
-        $streams = $this->get('json.serializer')->encode($streams);
-        $json = json_decode($streams);
-
-        return new JsonResponse($json, 200);
-    }
-
-    /**
-     * @Route("/{streamId}", name="stream", options={"expose"=true})
-     */
-    public function getAction($streamId)
-    {
-        $stream = $this->get('stream.repository')->getStream($streamId);
+        $limit = 10;
+        $offset = $limit * $page;
+        $params = array(
+          'game' => $gameId,
+          'limit' => $limit,
+          'offset' => $offset,
+          'stream_type' => 'live',
+        );
+        $stream = $this->get('stream.repository')->getStreams($params);
         $stream = $this->get('json.serializer')->encode($stream);
         $json = json_decode($stream);
 
-        return new JsonResponse($json, 200);
+        return new JsonResponse(['streams' => $json, 'title' => $gameId], 200);
     }
 }

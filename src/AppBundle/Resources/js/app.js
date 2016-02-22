@@ -59,10 +59,11 @@ function mount(tag, options) {
  * @param  string collection
  * @param  string id
  * @param  string action
+ * @param  string page
  */
-function handler(collection, id, action) {
+function handler(collection, id, action, page) {
   var fn = routes[collection || 'home']
-  fn ? fn(id, action) : mount('tweetch-error')
+  fn ? fn(id, action, page) : mount('tweetch-error')
 }
 
 
@@ -91,16 +92,13 @@ class AbstractService {
    * Serve ajax call
    * @param  string id
    * @param  string page
-   * @param  string query
    * @return Promise
    */
-  serve(id, page, query) {
+  serve(id, page) {
     var self      = this,
-        url       = this.protocol+this.host+this.endpoint,
-        url       = (id === undefined) ? url : url+'/'+id,
-        url       = (page === undefined) ? url : url+'/'+page,
-        url       = (query === undefined) ? url : url+'?'+query
-
+        url       = this.protocol+this.host+this.endpoint
+        url       = (id === undefined) ? url : url+'/'+id
+        url       = (page === undefined) ? url : url+'/'+page
     return $.ajax({
       url: url
     }).fail(function() {
@@ -134,9 +132,6 @@ class GameService extends AbstractService{
    * @return Object
    */
   fetchTop(page) {
-    var self = this
-    this.url = this.url+'/'+page
-
     return this.serve('top', page)
   }
 }
@@ -178,23 +173,14 @@ class StreamService extends AbstractService{
   }
 
   /**
-   * Fetch stream
+   * Fetch game streams
    * @param string id
+   * @param int    page
    * @return Object
    */
-  fetchStream(id) {
-    return this.serve(id)
-  }
-
-  /**
-   * Fetch streams
-   * @return Object
-   */
-  fetchStreams() {
-    var query = riot.route.query()
-        query = $.param(query)
-
-    return this.serve(undefined, undefined, query)
+  fetchGameStreams(id, page) {
+    id = encodeURIComponent(id)
+    return this.serve('game/'+id, page)
   }
 }
 
@@ -227,10 +213,10 @@ var streamService = new StreamService()
  * @param  string action
  * @return Object
  */
-routes.home = function(id, action) {
+routes.home = function(id, action, page) {
   mount('tweetch-loading')
-  gameService.fetchTop('1').done(function(top) {
-    mount('tweetch-home', {top: top})
+  gameService.fetchTop(action).done(function(top) {
+    mount('tweetch-home', top)
   })
 }
 
@@ -240,15 +226,11 @@ routes.home = function(id, action) {
  * @param  string action
  * @return Object
  */
-routes.channels = function(id, action) {
+routes.channels = function(id, action, page) {
   mount('tweetch-loading')
-  if (id && !id.match(/=/)) {
-    channelService.fetchChannel(id).done(function(channel) {
-      mount('tweetch-channel', {channel: channel})
-    })
-  } else {
-    mount('tweetch-error')
-  }
+  channelService.fetchChannel(id).done(function(channel) {
+    mount('tweetch-channel', channel)
+  })
 }
 
 /**
@@ -257,17 +239,11 @@ routes.channels = function(id, action) {
  * @param  string action
  * @return Object
  */
-routes.streams = function(id, action) {
+routes.streams = function(id, action, page) {
   mount('tweetch-loading')
-  if (id && !id.match(/=/)) {
-    streamService.fetchStream(id).done(function(stream) {
-      mount('tweetch-stream', {stream: stream})
-    })
-  } else {
-    streamService.fetchStreams().done(function(streams) {
-      mount('tweetch-streams', {streams: streams})
-    })
-  }
+  streamService.fetchGameStreams(action, page).done(function(streams) {
+    mount('tweetch-streams', streams)
+  })
 }
 
 /**
@@ -276,7 +252,7 @@ routes.streams = function(id, action) {
  * @param  string action
  * @return Object
  */
-routes.about = function(id, action) {
+routes.about = function(id, action, page) {
     mount('tweetch-about')
 }
 
@@ -285,6 +261,21 @@ routes.about = function(id, action) {
 /***********
  * Run app *
  ***********/
-riot.mount('*')
-riot.route(handler)
-riot.route.start(true)
+
+ /**
+  * Mount all the tags !!!!
+  * @param  string '*'
+  */
+ riot.mount('*')
+
+ /**
+  * Changes the browser URL and notifies all the listeners assigned with
+  * @param  Object handler
+  */
+ riot.route(handler)
+
+ /**
+  * Start listening the url changes.
+  * @param  bool
+  */
+ riot.route.start(true)

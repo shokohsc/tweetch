@@ -1,3 +1,3 @@
 <tweetch-streams>
-  <stream-list streams={ this.opts.streams.streams }></stream-list>
+  <stream-list streams={ opts.streams } title={ opts.title }></stream-list>
 </tweetch-streams>
