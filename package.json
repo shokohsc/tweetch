@@ -20,7 +20,7 @@
     "preconcat:assets": "npm run dir:assets",
     "concat:assets": "npm run concat:assets:js & npm run concat:assets:css",
 
-    "copy:assets:fonts": "cp -Rf ./bower_components/bootstrap/dist/fonts/ ./web",
+    "copy:assets:fonts": "cp -Rf ./bower_components/bootstrap/dist/fonts ./web",
 
     "minify:assets:js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/assets.js",
     "minify:assets:css": "minify --output ./web/bundles/css/assets.min.css ./web/bundles/assets.css",
