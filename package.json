@@ -6,6 +6,10 @@
   "directories": {
     "test": "tests"
   },
+  "engines": {
+    "node": "5.7.0",
+    "npm": "3.7.3"
+  },
   "scripts": {
     "clean": "rm -rf ./web/bundles ./web/fonts",
 
@@ -16,7 +20,7 @@
     "preconcat:assets": "npm run dir:assets",
     "concat:assets": "npm run concat:assets:js & npm run concat:assets:css",
 
-    "copy:assets:fonts": "cp -Rf ./bower_components/bootstrap/dist/fonts/ ./web/fonts",
+    "copy:assets:fonts": "cp -Rf ./bower_components/bootstrap/dist/fonts/ ./web",
 
     "minify:assets:js": "minify --output ./web/bundles/js/assets.min.js ./web/bundles/assets.js",
     "minify:assets:css": "minify --output ./web/bundles/css/assets.min.css ./web/bundles/assets.css",
@@ -26,6 +30,7 @@
 
     "preassets" : "npm run dir:assets",
     "assets": "npm run minify:assets & npm run copy:assets:fonts",
+    "postassets": "remove:assets",
 
 
     "less": "lessc ./src/AppBundle/Resources/less/style.less ./web/bundles/style.css",
@@ -40,6 +45,7 @@
 
     "preapp": "npm run minify:app",
     "app": "npm run riot",
+    "postapp": "remove:app",
 
     "dev": "npm run watch & npm run livereload",
     "watch": "watch 'npm run app' ./src/AppBundle/Resources/ ./app/Resources/",
