@@ -30,7 +30,6 @@
 
     "preassets" : "npm run dir:assets",
     "assets": "npm run minify:assets & npm run copy:assets:fonts",
-    "postassets": "npm run remove:assets",
 
 
     "less": "lessc ./src/AppBundle/Resources/less/style.less ./web/bundles/style.css",
@@ -45,7 +44,6 @@
 
     "preapp": "npm run minify:app",
     "app": "npm run riot",
-    "postapp": "npm run remove:app",
 
     "dev": "npm run watch & npm run livereload",
     "watch": "watch 'npm run app' ./src/AppBundle/Resources/ ./app/Resources/",
