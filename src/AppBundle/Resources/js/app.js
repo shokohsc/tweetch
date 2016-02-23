@@ -99,6 +99,7 @@ class AbstractService {
         url       = this.protocol+this.host+this.endpoint
         url       = (id === undefined) ? url : url+'/'+id
         url       = (page === undefined) ? url : url+'/'+page
+
     return $.ajax({
       url: url
     }).fail(function() {
@@ -137,29 +138,6 @@ class GameService extends AbstractService{
 }
 
 /**
- * ChannelService class.
- */
-class ChannelService extends AbstractService{
-
-  /**
-   * ChannelService constructor method.
-   * @return ChannelService
-   */
-  constructor() {
-    super('channels')
-  }
-
-  /**
-   * Fetch channel
-   * @param string id
-   * @return Object
-   */
-  fetchChannel(id) {
-    return this.serve(id)
-  }
-}
-
-/**
  * StreamService class.
  */
 class StreamService extends AbstractService{
@@ -170,6 +148,15 @@ class StreamService extends AbstractService{
    */
   constructor() {
     super('streams')
+  }
+
+  /**
+   * Fetch stream
+   * @param string id
+   * @return Object
+   */
+  fetchStream(id) {
+    return this.serve(id)
   }
 
   /**
@@ -196,12 +183,6 @@ class StreamService extends AbstractService{
 var gameService = new GameService()
 
 /**
- * channelService
- * @type ChannelService
- */
-var channelService = new ChannelService()
-
-/**
  * streamService
  * @type StreamService
  */
@@ -221,19 +202,6 @@ routes.home = function(id, action, page) {
 }
 
 /**
- * Channel route definition
- * @param  string id
- * @param  string action
- * @return Object
- */
-routes.channels = function(id, action, page) {
-  mount('tweetch-loading')
-  channelService.fetchChannel(id).done(function(channel) {
-    mount('tweetch-channel', channel)
-  })
-}
-
-/**
  * Stream route definition
  * @param  string id
  * @param  string action
@@ -241,9 +209,16 @@ routes.channels = function(id, action, page) {
  */
 routes.streams = function(id, action, page) {
   mount('tweetch-loading')
-  streamService.fetchGameStreams(action, page).done(function(streams) {
-    mount('tweetch-streams', streams)
-  })
+  if ('game' === id) {
+    streamService.fetchGameStreams(action, page).done(function(streams) {
+      mount('tweetch-streams', streams)
+    })
+  } else {
+    streamService.fetchStream(id).done(function(stream) {
+      mount('tweetch-stream', stream)
+      console.log(stream);
+    })
+  }
 }
 
 /**

@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class GameController extends Controller
 {
     /**
-     * @Route("/top/{page}", name="games_top", defaults={"page" = 1}, requirements={"page" = "\d+"}, options={"expose"=true})
+     * @Route("/top/{page}", name="games_top", defaults={"page" = 1}, requirements={"page" = "\d+"})
      */
     public function topAction($page = 1)
     {
