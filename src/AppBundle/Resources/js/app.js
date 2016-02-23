@@ -216,7 +216,6 @@ routes.streams = function(id, action, page) {
   } else {
     streamService.fetchStream(id).done(function(stream) {
       mount('tweetch-stream', stream)
-      console.log(stream);
     })
   }
 }

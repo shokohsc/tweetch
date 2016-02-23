@@ -7,7 +7,7 @@
         </a>
         <strong>
           <a class="inline" href="#streams/{ channel.name }">{ channel.name }</a>
-          <a class="inline" href="twitch://open?stream=#{ channel.name }"><span class="glyphicon glyphicon-phone"></span></a>
+          <a class="inline" href="twitch://open?stream={ channel.name }"><span class="glyphicon glyphicon-phone"></span></a>
         </strong>
         <small>{ viewers } viewers / { videoHeight }p / { channel.language }</small>
     </div>
