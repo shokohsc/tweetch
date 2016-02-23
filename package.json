@@ -8,7 +8,7 @@
   },
   "scripts": {
     "clean": "rm -rf ./web/bundles ./web/fonts",
-    "dir:assets": "mkdir ./web/fonts ./web/bundles ./web/bundles/js ./web/bundles/css",
+    "dir:assets": "mkdir -p ./web/fonts ./web/bundles ./web/bundles/js ./web/bundles/css",
     "postclean": "bin/console assets:install --symlink && npm run dir:assets",
 
     "concat:assets:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js ./bower_components/twbs-pagination/jquery.twbsPagination.js -o ./web/bundles/assets.js",
