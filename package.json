@@ -44,7 +44,7 @@
 
     "build": "npm run clean && npm run assets && npm run app",
 
-    "postinstall": "bower install",
+    "postinstall": "bower install && npm run assets",
 
     "test": "echo \"Error: no test specified\" && exit 1"
   },
