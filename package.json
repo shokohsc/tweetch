@@ -7,11 +7,13 @@
     "test": "tests"
   },
   "scripts": {
-    "clean": "rm -rf ./web/bundles ./web/fonts && mkdir ./web/fonts ./web/bundles ./web/bundles/js ./web/bundles/css",
-    "postclean": "bin/console assets:install --symlink",
+    "clean": "rm -rf ./web/bundles ./web/fonts",
+    "dir:assets": "mkdir ./web/fonts ./web/bundles ./web/bundles/js ./web/bundles/css",
+    "postclean": "bin/console assets:install --symlink && npm run dir:assets",
 
     "concat:assets:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js ./bower_components/twbs-pagination/jquery.twbsPagination.js -o ./web/bundles/assets.js",
     "concat:assets:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/assets.css",
+    "preconcat:assets": "npm run dir:assets",
     "concat:assets": "npm run concat:assets:js & npm run concat:assets:css",
 
     "copy:assets:fonts": "cp -Rf ./bower_components/bootstrap/dist/fonts/ ./web/fonts",
