@@ -62,7 +62,7 @@
         ],
         "compile": [
             "rm web/app_dev.php",
-            "npm run app"
+            "npm run build"
         ]
     },
     "config": {
