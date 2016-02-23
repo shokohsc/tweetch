@@ -62,7 +62,7 @@
         ],
         "compile": [
             "rm web/app_dev.php",
-            "npm run build"
+            "npm run assets && npm run app"
         ]
     },
     "config": {
