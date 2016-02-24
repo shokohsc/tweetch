@@ -7,14 +7,14 @@
         <strong>
           <a href="#streams/game/{ game.name }">{ game.name }</a>
         </strong>
-        <small>{ viewers } viewers</small>
+        <small>{ viewers } viewer(s)</small>
     </div>
   </div>
   <div id=pagination class="text-center"></div>
 
   <script>
     $(this.pagination).twbsPagination({
-      totalPages: opts.total !== 0 ? Math.floor(opts.total / 28) : 1,
+      totalPages: opts.total !== 0 ? Math.ceil(opts.total / 28) : 1,
       href: '#home/top/{{number}}'
     })
   </script>

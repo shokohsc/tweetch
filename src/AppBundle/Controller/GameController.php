@@ -12,12 +12,12 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class GameController extends Controller
 {
     /**
-     * @Route("/top/{page}", name="games_top", defaults={"page" = 1}, requirements={"page" = "\d+"})
+     * @Route("/top/{page}", name="top_games", defaults={"page" = 1}, requirements={"page" = "\d+"})
      */
     public function topAction($page = 1)
     {
         $limit = 28;
-        $offset = $limit * $page;
+        $offset = ($page * $limit) - $limit;
         $params = array(
           'limit' => $limit,
           'offset' => $offset,

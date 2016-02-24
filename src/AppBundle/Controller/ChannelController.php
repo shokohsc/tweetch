@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class ChannelController extends Controller
 {
     /**
-     * @Route("/{channelId}", name="channel")
+     * @Route("/{channelId}", name="get_channels")
      */
     public function getAction($channelId)
     {

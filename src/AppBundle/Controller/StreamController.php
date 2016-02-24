@@ -18,7 +18,7 @@ class StreamController extends Controller
     public function gamesAction($gameId, $page = 1)
     {
         $limit = 10;
-        $offset = $limit * $page;
+        $offset = ($page * $limit) - $limit;
         $params = array(
           'game' => $gameId,
           'limit' => $limit,
@@ -33,7 +33,7 @@ class StreamController extends Controller
     }
 
     /**
-     * @Route("/{streamId}", name="stream")
+     * @Route("/{streamId}", name="get_streams")
      */
     public function getAction($streamId)
     {
