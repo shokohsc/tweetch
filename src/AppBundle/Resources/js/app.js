@@ -56,14 +56,14 @@ function mount(tag, options) {
 
 /**
  * Routes handler
- * @param  string collection
+ * @param  string resource
  * @param  string id
- * @param  string action
+ * @param  string query
  * @param  string page
  */
-function handler(collection, id, action, page) {
-  var fn = routes[collection || 'home']
-  fn ? fn(id, action, page) : mount('tweetch-error')
+function handler(resource, id, query, page) {
+  var fn = routes[resource || 'home']
+  fn ? fn(id, query, page) : mount('tweetch-error')
 }
 
 
@@ -161,13 +161,13 @@ class StreamService extends AbstractService{
 
   /**
    * Fetch game streams
-   * @param string id
+   * @param string query
    * @param int    page
    * @return Object
    */
-  fetchGameStreams(id, page) {
-    id = encodeURIComponent(id)
-    return this.serve('game/'+id, page)
+  fetchGameStreams(query, page) {
+    query = encodeURIComponent(query)
+    return this.serve('game/'+query, page)
   }
 }
 
@@ -197,11 +197,10 @@ class SearchService extends AbstractService{
   /**
    * Fetch search games
    * @param string query
-   * @param int    page
    * @return Object
    */
-  fetchGames(query, page) {
-    return this.serve('games/'+query, page)
+  fetchGames(query) {
+    return this.serve('games/'+query)
   }
 
   /**
@@ -241,13 +240,13 @@ var searchService = new SearchService()
 /**
  * Home route definition
  * @param  string id
- * @param  string action
+ * @param  string query
  * @param  string page
  * @return Object
  */
-routes.home = function(id, action, page) {
+routes.home = function(id, query, page) {
   mount('tweetch-loading')
-  gameService.fetchTop(action).done(function(top) {
+  gameService.fetchTop(query).done(function(top) {
     mount('tweetch-home', top)
   })
 }
@@ -255,13 +254,13 @@ routes.home = function(id, action, page) {
 /**
  * Stream route definition
  * @param  string id
- * @param  string action
+ * @param  string query
  * @return Object
  */
-routes.streams = function(id, action, page) {
+routes.streams = function(id, query, page) {
   mount('tweetch-loading')
   if ('game' === id) {
-    streamService.fetchGameStreams(action, page).done(function(streams) {
+    streamService.fetchGameStreams(query, page).done(function(streams) {
       mount('tweetch-streams', streams)
     })
   } else {
@@ -273,20 +272,21 @@ routes.streams = function(id, action, page) {
 
 /**
  * Search route definition
- * @param  string id
+ * @param  string resource
  * @param  string query
+ * @param  string page
  * @return Object
  */
-routes.search = function(id, query, page) {
+routes.search = function(resource, query, page) {
   mount('tweetch-loading')
-  switch (id) {
+  switch (resource) {
     case 'channels':
       searchService.fetchChannels(query, page).done(function(search) {
         mount('tweetch-search', search)
       })
       break;
     case 'games':
-      searchService.fetchGames(query, page).done(function(search) {
+      searchService.fetchGames(query).done(function(search) {
         mount('tweetch-search', search)
       })
       break;
@@ -302,10 +302,9 @@ routes.search = function(id, query, page) {
 
 /**
  * About route definition
- * @param  string id
  * @return Object
  */
-routes.about = function(id) {
+routes.about = function() {
     mount('tweetch-about')
 }
 

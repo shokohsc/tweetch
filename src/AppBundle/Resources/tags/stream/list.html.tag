@@ -19,7 +19,7 @@
 
   <script>
     $(this.pagination).twbsPagination({
-      totalPages: opts.streams.total !== 0 ? Math.ceil(opts.streams.total / 10) : 1,
+      totalPages: opts.streams.total !== 0 ? Math.ceil(opts.streams.total / 9) : 1,
       href: '#streams/game/'+opts.title+'/{{number}}'
     })
   </script>

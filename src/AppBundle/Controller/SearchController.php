@@ -17,37 +17,33 @@ class SearchController extends Controller
      */
     public function channelsAction($query, $page = 1)
     {
-        $limit = 10;
+        $limit = 9;
         $offset = ($page * $limit) - $limit;
         $params = array(
           'q' => $query,
           'limit' => $limit,
           'offset' => $offset,
         );
-        $search = $this->get('search.repository')->getChannels($params);
-        $search = $this->get('json.serializer')->encode($search);
-        $json = json_decode($search);
+        $result = $this->get('search.repository')->getChannels($params);
+        $result = $this->get('json.serializer')->encode($result);
+        $json = json_decode($result);
 
         return new JsonResponse(['q' => $query, 'entity' => 'channels', 'results' => $json], 200);
     }
 
     /**
-     * @Route("/games/{query}/{page}", name="games_search", defaults={"page" = 1}, requirements={"page" = "\d+"})
+     * @Route("/games/{query}", name="games_search")
      */
-    public function gamesAction($query, $page = 1)
+    public function gamesAction($query)
     {
-        $limit = 10;
-        $offset = ($page * $limit) - $limit;
         $params = array(
           'q' => $query,
-          'limit' => $limit,
-          'offset' => $offset,
           'type' => 'suggest',
           'live' => true,
         );
-        $search = $this->get('search.repository')->getGames($params);
-        $search = $this->get('json.serializer')->encode($search);
-        $json = json_decode($search);
+        $result = $this->get('search.repository')->getGames($params);
+        $result = $this->get('json.serializer')->encode($result);
+        $json = json_decode($result);
 
         return new JsonResponse(['q' => $query, 'entity' => 'games', 'results' => $json], 200);
     }
@@ -57,7 +53,7 @@ class SearchController extends Controller
      */
     public function streamsAction($query, $page = 1)
     {
-        $limit = 10;
+        $limit = 9;
         $offset = ($page * $limit) - $limit;
         $params = array(
           'q' => $query,
@@ -65,9 +61,9 @@ class SearchController extends Controller
           'offset' => $offset,
           // 'hls' => true,
         );
-        $search = $this->get('search.repository')->getStreams($params);
-        $search = $this->get('json.serializer')->encode($search);
-        $json = json_decode($search);
+        $result = $this->get('search.repository')->getStreams($params);
+        $result = $this->get('json.serializer')->encode($result);
+        $json = json_decode($result);
 
         return new JsonResponse(['q' => $query, 'entity' => 'streams', 'results' => $json], 200);
     }
