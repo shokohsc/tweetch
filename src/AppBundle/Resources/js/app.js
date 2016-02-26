@@ -171,6 +171,50 @@ class StreamService extends AbstractService{
   }
 }
 
+/**
+ * SearchService class.
+ */
+class SearchService extends AbstractService{
+
+  /**
+   * SearchService constructor method.
+   * @return SearchService
+   */
+  constructor() {
+    super('search')
+  }
+
+  /**
+   * Fetch search channels
+   * @param string query
+   * @param int    page
+   * @return Object
+   */
+  fetchChannels(query, page) {
+    return this.serve('channels/'+query, page)
+  }
+
+  /**
+   * Fetch search games
+   * @param string query
+   * @param int    page
+   * @return Object
+   */
+  fetchGames(query, page) {
+    return this.serve('games/'+query, page)
+  }
+
+  /**
+   * Fetch search streams
+   * @param string query
+   * @param int    page
+   * @return Object
+   */
+  fetchStreams(query, page) {
+    return this.serve('streams/'+query, page)
+  }
+}
+
 
 /*********************
  * Route definitions *
@@ -189,9 +233,16 @@ var gameService = new GameService()
 var streamService = new StreamService()
 
 /**
+ * searchService
+ * @type SearchService
+ */
+var searchService = new SearchService()
+
+/**
  * Home route definition
  * @param  string id
  * @param  string action
+ * @param  string page
  * @return Object
  */
 routes.home = function(id, action, page) {
@@ -221,12 +272,40 @@ routes.streams = function(id, action, page) {
 }
 
 /**
- * About route definition
+ * Search route definition
  * @param  string id
- * @param  string action
+ * @param  string query
  * @return Object
  */
-routes.about = function(id, action, page) {
+routes.search = function(id, query, page) {
+  mount('tweetch-loading')
+  switch (id) {
+    case 'channels':
+      searchService.fetchChannels(query, page).done(function(search) {
+        mount('tweetch-search', search)
+      })
+      break;
+    case 'games':
+      searchService.fetchGames(query, page).done(function(search) {
+        mount('tweetch-search', search)
+      })
+      break;
+    case 'streams':
+      searchService.fetchStreams(query, page).done(function(search) {
+        mount('tweetch-search', search)
+      })
+      break;
+    default:
+      mount('tweetch-error')
+  }
+}
+
+/**
+ * About route definition
+ * @param  string id
+ * @return Object
+ */
+routes.about = function(id) {
     mount('tweetch-about')
 }
 

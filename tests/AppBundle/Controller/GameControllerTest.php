@@ -10,7 +10,7 @@ class GameControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/api/games/top');
+        $client->request('GET', '/api/games/top');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

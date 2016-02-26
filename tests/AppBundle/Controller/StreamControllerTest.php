@@ -10,7 +10,7 @@ class StreamControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/api/streams/games/Brawlhalla');
+        $client->request('GET', '/api/streams/game/Brawlhalla');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
@@ -18,7 +18,7 @@ class StreamControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/api/streams/test_channel');
+        $client->request('GET', '/api/streams/test_channel');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }
