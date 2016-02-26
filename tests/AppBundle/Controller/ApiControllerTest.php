@@ -10,7 +10,7 @@ class ApiControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/login');
+        $crawler = $client->request('GET', '/api/login');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
@@ -18,7 +18,7 @@ class ApiControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/api/logout');
+        $crawler = $client->request('GET', '/api/logout');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 }

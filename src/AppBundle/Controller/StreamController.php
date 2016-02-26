@@ -33,11 +33,11 @@ class StreamController extends Controller
     }
 
     /**
-     * @Route("/{streamId}", name="get_streams")
+     * @Route("/{channelId}", name="get_streams")
      */
-    public function getAction($streamId)
+    public function getAction($channelId)
     {
-        $stream = $this->get('stream.repository')->getStream($streamId);
+        $stream = $this->get('stream.repository')->getStream($channelId);
         $stream = $this->get('json.serializer')->encode($stream);
         $json = json_decode($stream);
 
