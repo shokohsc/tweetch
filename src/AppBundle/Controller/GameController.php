@@ -23,6 +23,7 @@ class GameController extends Controller
           'offset' => $offset,
         );
         $top = $this->get('game.repository')->getTop($params);
+        dump($top);
         $top = $this->get('json.serializer')->encode($top);
         $json = json_decode($top);
 
