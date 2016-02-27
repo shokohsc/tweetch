@@ -1714,12 +1714,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/shokohsc/TwitchApiBundle.git",
-                "reference": "c4c4bd957e0abfc1995a9a0973aab44f27c772b1"
+                "reference": "7704029fc4c86277d5df27c12dcf0a7e3477acb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shokohsc/TwitchApiBundle/zipball/c4c4bd957e0abfc1995a9a0973aab44f27c772b1",
-                "reference": "c4c4bd957e0abfc1995a9a0973aab44f27c772b1",
+                "url": "https://api.github.com/repos/shokohsc/TwitchApiBundle/zipball/7704029fc4c86277d5df27c12dcf0a7e3477acb5",
+                "reference": "7704029fc4c86277d5df27c12dcf0a7e3477acb5",
                 "shasum": ""
             },
             "require": {
@@ -1754,7 +1754,7 @@
                 "api",
                 "twitch"
             ],
-            "time": "2016-02-26 18:54:28"
+            "time": "2016-02-27 16:30:18"
         },
         {
             "name": "swiftmailer/swiftmailer",
