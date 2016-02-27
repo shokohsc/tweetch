@@ -5,8 +5,9 @@
   <div id=pagination class="text-center"></div>
 
   <script>
+  console.log(opts.results);
     $(this.pagination).twbsPagination({
-      totalPages: opts.results.total !== 0 ? Math.ceil(opts.results.total / 9) : 1,
+      totalPages: opts.results.total && opts.results.total !== 0 ? Math.ceil(opts.results.total / 9) : 1,
       href: '#search/'+opts.entity+'/'+opts.q+'/{{number}}'
     })
   </script>
