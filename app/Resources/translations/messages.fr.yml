@@ -21,6 +21,15 @@ error:
         title: Tweetch s'est planté
         message: Deadpool dit qu'on s'est perdu.
 
+search: Recherche
+games: Jeux
+streams: Flux
+viewers: spectateur(s)
+
+stream:
+  plays: joue à
+  for: pour
+
 about:
     title: A propos de Tweetch
     what:

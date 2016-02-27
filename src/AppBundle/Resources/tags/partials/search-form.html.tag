@@ -3,13 +3,13 @@
     <div class="row text-center">
       <div class="search-wrapper">
         <div class="input-group search-panel">
-          <input type="text" name="q" class="form-control" placeholder="Search for...">
+          <input type="text" name="q" class="form-control" placeholder="{ Translator.trans('search') }...">
           <input type="hidden" name="search_param" id="search_param" value="games">
           <span class="input-group-btn">
-            <button id="concept" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Games <span class="caret"></span></button>
+            <button id="concept" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{ Translator.trans('games') } <span class="caret"></span></button>
             <ul class="dropdown-menu dropdown-menu-right">
-              <li><a href="#games">Games</a></li>
-              <li><a href="#streams">Streams</a></li>
+              <li><a href="#games">{ Translator.trans('games') }</a></li>
+              <li><a href="#streams">{ Translator.trans('streams') }</a></li>
             </ul>
           </span>
         </div>

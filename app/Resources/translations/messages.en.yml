@@ -21,6 +21,15 @@ error:
         title: Tweetch stumbled
         message: Deadpool says we lost our way.
 
+search: Search for
+games: Games
+streams: Streams
+viewers: viewer(s)
+
+stream:
+  plays: plays
+  for: for
+
 about:
     title: About bubbles
     what:

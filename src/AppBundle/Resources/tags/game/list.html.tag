@@ -7,7 +7,7 @@
         <strong>
           <a href="#streams/game/{ game.name }">{ game.name }</a>
         </strong>
-        <small>{ viewers } viewer(s)</small>
+        <small>{ viewers } { Translator.trans('viewers') }</small>
     </div>
   </div>
   <div id=pagination class="text-center"></div>
