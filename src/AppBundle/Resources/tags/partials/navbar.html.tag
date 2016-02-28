@@ -17,6 +17,9 @@
             <a href="#streams/featured" title="{ Translator.trans('featured') }">{ Translator.trans('featured') }</a>
           </li>
           <li>
+            <a href="#users/shokohsc/games" title="{ Translator.trans('myGames') }">{ Translator.trans('myGames') }</a>
+          </li>
+          <li>
             <a href="#about" title="{ Translator.trans('navbar.about') }">{ Translator.trans('navbar.about') }</a>
           </li>
         </ul>

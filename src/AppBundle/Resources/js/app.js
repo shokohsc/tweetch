@@ -223,6 +223,31 @@ class SearchService extends AbstractService{
   }
 }
 
+/**
+ * UserService class.
+ */
+class UserService extends AbstractService{
+
+  /**
+   * UserService constructor method.
+   * @return UserService
+   */
+  constructor() {
+    super('users')
+  }
+
+  /**
+   * Fetch user followed games
+   * @param  string id
+   * @param  string page
+   * @return Object
+   */
+  fetchFollowedGames(id, page) {
+    return this.serve(id+'/games', page)
+  }
+}
+
+
 
 /*********************
  * Route definitions *
@@ -247,6 +272,12 @@ var streamService = new StreamService()
 var searchService = new SearchService()
 
 /**
+ * userService
+ * @type UserService
+ */
+var userService = new UserService()
+
+/**
  * Home route definition
  * @param  string id
  * @param  string query
@@ -264,6 +295,7 @@ routes.home = function(id, query, page) {
  * Stream route definition
  * @param  string id
  * @param  string query
+ * @param  string page
  * @return Object
  */
 routes.streams = function(id, query, page) {
@@ -315,6 +347,20 @@ routes.search = function(resource, query, page) {
     default:
       mount('tweetch-error')
   }
+}
+
+/**
+ * User route definition
+ * @param  string id
+ * @param  string resource
+ * @param  string page
+ * @return Object
+ */
+routes.users = function(id, resource, page) {
+  mount('tweetch-loading')
+  userService.fetchFollowedGames(id, page).done(function(games) {
+    mount('tweetch-follows-games', games)
+  })
 }
 
 /**
