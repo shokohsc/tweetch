@@ -14,6 +14,14 @@ class StreamControllerTest extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
 
+    public function testFeatured()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/api/streams/featured');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+    }
+
     public function testGet()
     {
         $client = static::createClient();

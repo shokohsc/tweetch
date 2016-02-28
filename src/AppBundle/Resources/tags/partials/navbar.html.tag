@@ -14,7 +14,10 @@
       <div id="navbar" class="navbar-collapse collapse" role="navigation">
         <ul class="nav navbar-nav">
           <li>
-            <a href="#about" title="About">{ Translator.trans('navbar.about') }</a>
+            <a href="#streams/featured" title="{ Translator.trans('featured') }">{ Translator.trans('featured') }</a>
+          </li>
+          <li>
+            <a href="#about" title="{ Translator.trans('navbar.about') }">{ Translator.trans('navbar.about') }</a>
           </li>
         </ul>
       </div>

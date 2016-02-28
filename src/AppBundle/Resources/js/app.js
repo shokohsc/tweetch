@@ -169,6 +169,15 @@ class StreamService extends AbstractService{
     query = encodeURIComponent(query)
     return this.serve('game/'+query, page)
   }
+
+  /**
+   * Fetch featured streams
+   * @param int    page
+   * @return Object
+   */
+  fetchFeaturedStreams(page) {
+    return this.serve('featured', page)
+  }
 }
 
 /**
@@ -259,14 +268,22 @@ routes.home = function(id, query, page) {
  */
 routes.streams = function(id, query, page) {
   mount('tweetch-loading')
-  if ('game' === id) {
-    streamService.fetchGameStreams(query, page).done(function(streams) {
-      mount('tweetch-streams', streams)
-    })
-  } else {
-    streamService.fetchStream(id).done(function(stream) {
-      mount('tweetch-stream', stream)
-    })
+  switch (id) {
+    case 'game':
+      streamService.fetchGameStreams(query, page).done(function(streams) {
+        mount('tweetch-streams', streams)
+      })
+      break;
+    case 'featured':
+      streamService.fetchFeaturedStreams(page).done(function(streams) {
+        mount('tweetch-featured-streams', streams)
+      })
+      break;
+    default:
+      streamService.fetchStream(id).done(function(stream) {
+        mount('tweetch-stream', stream)
+      })
+      break;
   }
 }
 

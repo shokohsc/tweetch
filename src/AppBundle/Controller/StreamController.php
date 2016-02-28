@@ -25,11 +25,29 @@ class StreamController extends Controller
           'offset' => $offset,
           'stream_type' => 'live',
         );
-        $stream = $this->get('stream.repository')->getStreams($params);
-        $stream = $this->get('json.serializer')->encode($stream);
-        $json = json_decode($stream);
+        $streams = $this->get('stream.repository')->getStreams($params);
+        $streams = $this->get('json.serializer')->encode($streams);
+        $json = json_decode($streams);
 
         return new JsonResponse(['streams' => $json, 'title' => $gameId], 200);
+    }
+
+    /**
+     * @Route("/featured/{page}", name="featured_streams", defaults={"page" = 1}, requirements={"page" = "\d+"})
+     */
+    public function featuredAction($page = 1)
+    {
+        $limit = 9;
+        $offset = ($page * $limit) - $limit;
+        $params = array(
+          'limit' => $limit,
+          'offset' => $offset,
+        );
+        $featuredStreams = $this->get('stream.repository')->getFeaturedStreams($params);
+        $featuredStreams = $this->get('json.serializer')->encode($featuredStreams);
+        $json = json_decode($featuredStreams);
+
+        return new JsonResponse($json, 200);
     }
 
     /**
