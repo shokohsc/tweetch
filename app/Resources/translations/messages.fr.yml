@@ -27,6 +27,8 @@ myGames: Mes jeux
 streams: Flux
 featured: Flux Promotionnés
 viewers: spectateur(s)
+login: Connexion
+logout: Déconnexion
 
 stream:
   plays: joue à

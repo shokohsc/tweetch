@@ -371,6 +371,18 @@ routes.about = function() {
     mount('tweetch-about')
 }
 
+routes.login = function() {
+  Twitch.getStatus(function(err, status) {
+    console.log(err, status);
+    if (status.authenticated) {
+      console.log('authenticated!');
+    }
+  })
+
+  var token = Twitch.getToken()
+  console.log(token);
+}
+
 
 
 /***********
@@ -394,3 +406,18 @@ routes.about = function() {
   * @param  bool
   */
  riot.route.start(true)
+
+/**
+ * Twitch initialization
+ * @param  Object client id
+ * @param  Object callback initialization
+ */
+Twitch.init({
+  clientId: 'CLIENT_ID'
+}, function(err, status) {
+  console.log(err, status);
+  if (status.authenticated) {
+    // Already logged in, hide button
+    $('.twitch-login').hide()
+  }
+})

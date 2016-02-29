@@ -20,10 +20,31 @@
             <a href="#users/shokohsc/games" title="{ Translator.trans('myGames') }">{ Translator.trans('myGames') }</a>
           </li>
           <li>
+            <a href="#" class="twitch-login" title="{ Translator.trans('login') }">{ Translator.trans('login') }</a>
+            <a href="#" class="twitch-logout hidden" title="{ Translator.trans('logout') }">{ Translator.trans('logout') }</a>
+          </li>
+          <li>
             <a href="#about" title="{ Translator.trans('navbar.about') }">{ Translator.trans('navbar.about') }</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  <script>
+    this.on('mount', function() {
+      // Login
+      $('.twitch-login').click(function(e) {
+        e.preventDefault()
+        Twitch.login({
+          redirect_uri: 'http://localhost:8000/#login',
+          scope: ['user_read', 'channel_read']
+        })
+      })
+      // Logout
+      $('.twitch-logout').click(function(e) {
+        e.preventDefault()
+        Twitch.logout()
+      })
+    })
+  </script>
 </tweetch-navbar>

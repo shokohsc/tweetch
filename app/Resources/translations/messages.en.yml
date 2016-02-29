@@ -27,6 +27,8 @@ myGames: My games
 streams: Streams
 featured: Featured Streams
 viewers: viewer(s)
+login: Login
+logout: Logout
 
 stream:
   plays: plays
