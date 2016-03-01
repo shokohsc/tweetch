@@ -85,7 +85,7 @@ class AbstractService {
   constructor(endpoint) {
     this.protocol  = location.protocol+'//'
     this.host      = location.host+'/'
-    this.endpoint  = 'api/'+endpoint
+    this.endpoint  = 'api'+endpoint
   }
 
   /**
@@ -124,7 +124,7 @@ class GameService extends AbstractService{
    * @return GameService
    */
   constructor() {
-    super('games')
+    super('/games')
   }
 
   /**
@@ -147,7 +147,7 @@ class StreamService extends AbstractService{
    * @return StreamService
    */
   constructor() {
-    super('streams')
+    super('/streams')
   }
 
   /**
@@ -190,7 +190,7 @@ class SearchService extends AbstractService{
    * @return SearchService
    */
   constructor() {
-    super('search')
+    super('/search')
   }
 
   /**
@@ -233,7 +233,7 @@ class UserService extends AbstractService{
    * @return UserService
    */
   constructor() {
-    super('users')
+    super('/users')
   }
 
   /**
@@ -247,6 +247,84 @@ class UserService extends AbstractService{
   }
 }
 
+/**
+ * AuthService class.
+ */
+class AuthService extends AbstractService{
+
+  /**
+   * AuthService constructor method.
+   * @return AuthService
+   */
+  constructor() {
+    super('')
+    // Make AuthService instances observable
+    riot.observable(this)
+    var self         = this,
+        redirect_uri = self.protocol+self.host+'#oauth',
+        scope        = ['user_read', 'channel_read']
+
+    // listen to 'login' event
+    this.on('login', function() {
+      Twitch.login({
+        redirect_uri: self.redirect_uri,
+        scope: self.scope
+      })
+    })
+
+    // listen to 'oauth' event
+    this.on('oauth', function() {
+      self.serve('login').done(function() {
+        Twitch.getStatus(function(err, status) {
+          if (status.authenticated) {
+            $('.auth-login').hide()
+            $('.auth-logout').show()
+
+            Twitch.api({method: 'user'}, function(err, user) {
+              var search = '[username]'
+              var href = $('.my-games').attr('href')
+              $('.my-games').show().attr('href', href.replace(search, user.name))
+            })
+          }
+        })
+      })
+
+      routes.home('top')
+    })
+
+    // listen to 'logout' event
+    this.on('logout', function() {
+      self.serve('logout').done(function() {
+        Twitch.logout()
+
+        $('.auth-login').show()
+        $('.auth-logout').hide()
+        $('.my-games').hide().attr('href', '#users/[username]/games')
+      })
+    })
+  }
+
+  /**
+   * Serve ajax call
+   * @param  string id
+   * @return Promise
+   */
+  serve(id) {
+    var self        = this,
+        url         = this.protocol+this.host+this.endpoint
+        url         = (id === undefined) ? url : url+'/'+id
+
+    return $.ajax({
+      url: url,
+      beforeSend: function(xhr){
+        var accessToken = Twitch.getToken()
+        xhr.setRequestHeader('authorization', accessToken)
+      }
+    }).fail(function() {
+      mount('tweetch-error')
+    })
+  }
+}
 
 
 /*********************
@@ -278,15 +356,20 @@ var searchService = new SearchService()
 var userService = new UserService()
 
 /**
+ * authService
+ * @type AuthService
+ */
+var authService = new AuthService()
+
+/**
  * Home route definition
  * @param  string id
- * @param  string query
  * @param  string page
  * @return Object
  */
-routes.home = function(id, query, page) {
+routes.home = function(id, page) {
   mount('tweetch-loading')
-  gameService.fetchTop(query).done(function(top) {
+  gameService.fetchTop(page).done(function(top) {
     mount('tweetch-home', top)
   })
 }
@@ -371,16 +454,29 @@ routes.about = function() {
     mount('tweetch-about')
 }
 
+/**
+ * Login route definition
+ * @return Object
+ */
 routes.login = function() {
-  Twitch.getStatus(function(err, status) {
-    console.log(err, status);
-    if (status.authenticated) {
-      console.log('authenticated!');
-    }
-  })
+  authService.trigger('login')
+}
 
-  var token = Twitch.getToken()
-  console.log(token);
+/**
+ * Authentification route definition
+ * @return Object
+ */
+routes.oauth = function() {
+  mount('tweetch-loading')
+  authService.trigger('oauth')
+}
+
+/**
+ * Logout route definition
+ * @return Object
+ */
+routes.logout = function() {
+  authService.trigger('logout')
 }
 
 
@@ -410,14 +506,7 @@ routes.login = function() {
 /**
  * Twitch initialization
  * @param  Object client id
- * @param  Object callback initialization
  */
 Twitch.init({
   clientId: 'CLIENT_ID'
-}, function(err, status) {
-  console.log(err, status);
-  if (status.authenticated) {
-    // Already logged in, hide button
-    $('.twitch-login').hide()
-  }
 })

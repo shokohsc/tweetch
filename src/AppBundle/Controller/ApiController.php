@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
@@ -14,8 +15,9 @@ class ApiController extends Controller
     /**
      * @Route("/login", name="login")
      */
-    public function loginAction()
+    public function loginAction(Request $request)
     {
+        // dump($request->headers);
         return new JsonResponse([], 200);
     }
 
@@ -24,6 +26,6 @@ class ApiController extends Controller
      */
     public function logoutAction()
     {
-        return new JsonResponse([], 200);
+        return new JsonResponse([], 204);
     }
 }

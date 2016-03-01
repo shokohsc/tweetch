@@ -17,11 +17,13 @@
             <a href="#streams/featured" title="{ Translator.trans('featured') }">{ Translator.trans('featured') }</a>
           </li>
           <li>
-            <a href="#users/shokohsc/games" title="{ Translator.trans('myGames') }">{ Translator.trans('myGames') }</a>
+            <a href="#users/[username]/games" class="my-games" style="display:none;" title="{ Translator.trans('myGames') }">{ Translator.trans('myGames') }</a>
           </li>
           <li>
-            <a href="#" class="twitch-login" title="{ Translator.trans('login') }">{ Translator.trans('login') }</a>
-            <a href="#" class="twitch-logout hidden" title="{ Translator.trans('logout') }">{ Translator.trans('logout') }</a>
+            <a href="#login" class="auth-login" title="{ Translator.trans('login') }">{ Translator.trans('login') }</a>
+          </li>
+          <li>
+            <a href="#logout" class="auth-logout" style="display:none;" title="{ Translator.trans('logout') }">{ Translator.trans('logout') }</a>
           </li>
           <li>
             <a href="#about" title="{ Translator.trans('navbar.about') }">{ Translator.trans('navbar.about') }</a>
@@ -30,21 +32,4 @@
       </div>
     </div>
   </nav>
-  <script>
-    this.on('mount', function() {
-      // Login
-      $('.twitch-login').click(function(e) {
-        e.preventDefault()
-        Twitch.login({
-          redirect_uri: 'http://localhost:8000/#login',
-          scope: ['user_read', 'channel_read']
-        })
-      })
-      // Logout
-      $('.twitch-logout').click(function(e) {
-        e.preventDefault()
-        Twitch.logout()
-      })
-    })
-  </script>
 </tweetch-navbar>
