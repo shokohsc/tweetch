@@ -34,7 +34,7 @@
     "remove:app": "rm ./web/bundles/style.css ./web/bundles/app.js",
     "riot": "riot ./src/AppBundle/Resources/tags ./web/bundles/js/tags.js",
     "preapp": "npm run minify:app",
-    "app": "npm run riot & bin/console assets:install --symlink",
+    "app": "npm run riot",
     "dev": "npm run watch & npm run livereload",
     "watch": "watch 'npm run app' ./src/AppBundle/Resources/ ./app/Resources/",
     "livereload": "livereload ./web/bundles/js/ ./web/bundles/css/",
