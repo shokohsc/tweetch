@@ -68,16 +68,16 @@ function handler(resource, id, query, page) {
 
 /**
  * Ui update user followed games pagination links
- * @param  Object twitch user
+ * @param  string user name
  */
-function update_followed_games_pagination(user) {
+function updateFollowedGamesPagination(name) {
   var search = '[username]'
 
   $('.pagination li a').each(function(i, el) {
     var pagination = $(el),
         source = pagination.attr('href')
 
-    pagination.attr('href', source.replace(search, user.name))
+    pagination.attr('href', source.replace(search, name))
   })
 }
 
@@ -85,20 +85,20 @@ function update_followed_games_pagination(user) {
  * Ui user has logged in function
  * @param  Object twitch user
  */
-function user_logged_in(user) {
+function userLoggedIn(user) {
   $('.auth-login').hide()
   $('.auth-logout').show()
 
   var search = '[username]'
   var href = $('.my-games').attr('href')
   $('.my-games').show().attr('href', href.replace(search, user.name))
-  update_followed_games_pagination(user)
+  updateFollowedGamesPagination(user.name)
 }
 
 /**
  * Ui user has logged out function
  */
-function user_logged_out() {
+function userLoggedOut() {
   $('.auth-login').show()
   $('.auth-logout').hide()
 
@@ -329,7 +329,7 @@ class AuthService extends AbstractService{
     // listen to 'logged-in' event
     this.on('logged-in', function() {
       self.serve('login').done(function(user) {
-        user_logged_in(user)
+        userLoggedIn(user)
       })
     })
 
@@ -346,7 +346,7 @@ class AuthService extends AbstractService{
 
     // listen to 'logged-out' event
     this.on('logged-out', function() {
-      user_logged_out()
+      userLoggedOut()
     })
 
   }
