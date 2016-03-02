@@ -67,6 +67,21 @@ function handler(resource, id, query, page) {
 }
 
 /**
+ * Ui update user followed games pagination links
+ * @param  Object twitch user
+ */
+function update_followed_games_pagination(user) {
+  var search = '[username]'
+
+  $('.pagination li a').each(function(i, el) {
+    var pagination = $(el),
+        source = pagination.attr('href')
+
+    pagination.attr('href', source.replace(search, user.name))
+  })
+}
+
+/**
  * Ui user has logged in function
  * @param  Object twitch user
  */
@@ -77,6 +92,7 @@ function user_logged_in(user) {
   var search = '[username]'
   var href = $('.my-games').attr('href')
   $('.my-games').show().attr('href', href.replace(search, user.name))
+  update_followed_games_pagination(user)
 }
 
 /**
@@ -301,25 +317,38 @@ class AuthService extends AbstractService{
 
     // listen to 'oauth' event
     this.on('oauth', function() {
-      self.serve('login').done(function(user) {
-        Twitch.getStatus(function(err, status) {
-          if (status.authenticated) {
-            user_logged_in(user)
-          }
-        })
+      Twitch.getStatus(function(err, status) {
+        if (status.authenticated) {
+          self.trigger('logged-in')
+        }
       })
 
-      routes.home('top')
+      handler('home')
+    })
+
+    // listen to 'logged-in' event
+    this.on('logged-in', function() {
+      self.serve('login').done(function(user) {
+        user_logged_in(user)
+      })
     })
 
     // listen to 'logout' event
     this.on('logout', function() {
       self.serve('logout').done(function() {
         Twitch.logout(function(error) {
-          user_logged_out()
+          self.trigger('logged-out')
         })
       })
+
+      handler('home')
     })
+
+    // listen to 'logged-out' event
+    this.on('logged-out', function() {
+      user_logged_out()
+    })
+
   }
 }
 
@@ -439,7 +468,7 @@ routes.search = function(resource, query, page) {
 routes.users = function(id, resource, page) {
   mount('tweetch-loading')
   userService.fetchFollowedGames(id, page).done(function(games) {
-    mount('tweetch-follows-games', games)
+    mount('tweetch-follows-games', {games: games, authService: authService})
   })
 }
 
