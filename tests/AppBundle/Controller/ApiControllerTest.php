@@ -11,7 +11,7 @@ class ApiControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/api/login');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 
     public function testLogout()
@@ -19,6 +19,6 @@ class ApiControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/api/logout');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(204, $client->getResponse()->getStatusCode());
     }
 }

@@ -66,6 +66,29 @@ function handler(resource, id, query, page) {
   fn ? fn(id, query, page) : mount('tweetch-error')
 }
 
+/**
+ * Ui user has logged in function
+ * @param  Object twitch user
+ */
+function user_logged_in(user) {
+  $('.auth-login').hide()
+  $('.auth-logout').show()
+
+  var search = '[username]'
+  var href = $('.my-games').attr('href')
+  $('.my-games').show().attr('href', href.replace(search, user.name))
+}
+
+/**
+ * Ui user has logged out function
+ */
+function user_logged_out() {
+  $('.auth-login').show()
+  $('.auth-logout').hide()
+
+  $('.my-games').hide().attr('href', '#users/[username]/games')
+}
+
 
 
 /*******************
@@ -101,7 +124,11 @@ class AbstractService {
         url       = (page === undefined) ? url : url+'/'+page
 
     return $.ajax({
-      url: url
+      url: url,
+      beforeSend: function(xhr){
+        var accessToken = Twitch.getToken()
+        xhr.setRequestHeader('authorization', accessToken)
+      }
     }).fail(function() {
       mount('tweetch-error')
     })
@@ -267,24 +294,17 @@ class AuthService extends AbstractService{
     // listen to 'login' event
     this.on('login', function() {
       Twitch.login({
-        redirect_uri: self.redirect_uri,
-        scope: self.scope
+        redirect_uri: redirect_uri,
+        scope: scope
       })
     })
 
     // listen to 'oauth' event
     this.on('oauth', function() {
-      self.serve('login').done(function() {
+      self.serve('login').done(function(user) {
         Twitch.getStatus(function(err, status) {
           if (status.authenticated) {
-            $('.auth-login').hide()
-            $('.auth-logout').show()
-
-            Twitch.api({method: 'user'}, function(err, user) {
-              var search = '[username]'
-              var href = $('.my-games').attr('href')
-              $('.my-games').show().attr('href', href.replace(search, user.name))
-            })
+            user_logged_in(user)
           }
         })
       })
@@ -295,33 +315,10 @@ class AuthService extends AbstractService{
     // listen to 'logout' event
     this.on('logout', function() {
       self.serve('logout').done(function() {
-        Twitch.logout()
-
-        $('.auth-login').show()
-        $('.auth-logout').hide()
-        $('.my-games').hide().attr('href', '#users/[username]/games')
+        Twitch.logout(function(error) {
+          user_logged_out()
+        })
       })
-    })
-  }
-
-  /**
-   * Serve ajax call
-   * @param  string id
-   * @return Promise
-   */
-  serve(id) {
-    var self        = this,
-        url         = this.protocol+this.host+this.endpoint
-        url         = (id === undefined) ? url : url+'/'+id
-
-    return $.ajax({
-      url: url,
-      beforeSend: function(xhr){
-        var accessToken = Twitch.getToken()
-        xhr.setRequestHeader('authorization', accessToken)
-      }
-    }).fail(function() {
-      mount('tweetch-error')
     })
   }
 }
@@ -388,17 +385,17 @@ routes.streams = function(id, query, page) {
       streamService.fetchGameStreams(query, page).done(function(streams) {
         mount('tweetch-streams', streams)
       })
-      break;
+      break
     case 'featured':
       streamService.fetchFeaturedStreams(page).done(function(streams) {
         mount('tweetch-featured-streams', streams)
       })
-      break;
+      break
     default:
       streamService.fetchStream(id).done(function(stream) {
         mount('tweetch-stream', stream)
       })
-      break;
+      break
   }
 }
 
@@ -416,17 +413,17 @@ routes.search = function(resource, query, page) {
       searchService.fetchChannels(query, page).done(function(search) {
         mount('tweetch-search', search)
       })
-      break;
+      break
     case 'games':
       searchService.fetchGames(query).done(function(search) {
         mount('tweetch-search', search)
       })
-      break;
+      break
     case 'streams':
       searchService.fetchStreams(query, page).done(function(search) {
         mount('tweetch-search', search)
       })
-      break;
+      break
     default:
       mount('tweetch-error')
   }
@@ -508,5 +505,5 @@ routes.logout = function() {
  * @param  Object client id
  */
 Twitch.init({
-  clientId: 'CLIENT_ID'
+  clientId: $('meta[name="client_id"]').attr('content')
 })

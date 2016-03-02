@@ -12,6 +12,10 @@ class IndexController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('base.html.twig');
+        $clientId = $this->getParameter('client_id');
+
+        return $this->render('base.html.twig', array(
+          'client_id' => $clientId,
+        ));
     }
 }

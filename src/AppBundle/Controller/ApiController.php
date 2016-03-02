@@ -17,8 +17,16 @@ class ApiController extends Controller
      */
     public function loginAction(Request $request)
     {
-        // dump($request->headers);
-        return new JsonResponse([], 200);
+        $accessToken = $request->headers->get('authorization');
+        if ($accessToken && !empty($accessToken)) {
+            $me = $this->get('me.repository')->getMe($accessToken);
+            $me = $this->get('json.serializer')->encode($me);
+            $json = json_decode($me);
+
+            return new JsonResponse($json, 200);
+        }
+
+        return new JsonResponse(['error' => 'wrong access token'], 400);
     }
 
     /**
