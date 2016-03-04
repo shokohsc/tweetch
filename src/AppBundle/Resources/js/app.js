@@ -143,6 +143,7 @@ class AbstractService {
       url: url,
       beforeSend: function(xhr){
         var accessToken = Twitch.getToken()
+            accessToken = window.btoa(accessToken)
         xhr.setRequestHeader('authorization', accessToken)
       }
     }).fail(function() {
@@ -300,7 +301,7 @@ class AuthService extends AbstractService{
    * @return AuthService
    */
   constructor() {
-    super('')
+    super('/auth')
     // Make AuthService instances observable
     riot.observable(this)
     var self         = this,
@@ -328,17 +329,15 @@ class AuthService extends AbstractService{
 
     // listen to 'logged-in' event
     this.on('logged-in', function() {
-      self.serve('login').done(function(user) {
+      self.serve('me').done(function(user) {
         userLoggedIn(user)
       })
     })
 
     // listen to 'logout' event
     this.on('logout', function() {
-      self.serve('logout').done(function() {
-        Twitch.logout(function(error) {
-          self.trigger('logged-out')
-        })
+      Twitch.logout(function(error) {
+        self.trigger('logged-out')
       })
 
       handler('home')

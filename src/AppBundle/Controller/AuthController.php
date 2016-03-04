@@ -8,17 +8,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
- * @Route("/api")
+ * @Route("/api/auth")
  */
-class ApiController extends Controller
+class AuthController extends Controller
 {
     /**
-     * @Route("/login", name="login")
+     * @Route("/me", name="me")
      */
-    public function loginAction(Request $request)
+    public function meAction(Request $request)
     {
         $accessToken = $request->headers->get('authorization');
         if ($accessToken && !empty($accessToken)) {
+            $accessToken = base64_decode($accessToken);
             $me = $this->get('me.repository')->getMe($accessToken);
             $me = $this->get('json.serializer')->encode($me);
             $json = json_decode($me);
@@ -27,13 +28,5 @@ class ApiController extends Controller
         }
 
         return new JsonResponse(['error' => 'wrong access token'], 400);
-    }
-
-    /**
-     * @Route("/logout", name="logout")
-     */
-    public function logoutAction()
-    {
-        return new JsonResponse([], 204);
     }
 }
