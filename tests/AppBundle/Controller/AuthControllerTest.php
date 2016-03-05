@@ -10,7 +10,7 @@ class AuthControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/auth/me');
+        $client->request('GET', '/api/auth/me');
         $this->assertEquals(400, $client->getResponse()->getStatusCode());
     }
 }
