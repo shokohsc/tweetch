@@ -86,11 +86,11 @@ function updateFollowedGamesPagination(name) {
  * @param  Object twitch user
  */
 function userLoggedIn(user) {
-  $('.auth-login').hide()
-  $('.auth-logout').show()
+  $('.anon').hide()
+  $('.auth').show()
 
   var search = '[username]'
-  var href = $('.my-games').attr('href')
+  var href = $('.auth').attr('href')
   $('.my-games').show().attr('href', href.replace(search, user.name))
   updateFollowedGamesPagination(user.name)
 }
@@ -99,8 +99,8 @@ function userLoggedIn(user) {
  * Ui user has logged out function
  */
 function userLoggedOut() {
-  $('.auth-login').show()
-  $('.auth-logout').hide()
+  $('.anon').show()
+  $('.auth').hide()
 
   $('.my-games').hide().attr('href', '#users/[username]/games')
 }
@@ -349,6 +349,15 @@ class AuthService extends AbstractService{
     })
 
   }
+
+  /**
+   * Fetch followed streams
+   * @param int    page
+   * @return Object
+   */
+  fetchFollowedStreams(page) {
+    return this.serve('streams/followed', page)
+  }
 }
 
 
@@ -417,6 +426,11 @@ routes.streams = function(id, query, page) {
     case 'featured':
       streamService.fetchFeaturedStreams(page).done(function(streams) {
         mount('tweetch-featured-streams', streams)
+      })
+      break
+    case 'followed':
+      authService.fetchFollowedStreams(page).done(function(streams) {
+        mount('tweetch-followed-streams', streams)
       })
       break
     default:
