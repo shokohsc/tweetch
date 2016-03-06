@@ -66,29 +66,6 @@ function handler(resource, id, query, page) {
   fn ? fn(id, query, page) : mount('tweetch-error')
 }
 
-/**
- * Ui user has logged in function
- * @param  Object twitch user
- */
-function userLoggedIn(user) {
-  $('.anon').hide()
-  $('.auth').show()
-
-  var search = '[username]'
-  var href = $('.auth').attr('href')
-  $('.my-games').show().attr('href', href.replace(search, user.name))
-}
-
-/**
- * Ui user has logged out function
- */
-function userLoggedOut() {
-  $('.anon').show()
-  $('.auth').hide()
-
-  $('.my-games').hide().attr('href', '#users/[username]/games')
-}
-
 
 
 /*******************
@@ -126,7 +103,8 @@ class AbstractService {
     return $.ajax({
       url: url,
       beforeSend: function(xhr){
-        var accessToken = Twitch.getToken()
+        var accessToken = sessionStorage.getItem('accessToken')
+            accessToken = !accessToken ? Twitch.getToken() : accessToken
             accessToken = window.btoa(accessToken)
         xhr.setRequestHeader('authorization', accessToken)
       }
@@ -303,10 +281,15 @@ class AuthService extends AbstractService{
 
     // listen to 'login' event
     this.on('login', function() {
-      Twitch.login({
-        redirect_uri: redirect_uri,
-        scope: scope
-      })
+      var username = sessionStorage.getItem('username')
+      if (!username) {
+        Twitch.login({
+          redirect_uri: redirect_uri,
+          scope: scope
+        })
+      } else {
+        self.userLoggedIn(username)
+      }
     })
 
     // listen to 'oauth' event
@@ -323,7 +306,9 @@ class AuthService extends AbstractService{
     // listen to 'logged-in' event
     this.on('logged-in', function() {
       self.serve('me').done(function(user) {
-        userLoggedIn(user)
+        self.userLoggedIn(user.name)
+        sessionStorage.setItem('username', user.name)
+        sessionStorage.setItem('accessToken', Twitch.getToken())
       })
     })
 
@@ -338,9 +323,32 @@ class AuthService extends AbstractService{
 
     // listen to 'logged-out' event
     this.on('logged-out', function() {
-      userLoggedOut()
+      self.userLoggedOut()
+      sessionStorage.clear()
     })
+  }
 
+  /**
+   * Ui user has logged in function
+   * @param  Object twitch username
+   */
+  userLoggedIn(username) {
+    $('.anon').hide()
+    $('.auth').show()
+
+    var search = '[username]'
+    var href = $('.auth').attr('href')
+    $('.my-games').show().attr('href', href.replace(search, username))
+  }
+
+  /**
+   * Ui user has logged out function
+   */
+  userLoggedOut() {
+    $('.anon').show()
+    $('.auth').hide()
+
+    $('.my-games').hide().attr('href', '#users/[username]/games')
   }
 }
 
