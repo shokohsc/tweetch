@@ -1,20 +1,6 @@
 <tweetch-followed-streams>
   <h1 class="text-center">{ Translator.trans('myFollowedStreams') }</h1>
-  <div class="text-center">
-    <div each={ this.opts.streams } class="list stream">
-        <a class="hidden-xs" href="#streams/{ channel.name }">
-          <stream-image stream={ item }></stream-image>
-        </a>
-        <a class="visible-xs-inline" href="twitch://open?stream={ channel.name }">
-          <stream-image stream={ item }></stream-image>
-        </a>
-        <strong>
-          <a class="hidden-xs" href="#streams/{ channel.name }">{ channel.name }</a>
-          <a class="visible-xs-inline" href="twitch://open?stream={ channel.name }">{ channel.name }</a>
-        </strong>
-        <small>{ viewers } viewer(s) / { videoHeight }p / { channel.language }</small>
-    </div>
-  </div>
+  <stream-list streams={ this.opts.streams.streams }></stream-list>
   <div id=pagination class="text-center"></div>
 
   <script>

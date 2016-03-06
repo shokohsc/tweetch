@@ -23,10 +23,10 @@ error:
 
 search: Recherche
 games: Jeux
-myGames: Mes jeux
-myFollowedStreams: Mes flux suivis
+myFollowedGames: Mes jeux
+myFollowedStreams: Mes flux
 streams: Flux
-featured: Flux Promotionnés
+featured: Flux promotionnés
 viewers: spectateur(s)
 login: Connexion
 logout: Déconnexion

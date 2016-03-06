@@ -1,2 +1,0 @@
-<search-channels>
-</search-channels>

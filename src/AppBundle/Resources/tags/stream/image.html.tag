@@ -1,14 +1,10 @@
 <stream-image>
   <img
-    id="incredible_{ id }"
+    id="incredible_{ opts.data.id }"
     class="img-thumbnail"
-    src="{ preview.medium.encrypt() }"
-    alt="{ id }"
+    src="{ opts.data.preview.medium.encrypt() }"
+    alt="{ opts.data.id }"
     height="180"
     width="320"
   />
-
-  <script>
-    this.stream = this.opts.stream
-  </script>
 </stream-image>

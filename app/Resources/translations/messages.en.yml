@@ -23,10 +23,10 @@ error:
 
 search: Search for
 games: Games
-myGames: My games
-myFollowedStreams: My followed streams
+myFollowedGames: My games
+myFollowedStreams: My streams
 streams: Streams
-featured: Featured Streams
+featured: Featured streams
 viewers: viewer(s)
 login: Login
 logout: Logout

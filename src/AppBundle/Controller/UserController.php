@@ -23,10 +23,11 @@ class UserController extends Controller
           'limit' => $limit,
           'offset' => $offset,
         );
-        $followedGames = $this->get('user.repository')->getUserFollowedGames($userId, $params);
+        $clientId = $this->getParameter('client_id');
+        $followedGames = $this->get('user.repository')->getUserFollowedGames($userId, $clientId, $params);
         $followedGames = $this->get('json.serializer')->encode($followedGames);
         $json = json_decode($followedGames);
 
-        return new JsonResponse($json, 200);
+        return new JsonResponse(['follows' => $json, 'username' => $userId], 200);
     }
 }

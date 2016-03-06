@@ -3,7 +3,6 @@
     <tweetch-search-form></tweetch-search-form>
   </div>
 
-  <search-channels if={ opts.entity == 'channels' } channels={ opts.results.channels }></search-channels>
   <search-games if={ opts.entity == 'games' } games={ opts.results.games }></search-games>
   <search-streams if={ opts.entity == 'streams' } streams={ opts.results.streams }></search-streams>
   <div id=pagination class="text-center"></div>

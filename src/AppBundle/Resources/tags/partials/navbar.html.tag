@@ -17,7 +17,7 @@
             <a href="#streams/featured" title="{ Translator.trans('featured') }">{ Translator.trans('featured') }</a>
           </li>
           <li>
-            <a href="#users/[username]/games" class="my-games auth" style="display:none;" title="{ Translator.trans('myGames') }">{ Translator.trans('myGames') }</a>
+            <a href="#users/[username]/games" class="my-games auth" style="display:none;" title="{ Translator.trans('myFollowedGames') }">{ Translator.trans('myFollowedGames') }</a>
           </li>
           <li>
             <a href="#streams/followed" class="my-streams auth" style="display:none;" title="{ Translator.trans('myFollowedStreams') }">{ Translator.trans('myFollowedStreams') }</a>

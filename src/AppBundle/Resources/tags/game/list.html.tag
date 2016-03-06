@@ -2,7 +2,7 @@
   <div class="text-center">
     <div each={ this.opts.games } class="list game">
         <a href="#streams/game/{ game.name }">
-          <game-image game={ item }></game-image>
+          <game-image data={ this.game }></game-image>
         </a>
         <strong>
           <a href="#streams/game/{ game.name }">{ game.name }</a>
@@ -10,12 +10,4 @@
         <small>{ viewers } { Translator.trans('viewers') }</small>
     </div>
   </div>
-  <div id=pagination class="text-center"></div>
-
-  <script>
-    $(this.pagination).twbsPagination({
-      totalPages: opts.total !== 0 ? Math.ceil(opts.total / 28) : 1,
-      href: '#home/top/{{number}}'
-    })
-  </script>
 </game-list>
