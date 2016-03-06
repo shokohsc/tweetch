@@ -1,4 +1,9 @@
-tweetch
-=======
+Tweetch
+========================
 
-A Symfony project created on February 13, 2016, 9:02 pm.
+Welcome to [Tweetch][1], mirrors twitch !
+Hosted on [Heroku][2]
+Enjoy!
+
+[1]:  //tweetch.herokuapp.com/
+[2]:  //heroku.com/
