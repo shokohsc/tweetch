@@ -8,4 +8,10 @@
       src="//player.twitch.tv/?channel={ opts.channel.name }">
     </iframe>
   </div>
+  <div class="embed-responsive embed-responsive-16by9">
+    <iframe
+          id="chat_embed" 
+          src="http://www.twitch.tv/{ opts.channel.name }/chat"
+    </iframe>
+  </div>
 </tweetch-stream>
