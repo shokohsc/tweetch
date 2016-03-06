@@ -27,11 +27,11 @@
         <div id="content" class="container"></div>
         <tweetch-footer></tweetch-footer>
 
-        <script type="text/javascript" src="//cdn.jsdelivr.net/riot/2.3/riot+compiler.min.js"></script>
         <script src="{{ asset('bundles/bazingajstranslation/js/translator.min.js') }}"></script>
         <script src="{{ url('bazinga_jstranslation_js', {}, true) }}"></script>
         <script src="{{ asset('bundles/js/assets.min.js') }}"></script>
-        <script src="{{ asset('bundles/js/tags.js') }}"></script>
+        <rg-ga property="{{ ga_id }}"></rg-ga>
+        <script src="{{ asset('bundles/js/tags+ga.js') }}"></script>
         <script src="{{ asset('bundles/js/app.min.js') }}"></script>
     </body>
 </html>
