@@ -67,21 +67,6 @@ function handler(resource, id, query, page) {
 }
 
 /**
- * Ui update user followed games pagination links
- * @param  string user name
- */
-function updateFollowedGamesPagination(name) {
-  var search = '[username]'
-
-  $('.pagination li a').each(function(i, el) {
-    var pagination = $(el),
-        source = pagination.attr('href')
-
-    pagination.attr('href', source.replace(search, name))
-  })
-}
-
-/**
  * Ui user has logged in function
  * @param  Object twitch user
  */
@@ -92,7 +77,6 @@ function userLoggedIn(user) {
   var search = '[username]'
   var href = $('.auth').attr('href')
   $('.my-games').show().attr('href', href.replace(search, user.name))
-  updateFollowedGamesPagination(user.name)
 }
 
 /**
@@ -222,6 +206,15 @@ class StreamService extends AbstractService{
   fetchFeaturedStreams(page) {
     return this.serve('featured', page)
   }
+
+  /**
+   * Fetch followed streams
+   * @param int    page
+   * @return Object
+   */
+  fetchFollowedStreams(page) {
+    return this.serve('followed', page)
+  }
 }
 
 /**
@@ -349,15 +342,6 @@ class AuthService extends AbstractService{
     })
 
   }
-
-  /**
-   * Fetch followed streams
-   * @param int    page
-   * @return Object
-   */
-  fetchFollowedStreams(page) {
-    return this.serve('streams/followed', page)
-  }
 }
 
 
@@ -429,7 +413,7 @@ routes.streams = function(id, query, page) {
       })
       break
     case 'followed':
-      authService.fetchFollowedStreams(page).done(function(streams) {
+      streamService.fetchFollowedStreams(page).done(function(streams) {
         mount('tweetch-followed-streams', streams)
       })
       break

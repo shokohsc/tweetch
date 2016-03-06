@@ -51,6 +51,31 @@ class StreamController extends Controller
     }
 
     /**
+     * @Route("/followed/{page}", name="streams_followed", defaults={"page" = 1}, requirements={"page" = "\d+"})
+     */
+    public function followedAction(Request $request, $page = 1)
+    {
+        $accessToken = $request->headers->get('authorization');
+        if ($accessToken && !empty($accessToken)) {
+            $limit = 9;
+            $offset = ($page * $limit) - $limit;
+            $params = array(
+              'limit' => $limit,
+              'offset' => $offset,
+              'stream_type' => 'live',
+            );
+            $accessToken = base64_decode($accessToken);
+            $followedStreams = $this->get('stream.repository')->getFollowedStreams($accessToken, $params);
+            $followedStreams = $this->get('json.serializer')->encode($followedStreams);
+            $json = json_decode($followedStreams);
+
+            return new JsonResponse($json, 200);
+        }
+
+        return new JsonResponse(['error' => 'wrong access token'], 400);
+    }
+
+    /**
      * @Route("/{channelId}", name="get_streams")
      */
     public function getAction($channelId)
