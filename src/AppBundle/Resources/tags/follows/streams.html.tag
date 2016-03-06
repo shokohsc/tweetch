@@ -1,6 +1,6 @@
 <tweetch-followed-streams>
   <h1 class="text-center">{ Translator.trans('myFollowedStreams') }</h1>
-  <stream-list streams={ this.opts.streams.streams }></stream-list>
+  <stream-list streams={ this.opts.streams }></stream-list>
   <div id=pagination class="text-center"></div>
 
   <script>
