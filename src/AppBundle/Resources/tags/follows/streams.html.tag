@@ -4,9 +4,11 @@
   <div id=pagination class="text-center"></div>
 
   <script>
-    $(this.pagination).twbsPagination({
-      totalPages: opts.total !== 0 ? Math.ceil(opts.total / 9) : 1,
-      href: '#streams/followed/{{number}}'
+    this.on('mount', function() {
+      $(this.pagination).twbsPagination({
+        totalPages: opts.total !== 0 ? Math.ceil(opts.total / 9) : 1,
+        href: '#streams/followed/{{number}}'
+      })
     })
   </script>
 </tweetch-followed-streams>

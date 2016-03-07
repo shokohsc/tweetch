@@ -62,6 +62,13 @@ function mount(tag, options) {
  * @param  string page
  */
 function handler(resource, id, query, page) {
+  var authResources = ['login', 'logout', 'oauth']
+  if (false === authResources.includes(resource)){
+    sessionStorage.setItem('tweetch-resource', resource)
+    sessionStorage.setItem('tweetch-id', id)
+    sessionStorage.setItem('tweetch-query', query)
+    sessionStorage.setItem('tweetch-page', page)
+  }
   var fn = routes[resource || 'home']
   fn ? fn(id, query, page) : mount('tweetch-error')
 }
@@ -97,8 +104,8 @@ class AbstractService {
   serve(id, page) {
     var self      = this,
         url       = this.protocol+this.host+this.endpoint
-        url       = (id === undefined) ? url : url+'/'+id
-        url       = (page === undefined) ? url : url+'/'+page
+        url       = (id === undefined || id == 'undefined') ? url : url+'/'+id
+        url       = (page === undefined || page == 'undefined') ? url : url+'/'+page
 
     return $.ajax({
       url: url,
@@ -288,7 +295,7 @@ class AuthService extends AbstractService{
           scope: scope
         })
       } else {
-        self.userLoggedIn(username)
+        self.updateUILogin(username)
       }
     })
 
@@ -299,16 +306,15 @@ class AuthService extends AbstractService{
           self.trigger('logged-in')
         }
       })
-
-      handler('home')
     })
 
     // listen to 'logged-in' event
     this.on('logged-in', function() {
       self.serve('me').done(function(user) {
-        self.userLoggedIn(user.name)
+        self.updateUILogin(user.name)
         sessionStorage.setItem('username', user.name)
         sessionStorage.setItem('accessToken', Twitch.getToken())
+        self.historyHandler()
       })
     })
 
@@ -317,22 +323,41 @@ class AuthService extends AbstractService{
       Twitch.logout(function(error) {
         self.trigger('logged-out')
       })
-
-      handler('home')
     })
 
     // listen to 'logged-out' event
     this.on('logged-out', function() {
-      self.userLoggedOut()
-      sessionStorage.clear()
+      self.updateUILogout()
+      sessionStorage.removeItem('username')
+      sessionStorage.removeItem('accessToken')
+      self.historyHandler()
     })
+  }
+
+  /**
+   * History handler, redirect to page before login/logout
+   */
+  historyHandler() {
+    if (sessionStorage.getItem('tweetch-resource')) {
+      handler(sessionStorage.getItem('tweetch-resource'), sessionStorage.getItem('tweetch-id'), sessionStorage.getItem('tweetch-query'), sessionStorage.getItem('tweetch-page'))
+    } else {
+      handler('home')
+    }
+  }
+
+  /**
+   * Is current user logged in ?
+   * @return Boolean
+   */
+  isUserLoggedIn() {
+    return null !== sessionStorage.getItem('username') && null !== sessionStorage.getItem('accessToken')
   }
 
   /**
    * Ui user has logged in function
    * @param  Object twitch username
    */
-  userLoggedIn(username) {
+  updateUILogin(username) {
     $('.anon').hide()
     $('.auth').show()
 
@@ -344,7 +369,7 @@ class AuthService extends AbstractService{
   /**
    * Ui user has logged out function
    */
-  userLoggedOut() {
+  updateUILogout() {
     $('.anon').show()
     $('.auth').hide()
 
@@ -421,13 +446,17 @@ routes.streams = function(id, query, page) {
       })
       break
     case 'followed':
-      streamService.fetchFollowedStreams(page).done(function(streams) {
-        mount('tweetch-followed-streams', streams)
-      })
+      if (authService.isUserLoggedIn()) {
+        streamService.fetchFollowedStreams(page).done(function(streams) {
+            mount('tweetch-followed-streams', streams)
+        })
+      } else {
+        handler('home')
+      }
       break
     default:
       streamService.fetchStream(id).done(function(stream) {
-        mount('tweetch-stream', stream)
+        mount('tweetch-stream', {stream: stream, loggedIn: authService.isUserLoggedIn()})
       })
       break
   }
@@ -472,9 +501,13 @@ routes.search = function(resource, query, page) {
  */
 routes.users = function(id, resource, page) {
   mount('tweetch-loading')
-  userService.fetchFollowedGames(id, page).done(function(games) {
-    mount('tweetch-follows-games', {games: games, authService: authService})
-  })
+  if (authService.isUserLoggedIn()) {
+    userService.fetchFollowedGames(id, page).done(function(games) {
+      mount('tweetch-follows-games', games)
+    })
+  } else {
+    handler('home')
+  }
 }
 
 /**
