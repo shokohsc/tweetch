@@ -23,8 +23,7 @@ class UserController extends Controller
           'limit' => $limit,
           'offset' => $offset,
         );
-        $clientId = $this->getParameter('client_id');
-        $followedGames = $this->get('user.repository')->getUserFollowedGames($userId, $clientId, $params);
+        $followedGames = $this->get('user.repository')->getUserFollowedGames($userId, $params);
         $followedGames = $this->get('json.serializer')->encode($followedGames);
         $json = json_decode($followedGames);
 
