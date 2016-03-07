@@ -339,7 +339,11 @@ class AuthService extends AbstractService{
    */
   historyHandler() {
     if (sessionStorage.getItem('tweetch-resource')) {
-      handler(sessionStorage.getItem('tweetch-resource'), sessionStorage.getItem('tweetch-id'), sessionStorage.getItem('tweetch-query'), sessionStorage.getItem('tweetch-page'))
+      var resource = sessionStorage.getItem('tweetch-resource'),
+          id       = sessionStorage.getItem('tweetch-id'),
+          query    = sessionStorage.getItem('tweetch-query'),
+          page     = sessionStorage.getItem('tweetch-page')
+      handler(resource, id, query, page)
     } else {
       handler('home')
     }
@@ -361,9 +365,7 @@ class AuthService extends AbstractService{
     $('.anon').hide()
     $('.auth').show()
 
-    var search = '[username]'
-    var href = $('.auth').attr('href')
-    $('.my-games').show().attr('href', href.replace(search, username))
+    $('.my-games').show().attr('href', '#users/'+username+'/games')
   }
 
   /**
