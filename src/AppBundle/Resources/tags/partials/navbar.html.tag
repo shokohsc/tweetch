@@ -12,10 +12,16 @@
       </div>
 
       <div id="navbar" class="navbar-collapse collapse" role="navigation">
-        <ul class="nav navbar-nav">
+        <ul class="nav navbar-nav navbar-left">
           <li>
             <a href="#streams/featured" title="{ Translator.trans('featured') }">{ Translator.trans('featured') }</a>
           </li>
+          <li>
+            <a href="#about" title="{ Translator.trans('navbar.about') }">{ Translator.trans('navbar.about') }</a>
+          </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
           <li>
             <a href="#users/[username]/games" class="my-games auth" style="display:none;" title="{ Translator.trans('myFollowedGames') }">{ Translator.trans('myFollowedGames') }</a>
           </li>
@@ -27,9 +33,6 @@
           </li>
           <li>
             <a href="#logout" class="auth" style="display:none;" title="{ Translator.trans('logout') }">{ Translator.trans('logout') }</a>
-          </li>
-          <li>
-            <a href="#about" title="{ Translator.trans('navbar.about') }">{ Translator.trans('navbar.about') }</a>
           </li>
         </ul>
       </div>
