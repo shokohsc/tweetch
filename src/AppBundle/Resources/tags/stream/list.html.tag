@@ -1,7 +1,7 @@
 <stream-list>
   <div class="text-center">
     <div each={ this.opts.streams } class="list stream">
-        <a class="hidden-xs" href="#streams/{ channel.name }">
+        <a class="hidden-xs" href="#streams/{ channel.name }" title="{ game }">
           <stream-image data={ this }></stream-image>
         </a>
         <a class="visible-xs-inline" href="twitch://open?stream={ channel.name }">
