@@ -5,7 +5,7 @@
     <iframe
       class="embed-responsive-item"
       allowfullscreen="true"
-      src="//player.twitch.tv/?channel={ opts.stream.channel.name }">
+      src="//player.twitch.tv/?channel={ opts.stream.channel.name }&html5">
     </iframe>
   </div>
   <tweetch-chat if={ opts.loggedIn == true } data={ opts.stream.channel }></tweetch-chat>
