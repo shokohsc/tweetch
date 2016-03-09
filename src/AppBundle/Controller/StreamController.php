@@ -17,6 +17,7 @@ class StreamController extends Controller
      */
     public function gamesAction($gameId, $page = 1)
     {
+        $gameId = urldecode($gameId);
         $limit = 9;
         $offset = ($page * $limit) - $limit;
         $params = array(
