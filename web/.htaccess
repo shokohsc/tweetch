@@ -24,9 +24,9 @@ DirectoryIndex app.php
     #Normal way (in case you need to deploy to NON-heroku)
     #RewriteCond %{HTTPS} !=on
     #Heroku way
-    #RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
     #If neither above conditions are met, redirect to https
-    #RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # Determine the RewriteBase automatically and set it as environment variable.
     # If you are using Apache aliases to do mass virtual hosting or installed the
