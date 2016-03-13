@@ -14,8 +14,7 @@
     "clean": "rm -rf ./web/bundles ./web/fonts",
 
     "dir:assets": "mkdir -p ./web/fonts ./web/bundles ./web/bundles/js ./web/bundles/css",
-
-    "concat:assets:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js ./bower_components/twbs-pagination/jquery.twbsPagination.js ./bower_components/twitch-js-sdk/twitch.js ./node_modules/riot/riot+compiler.js -o ./web/bundles/assets.js",
+    "concat:assets:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js ./bower_components/twbs-pagination/jquery.twbsPagination.js ./bower_components/twitch-js-sdk/twitch.js ./node_modules/hls.js/dist/hls.js ./node_modules/riot/riot+compiler.js -o ./web/bundles/assets.js",
     "concat:assets:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/bundles/assets.css",
     "preconcat:assets": "npm run dir:assets",
     "concat:assets": "npm run concat:assets:js & npm run concat:assets:css",
@@ -41,7 +40,7 @@
     "remove:app": "rm ./web/bundles/style.css ./web/bundles/app.js",
 
     "riot": "riot ./src/AppBundle/Resources/tags ./web/bundles/js/tags.js",
-    "postriot":"concat-cli -f  ./web/bundles/js/tags.js ./node_modules/riotgear/dist/rg-ga/rg-ga.js -o ./web/bundles/js/tags+ga.js",
+    "postriot": "concat-cli -f  ./web/bundles/js/tags.js ./node_modules/riotgear/dist/rg-ga/rg-ga.js -o ./web/bundles/js/tags+ga.js",
     "preapp": "npm run minify:app",
     "app": "npm run riot",
 
@@ -74,6 +73,7 @@
     "babel-preset-es2015": "^6.5.0",
     "bower": "^1.7.7",
     "concat-cli": "^4.0.0",
+    "hls.js": "git+https://github.com/dailymotion/hls.js.git",
     "less": "^2.6.0",
     "minifier": "^0.7.1",
     "riot": "^2.3.16",
