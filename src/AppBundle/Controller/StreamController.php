@@ -85,6 +85,15 @@ class StreamController extends Controller
         $stream = $this->get('json.serializer')->encode($stream);
         $json = json_decode($stream);
 
-        return new JsonResponse($json, 200);
+        $channelToken = $this->get('channel.repository')->getChannelToken($channelId);
+        $source = '//usher.ttvnw.net/api/channel/hls/';
+        $source .= $channelId;
+        $source .= '.m3u8?token=';
+        $source .= urlencode($channelToken->getToken());
+        $source .= '&sig=';
+        $source .= $channelToken->getSig();
+        $source .= '&allow_source=true';
+
+        return new JsonResponse(['stream' => $json, 'source' => $source], 200);
     }
 }
