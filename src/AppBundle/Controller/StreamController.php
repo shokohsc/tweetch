@@ -86,7 +86,7 @@ class StreamController extends Controller
         $json = json_decode($stream);
 
         $channelToken = $this->get('channel.repository')->getChannelToken($channelId);
-        $source = '//usher.ttvnw.net/api/channel/hls/';
+        $source = 'http://usher.ttvnw.net/api/channel/hls/';
         $source .= $channelId;
         $source .= '.m3u8?token=';
         $source .= urlencode($channelToken->getToken());
@@ -94,6 +94,22 @@ class StreamController extends Controller
         $source .= $channelToken->getSig();
         $source .= '&allow_source=true';
 
-        return new JsonResponse(['stream' => $json, 'source' => $source], 200);
+        $streamsDir = $this->get('kernel')->getRootDir().'/../web/streams/';
+
+        if (!is_dir($streamsDir)) {
+            mkdir($streamsDir, 0777, true);
+        }
+
+        foreach(glob($streamsDir . '/*') as $file) {
+            unlink($file);
+        }
+
+        $streamsDir = $streamsDir;
+        $sourceId = uniqid('stream_');
+        $sourceId .= '.m3u8';
+        $content = file_get_contents($source);
+        file_put_contents($streamsDir.$sourceId, $content);
+
+        return new JsonResponse(['stream' => $json, 'source' => $sourceId], 200);
     }
 }
