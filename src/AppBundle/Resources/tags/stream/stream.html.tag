@@ -6,23 +6,22 @@
       id="video"
       controls
       autoplay="true"
+      src={ opts.stream.source.encrypt() }
       type="application/vnd.apple.mpegurl">
     </video>
   </div>
   <tweetch-chat if={ opts.loggedIn == true } data={ opts.stream.stream.channel }></tweetch-chat>
   <script>
-    this.on('before-mount', function() {
+    this.on('mount', function() {
       var source = opts.stream.source.encrypt()
       var video = this.video
       if(Hls.isSupported()) {
         var hls = new Hls()
         hls.loadSource(source)
         hls.attachMedia(video)
-        // hls.on(Hls.Events.MANIFEST_PARSED,function() {
-        //   video.play()
-        // })
-      } else {
-        $(video).attr('src', source)
+        hls.on(Hls.Events.MANIFEST_PARSED,function() {
+          video.play()
+        })
       }
     })
   </script>
