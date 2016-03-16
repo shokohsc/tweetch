@@ -147,6 +147,6 @@ class StreamController extends Controller
             // unlink($file);
         }
 
-        return new JsonResponse(['stream' => $json, 'source' => $sourceId], 200);
+        return new JsonResponse(['stream' => $json, 'source' => $source], 200);
     }
 }
