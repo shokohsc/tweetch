@@ -200,6 +200,16 @@ class StreamService extends AbstractService{
   fetchFollowedStreams(page) {
     return this.serve('followed', page)
   }
+
+  /**
+   * Stream stream
+   * @param string id
+   * @return Object
+   */
+  streamStream(id) {
+    return this.serve('stream/'+id)
+  }
+
 }
 
 /**
@@ -456,9 +466,14 @@ routes.streams = function(id, query, page) {
         handler('home')
       }
       break
+    case 'stream':
+      streamService.streamStream(id).done(function(stream) {
+          return stream
+      })
+      break
     default:
       streamService.fetchStream(id).done(function(stream) {
-        mount('tweetch-stream', {stream: stream, loggedIn: authService.isUserLoggedIn()})
+        mount('tweetch-stream', {stream: stream, loggedIn: authService.isUserLoggedIn(), streamService: streamService})
       })
       break
   }

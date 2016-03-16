@@ -4,30 +4,20 @@
   <div class="embed-responsive embed-responsive-16by9">
     <video
       id="video"
-      >
+      autoplay="true"
+      src = { opts.stream.source }
+      controls>
     </video>
   </div>
   <tweetch-chat if={ opts.loggedIn == true } data={ opts.stream.stream.channel }></tweetch-chat>
   <script>
-    var hls = new Hls({debug:true, xhrSetup:function(xhr, url) {
-      xhr.setRequestHeader('Access-Control-Allow-Origin', location.protocol+'//'+location.host)
-      xhr.withCredentials = true
-    }})
-    this.on('before-mount', function() {
-      var source = opts.stream.source
-      var video = this.video
-      if(Hls.isSupported()) {
-        hls.loadSource(location.protocol+'//'+location.host+'/streams/'+source)
-        // hls.loadSource(source)
-        hls.attachMedia(video)
-        // hls.on(Hls.Events.MANIFEST_PARSED,function() {
-        //   video.play()
-        // })
-      }
-    })
-
-    this.on('unmount', function() {
-      hls.destroy()
-    })
+    // this.on('mount', function() {
+    //   var source = opts.stream.source
+    //   var video = this.video
+    //   opts.streamService.streamStream(source).done(function(data) {
+    //     $(video).attr('src', location.protocol+'//'+location.host+'/streams/'+source+'.m3u8')
+    //   })
+    //   // $(video).attr('src', location.protocol+'//'+location.host+'/streams/'+source+'.m3u8')
+    // })
   </script>
 </tweetch-stream>

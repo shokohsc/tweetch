@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 /**
@@ -77,6 +78,33 @@ class StreamController extends Controller
     }
 
     /**
+     * @Route("/stream/{sourceId}", name="stream_streams")
+     */
+    public function streamAction($sourceId)
+    {
+        $streamsDir = $this->get('kernel')->getRootDir().'/../web/streams/';
+
+        $sourceId = $streamsDir.$sourceId.'.m3u8';
+
+        $ffmpeg = \FFMpeg\FFMpeg::create();
+        $video = $ffmpeg->open($sourceId);
+
+        $video->save(new \FFMpeg\Format\Video\X264(), $sourceId);
+        $response = new StreamedResponse(function() use ($video, $sourceId) {
+            $handle = fopen($video->getRealPath(), 'r');
+            while (!feof($handle)) {
+              $buffer = fread($handle, 1024);
+              echo $buffer;
+              flush();
+            }
+            fclose($handle);
+        });
+        $response->headers->set('Content-Type', $video->getMimeType());
+
+        return $response;
+    }
+
+    /**
      * @Route("/{channelId}", name="get_streams")
      */
     public function getAction($channelId)
@@ -100,16 +128,23 @@ class StreamController extends Controller
             mkdir($streamsDir, 0777, true);
         }
 
+        $sourceId = uniqid();
+        $content = file_get_contents($source);
+        file_put_contents($streamsDir.$sourceId.'.m3u8', $content);
+
+        $fh = fopen($streamsDir.$sourceId.'.m3u8', 'r');
+        while (!feof($fh)) {
+            $line = fgets($fh, 4096);
+            if (preg_match('/chunked/i', $line)) {
+              $source = $line;
+            }
+        }
+        fclose($fh);
+
         foreach(glob($streamsDir . '/*') as $file) {
             unlink($file);
         }
 
-        $streamsDir = $streamsDir;
-        $sourceId = uniqid('stream_');
-        $sourceId .= '.m3u8';
-        $content = file_get_contents($source);
-        file_put_contents($streamsDir.$sourceId, $content);
-
-        return new JsonResponse(['stream' => $json, 'source' => $sourceId], 200);
+        return new JsonResponse(['stream' => $json, 'source' => $source], 200);
     }
 }
