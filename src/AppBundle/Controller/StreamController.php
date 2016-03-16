@@ -88,20 +88,22 @@ class StreamController extends Controller
 
         $ffmpeg = \FFMpeg\FFMpeg::create();
         $video = $ffmpeg->open($sourceId);
+        $fileName = uniqid().'.mp4';
+        $file = $streamsDir.$fileName;
 
-        $video->save(new \FFMpeg\Format\Video\X264(), $sourceId);
-        $response = new StreamedResponse(function() use ($video, $sourceId) {
-            $handle = fopen($video->getRealPath(), 'r');
-            while (!feof($handle)) {
-              $buffer = fread($handle, 1024);
-              echo $buffer;
-              flush();
-            }
-            fclose($handle);
-        });
-        $response->headers->set('Content-Type', $video->getMimeType());
+        $video->save(new \FFMpeg\Format\Video\X264(), $file);
+        // $response = new StreamedResponse(function() use ($video, $sourceId) {
+        //     $handle = fopen($video->getRealPath(), 'r');
+        //     while (!feof($handle)) {
+        //       $buffer = fread($handle, 1024);
+        //       echo $buffer;
+        //       flush();
+        //     }
+        //     fclose($handle);
+        // });
+        // $response->headers->set('Content-Type', $video->getMimeType());
 
-        return $response;
+        return new JsonResponse($fileName, 200);
     }
 
     /**
@@ -142,9 +144,9 @@ class StreamController extends Controller
         fclose($fh);
 
         foreach(glob($streamsDir . '/*') as $file) {
-            unlink($file);
+            // unlink($file);
         }
 
-        return new JsonResponse(['stream' => $json, 'source' => $source], 200);
+        return new JsonResponse(['stream' => $json, 'source' => $sourceId], 200);
     }
 }

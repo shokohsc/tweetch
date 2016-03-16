@@ -4,6 +4,7 @@
   <div class="embed-responsive embed-responsive-16by9">
     <video
       id="video"
+      type="application/x-mpegURL"
       autoplay="true"
       src = { opts.stream.source }
       controls>
@@ -11,13 +12,13 @@
   </div>
   <tweetch-chat if={ opts.loggedIn == true } data={ opts.stream.stream.channel }></tweetch-chat>
   <script>
-    // this.on('mount', function() {
-    //   var source = opts.stream.source
-    //   var video = this.video
-    //   opts.streamService.streamStream(source).done(function(data) {
-    //     $(video).attr('src', location.protocol+'//'+location.host+'/streams/'+source+'.m3u8')
-    //   })
-    //   // $(video).attr('src', location.protocol+'//'+location.host+'/streams/'+source+'.m3u8')
-    // })
+    this.on('mount', function() {
+      var source = opts.stream.source
+      var video = this.video
+      opts.streamService.streamStream(source).done(function(fileName) {
+        $(video).attr('src', location.protocol+'//'+location.host+'/streams/'+fileName)
+      })
+      // $(video).attr('src', location.protocol+'//'+location.host+'/streams/'+source+'.mp4')
+    })
   </script>
 </tweetch-stream>
