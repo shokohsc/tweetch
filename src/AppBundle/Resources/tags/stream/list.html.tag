@@ -1,6 +1,6 @@
 <stream-list>
   <div class="text-center">
-    <div each={ this.opts.streams } class="list stream">
+    <div each={ this.opts.streams } class="list featured">
         <a class="hidden-xs" href="#streams/{ channel.name }" title="{ game }">
           <stream-image data={ this }></stream-image>
         </a>
@@ -10,6 +10,9 @@
         <strong>
           <a class="hidden-xs" href="#streams/{ channel.name }">{ channel.name }</a>
           <a class="visible-xs-inline" href="twitch://open?stream={ channel.name }">{ channel.name }</a>
+        </strong>
+        <strong>
+          <a href="#streams/game/{ game }">{ game }</a>
         </strong>
         <small>{ viewers } viewer(s) / { videoHeight }p / { channel.language }</small>
     </div>
