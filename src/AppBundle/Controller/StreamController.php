@@ -78,35 +78,6 @@ class StreamController extends Controller
     }
 
     /**
-     * @Route("/stream/{sourceId}", name="stream_streams")
-     */
-    public function streamAction($sourceId)
-    {
-        $streamsDir = $this->get('kernel')->getRootDir().'/../web/streams/';
-
-        $sourceId = $streamsDir.$sourceId.'.m3u8';
-
-        $ffmpeg = \FFMpeg\FFMpeg::create();
-        $video = $ffmpeg->open($sourceId);
-        $fileName = uniqid().'.mp4';
-        $file = $streamsDir.$fileName;
-
-        $video->save(new \FFMpeg\Format\Video\X264(), $file);
-        // $response = new StreamedResponse(function() use ($video, $sourceId) {
-        //     $handle = fopen($video->getRealPath(), 'r');
-        //     while (!feof($handle)) {
-        //       $buffer = fread($handle, 1024);
-        //       echo $buffer;
-        //       flush();
-        //     }
-        //     fclose($handle);
-        // });
-        // $response->headers->set('Content-Type', $video->getMimeType());
-
-        return new JsonResponse($fileName, 200);
-    }
-
-    /**
      * @Route("/{channelId}", name="get_streams")
      */
     public function getAction($channelId)
@@ -116,36 +87,13 @@ class StreamController extends Controller
         $json = json_decode($stream);
 
         $channelToken = $this->get('channel.repository')->getChannelToken($channelId);
-        $source = 'http://usher.ttvnw.net/api/channel/hls/';
+        $source = '//usher.ttvnw.net/api/channel/hls/';
         $source .= $channelId;
         $source .= '.m3u8?token=';
         $source .= urlencode($channelToken->getToken());
         $source .= '&sig=';
         $source .= $channelToken->getSig();
         $source .= '&allow_source=true';
-
-        $streamsDir = $this->get('kernel')->getRootDir().'/../web/streams/';
-
-        if (!is_dir($streamsDir)) {
-            mkdir($streamsDir, 0777, true);
-        }
-
-        $sourceId = uniqid();
-        $content = file_get_contents($source);
-        file_put_contents($streamsDir.$sourceId.'.m3u8', $content);
-
-        $fh = fopen($streamsDir.$sourceId.'.m3u8', 'r');
-        while (!feof($fh)) {
-            $line = fgets($fh, 4096);
-            if (preg_match('/chunked/i', $line)) {
-              $source = $line;
-            }
-        }
-        fclose($fh);
-
-        foreach(glob($streamsDir . '/*') as $file) {
-            // unlink($file);
-        }
 
         return new JsonResponse(['stream' => $json, 'source' => $source], 200);
     }

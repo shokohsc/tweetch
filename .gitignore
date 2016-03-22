@@ -15,7 +15,6 @@
 /vendor/
 /web/bundles/
 /web/fonts/
-/web/streams/
 /node_modules/
 /bower_components/
 npm-debug.log
