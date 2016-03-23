@@ -41,7 +41,7 @@
     "remove:app": "rm ./web/bundles/style.css ./web/bundles/app.js",
 
     "riot": "riot ./src/AppBundle/Resources/tags ./web/bundles/js/tags.js",
-    "postriot":"concat-cli -f  ./web/bundles/js/tags.js ./node_modules/riotgear/dist/rg-ga/rg-ga.js -o ./web/bundles/js/tags+ga.js",
+    "postriot": "concat-cli -f  ./web/bundles/js/tags.js ./node_modules/riotgear/dist/rg-ga/rg-ga.js -o ./web/bundles/js/tags+ga.js",
     "preapp": "npm run minify:app",
     "app": "npm run riot",
 
