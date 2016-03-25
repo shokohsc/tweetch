@@ -1,6 +1,6 @@
 <tweetch-streams>
   <h1 class="text-center">{ this.opts.title }</h1>
-  <stream-list streams={ opts.streams.streams } title={ opts.title }></stream-list>
+  <stream-list streams={ opts.streams.streams } title={ opts.title } hidegamelink={ true }></stream-list>
   <div id=pagination class="text-center"></div>
 
   <script>
