@@ -23,10 +23,12 @@
 
         <ul class="nav navbar-nav navbar-right">
           <li>
-            <a href="#users/[username]/games" data-toggle="collapse" data-target="#navbar" class="my-games auth" style="display:none;" title="{ Translator.trans('myFollowedGames') }">{ Translator.trans('myFollowedGames') }</a>
+            <a href="#users/[username]/games" class="hidden-xs my-games auth" style="display:none;" title="{ Translator.trans('myFollowedGames') }">{ Translator.trans('myFollowedGames') }</a>
+            <a href="#users/[username]/games" data-toggle="collapse" data-target="#navbar" class="visible-xs-inline my-games auth" style="display:none;" title="{ Translator.trans('myFollowedGames') }">{ Translator.trans('myFollowedGames') }</a>
           </li>
           <li>
-            <a href="#streams/followed" data-toggle="collapse" data-target="#navbar" class="my-streams auth" style="display:none;" title="{ Translator.trans('myFollowedStreams') }">{ Translator.trans('myFollowedStreams') }</a>
+            <a href="#streams/followed" class="hidden-xs my-streams auth" style="display:none;" title="{ Translator.trans('myFollowedStreams') }">{ Translator.trans('myFollowedStreams') }</a>
+            <a href="#streams/followed" data-toggle="collapse" data-target="#navbar" class="visible-xs-inline my-streams auth" style="display:none;" title="{ Translator.trans('myFollowedStreams') }">{ Translator.trans('myFollowedStreams') }</a>
           </li>
           <li>
             <a href="#login" class="anon" title="{ Translator.trans('login') }">{ Translator.trans('login') }</a>
