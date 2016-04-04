@@ -76,7 +76,7 @@
     "concat-cli": "^4.0.0",
     "less": "^2.6.0",
     "minifier": "^0.7.1",
-    "riot": "^2.3.16",
+    "riot": "^2.3.18",
     "riotgear": "^3.3.1"
   },
   "devDependencies": {
