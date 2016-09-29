@@ -42,7 +42,7 @@ about:
         answer: Tweetch is meant to mirror twitch.tv.
     who:
         question: Who am I ?
-        answer: I am a 29 years old web developer who lives in France near Paris.
+        answer: "I am a %age% years old web developer who lives in France near Paris."
     why:
         question: Why did I do that ?
         answer: "This is Symfony practice, check out my <a href=\"//shokohsc.github.io\">resume</a>."

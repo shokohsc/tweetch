@@ -42,7 +42,7 @@ about:
         answer: Tweetch reflète twitch.tv.
     who:
         question: Qui suis-je ?
-        answer: Je suis un développeur de 29 ans qui vit en France près de Paris.
+        answer: "Je suis un développeur de %age% ans qui vit en France près de Paris."
     why:
         question: Pourquoi ça ?
         answer: "C'est un entrainement à Symfony et plus encore, regardez mon <a href=\"//shokohsc.github.io\">cv</a>."

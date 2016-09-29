@@ -3,7 +3,7 @@
   <p>{ Translator.trans('about.what.answer') }</p>
 
   <h3>{ Translator.trans('about.who.question') }</h3>
-  <p>{ Translator.trans('about.who.answer') }</p>
+  <p>{ Translator.trans('about.who.answer', {'age': age}) }</p>
 
   <h3>{ Translator.trans('about.why.question') }</h3>
   <p><raw html={ Translator.trans('about.why.answer') }/></p>
@@ -19,6 +19,12 @@
       <li><strong><a href="//fontlibrary.org/">Open Font Library</a></strong> { Translator.trans('about.thanks.openfonts') }</li>
     </ul>
   </p>
+  
+  <script>
+    var birthday = +new Date(1986, 2, 27);
+    var age = ~~((Date.now() - birthday) / (31557600000));
+    this.age = age.toString()
+  </script>
 </tweetch-about>
 
 <raw>
