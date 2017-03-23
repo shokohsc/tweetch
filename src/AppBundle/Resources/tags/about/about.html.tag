@@ -21,7 +21,7 @@
   </p>
   
   <script>
-    var birthday = +new Date(1986, 2, 27);
+    var birthday = +new Date(1986, 1, 27);
     var age = ~~((Date.now() - birthday) / (31557600000));
     this.age = age.toString()
   </script>
