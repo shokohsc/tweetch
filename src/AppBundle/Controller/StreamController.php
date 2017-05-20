@@ -38,7 +38,7 @@ class StreamController extends Controller
      */
     public function featuredAction($page = 1)
     {
-        $limit = 9;
+        $limit = 25;
         $offset = ($page * $limit) - $limit;
         $params = array(
           'limit' => $limit,

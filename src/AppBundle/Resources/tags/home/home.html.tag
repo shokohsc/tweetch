@@ -8,6 +8,7 @@
   <script>
     this.on('mount', function() {
       $(this.pagination).twbsPagination({
+        pageVariable: 'page',
         totalPages: opts.total !== 0 ? Math.ceil(opts.total / 28) : 1,
         href: '#home/top/{{number}}'
       })
