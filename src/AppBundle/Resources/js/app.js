@@ -115,7 +115,7 @@ routes.streams = function(id, query, page) {
       break
     case 'followed':
       if (authService.isUserLoggedIn()) {
-        streamService.fetchFollowedStreams(page).done(function(streams) {
+        streamService.fetchFollowedStreams(query).done(function(streams) {
             mount('tweetch-followed-streams', streams)
         })
       } else {
