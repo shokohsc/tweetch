@@ -35,7 +35,7 @@
         "ext-PDO": "*",
         "ext-soap": "*",
         "shokohsc/twitch-api-bundle": "dev-master",
-        "willdurand/js-translation-bundle": "^2.5",
+        "willdurand/js-translation-bundle": "2.6.6",
         "nelmio/cors-bundle": "^1.4",
         "friendsofsymfony/http-cache-bundle": "^1.3"
     },
