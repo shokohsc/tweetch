@@ -78,7 +78,7 @@
     "bower": "^1.7.7",
     "concat-cli": "^4.0.0",
     "less": "^2.7.1",
-    "minifier": "^0.7.1",
+    "minifier": "^0.8.0",
     "riot": "^2.6.2",
     "riotgear": "^3.3.1"
   },
