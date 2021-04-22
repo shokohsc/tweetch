@@ -37,7 +37,7 @@
         "shokohsc/twitch-api-bundle": "dev-master",
         "willdurand/js-translation-bundle": "^2.5",
         "nelmio/cors-bundle": "^1.4",
-        "friendsofsymfony/http-cache-bundle": "^1.3"
+        "friendsofsymfony/http-cache-bundle": "2.10.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
