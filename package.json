@@ -84,6 +84,6 @@
   },
   "devDependencies": {
     "livereload": "^0.4.1",
-    "watch": "^0.17.1"
+    "watch": "0.19.2"
   }
 }
