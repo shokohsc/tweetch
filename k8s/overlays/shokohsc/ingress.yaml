@@ -1,0 +1,27 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tweetch
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: ca-cluster-issuer
+    dashboard.shokohsc.home/name: dev-tweetch
+    dashboard.shokohsc.home/url: https://dev.tweetch.shokohsc.home
+    dashboard.shokohsc.home/icon: wrench
+spec:
+  rules:
+  - host: dev.tweetch.shokohsc.home
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: tweetch
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - dev.tweetch.shokohsc.home
+    secretName: tweetch-cert

@@ -1,0 +1,12 @@
+# build stage
+FROM node:lts-alpine as build-stage
+WORKDIR /app
+COPY package*.json ./
+RUN apk add --no-cache bash gettext ca-certificates && \
+    npm install
+COPY . .
+
+COPY ./start-nginx.sh /usr/bin/start-nginx.sh
+RUN chmod +x /usr/bin/start-nginx.sh
+ENTRYPOINT [ "start-nginx.sh" ]
+CMD ["dev"]

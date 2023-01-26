@@ -1,0 +1,45 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: tweetch
+spec:
+  selector:
+    matchLabels:
+      app: tweetch
+  template:
+    metadata:
+      labels:
+        app: tweetch
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: tweetch
+          image: shokohsc/tweetch
+          env:
+            - name: ENV
+              value: production
+            - name: USE_SENTRY
+              value: "false"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          startupProbe:
+            tcpSocket:
+              port: http
+          livenessProbe:
+            tcpSocket:
+              port: http
+          readinessProbe:
+            httpGet:
+              port: http
+              path: /
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64M
+            limits:
+              cpu: 100m
+              memory: 64M

@@ -1,89 +1,22 @@
 {
   "name": "tweetch",
-  "version": "1.0.0",
-  "description": "tweetch",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
-  "engines": {
-    "node": "5.7.0",
-    "npm": "3.7.3"
-  },
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "clean": "rm -rf ./web/js ./web/css ./web/fonts",
-
-    "dir:assets": "mkdir -p ./web/fonts ./web/js ./web/css",
-
-    "concat:assets:js": "concat-cli -f ./bower_components/jquery/dist/jquery.js ./bower_components/bootstrap/dist/js/bootstrap.js ./bower_components/twbs-pagination/jquery.twbsPagination.js ./bower_components/twitch-js-sdk/twitch.js ./node_modules/riot/riot+compiler.js -o ./web/assets.js",
-    "concat:assets:css": "concat-cli -f ./bower_components/bootstrap/dist/css/bootstrap.css ./bower_components/bootstrap/dist/css/bootstrap-theme.css -o ./web/assets.css",
-    "preconcat:assets": "npm run dir:assets",
-    "concat:assets": "npm run concat:assets:js & npm run concat:assets:css",
-
-    "copy:assets:fonts": "cp -Rf ./bower_components/bootstrap/dist/fonts ./web",
-
-    "minify:assets:js": "minify --output ./web/js/assets.min.js ./web/assets.js",
-    "minify:assets:css": "minify --output ./web/css/assets.min.css ./web/assets.css",
-    "preminify:assets": "npm run concat:assets",
-    "minify:assets": "npm run minify:assets:js & npm run minify:assets:css",
-    "remove:assets": "rm ./web/assets.css ./web/assets.js",
-    "preassets": "npm run dir:assets",
-    "assets": "npm run minify:assets && npm run copy:assets:fonts && npm run remove:assets",
-    "remove:assets": "rm ./web/assets.css & rm ./web/assets.js",
-
-
-    "less": "lessc ./src/AppBundle/Resources/less/style.less ./web/app.css",
-    "babel": "babel ./src/AppBundle/Resources/js/**/*.js ./src/AppBundle/Resources/js/app.js -o ./web/app.js",
-    "copy:app:fonts": "cp -Rf ./src/AppBundle/Resources/fonts ./web",
-
-    "minify:app:js": "minify --output ./web/js/app.min.js ./web/app.js",
-    "minify:app:css": "minify --output ./web/css/app.min.css ./web/app.css",
-    "preminify:app": "npm run less & npm run babel",
-    "minify:app": "npm run minify:app:js & npm run minify:app:css",
-    "remove:app": "rm ./web/app.css ./web/app.js",
-
-    "riot": "riot ./src/AppBundle/Resources/tags ./web/js/tags.js",
-    "postriot": "concat-cli -f  ./web/js/tags.js ./node_modules/riotgear/dist/rg-ga/rg-ga.js -o ./web/js/tags+ga.js",
-    "preapp": "npm run copy:app:fonts && npm run minify:app",
-    "app": "npm run riot",
-    "postapp": "rm ./web/app.css & rm ./web/app.js & rm ./web/js/tags.js",
-
-
-    "dev": "npm run watch & npm run livereload",
-    "watch": "watch 'npm run app' ./src/AppBundle/Resources/ ./app/Resources/",
-    "livereload": "livereload ./web/js/ ./web/css/",
-
-    "build": "npm run clean && npm run assets && npm run app",
-
-    "postinstall": "bower install && npm run assets",
-
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/shokohsc/tweetch.git"
-  },
-  "keywords": [
-    "twitch"
-  ],
-  "author": "shokohsc@gmail.com",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/shokohsc/tweetch/issues"
-  },
-  "homepage": "https://github.com/shokohsc/tweetch#readme",
-  "dependencies": {
-    "babel-cli": "^6.5.1",
-    "babel-preset-es2015": "^6.5.0",
-    "bower": "^1.7.7",
-    "concat-cli": "^4.0.0",
-    "less": "^2.7.1",
-    "minifier": "^0.7.1",
-    "riot": "^2.6.2",
-    "riotgear": "^3.3.1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "livereload": "^0.4.1",
-    "watch": "^0.17.1"
+    "@fortawesome/fontawesome-free": "^6.2.1",
+    "@vitejs/plugin-vue": "^4.0.0",
+    "axios": "^1.2.3",
+    "bulma": "^0.9.4",
+    "pinia": "^2.0.29",
+    "vite": "^4.0.0",
+    "vite-plugin-fonts": "^0.7.0",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6"
   }
 }
