@@ -10,10 +10,13 @@
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.2.1",
+    "@sentry/tracing": "^7.33.0",
+    "@sentry/vue": "^7.33.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "axios": "^1.2.3",
     "bulma": "^0.9.4",
     "pinia": "^2.0.29",
+    "pinia-plugin-persistedstate": "^3.0.2",
     "vite": "^4.0.0",
     "vite-plugin-fonts": "^0.7.0",
     "vue": "^3.2.45",

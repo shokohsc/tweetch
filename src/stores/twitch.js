@@ -16,6 +16,10 @@ const useTwitchStore = defineStore('twitch', {
     channels: [],
     users: []
   }),
+  persist: {
+    storage: sessionStorage,
+    debug: true
+  },
   actions: {
     async login(token) {
       this.accessToken = token
