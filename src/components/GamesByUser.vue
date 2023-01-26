@@ -35,7 +35,7 @@ const previousClass = computed(() => {
 })
 const previous = computed(() => {
   return {
-    name: 'TopGames',
+    name: 'FollowedGames',
     query: { before: cursor.value }
   }
 })
@@ -45,7 +45,7 @@ const nextClass = computed(() => {
 })
 const next = computed(() => {
   return {
-    name: 'TopGames',
+    name: 'FollowedGames',
     query: { after: cursor.value }
   }
 })

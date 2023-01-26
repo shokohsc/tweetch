@@ -36,7 +36,7 @@ const previousClass = computed(() => {
 const previous = computed(() => {
   return {
     name: 'Categories',
-    query: { after: cursor.value, query: route.query.query }
+    query: { before: cursor.value, query: route.query.query }
   }
 })
 const nextClass = computed(() => {
