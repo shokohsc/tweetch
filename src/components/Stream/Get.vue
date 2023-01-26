@@ -40,10 +40,10 @@ const stream = computed(() => {
   }
 })
 const source = computed(() => {
-  return '//player.twitch.tv/?channel='+(streams.value[0].user || '')+`&parent=${window.location.host}`
+  return '//player.twitch.tv/?channel='+(streams.value[0].login || '')+`&parent=${window.location.host}`
 })
 const chat = computed(() => {
-  return '//www.twitch.tv/embed/'+(streams.value[0].user || '')+`/chat?parent=${window.location.host}`
+  return '//www.twitch.tv/embed/'+(streams.value[0].login || '')+`/chat?parent=${window.location.host}`
 })
 
 watch(
