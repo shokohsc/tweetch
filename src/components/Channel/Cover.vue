@@ -4,7 +4,7 @@
       <router-link :to="cover.streamRoute">
         <div class="block">
           <figure class="image cover">
-            <img :src="thumbnail" :alt="cover.channel" loading="lazy" class="cover" />
+            <img :src="thumbnail" :title="cover.channel" loading="lazy" class="cover" />
           </figure>
         </div>
       </router-link>

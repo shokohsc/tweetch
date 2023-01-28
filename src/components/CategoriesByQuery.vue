@@ -2,16 +2,18 @@
   <h1 class="title has-text-light has-text-centered">{{ formattedTitle }}</h1>
 
   <section >
+    <List />
     <div class="columns is-justify-content-center is-multiline">
-      <List />
-      <nav class="pagination" role="navigation" aria-label="pagination">
-        <router-link :class="previousClass" :to="previous">
-          Previous
-        </router-link>
-        <router-link :class="nextClass" :to="next">
-          Next page
-        </router-link>
-      </nav>
+      <div class="column is-narrow">
+        <nav class="pagination" role="navigation" aria-label="pagination">
+          <router-link :class="previousClass" :to="previous">
+            Previous
+          </router-link>
+          <router-link :class="nextClass" :to="next">
+            Next page
+          </router-link>
+        </nav>
+      </div>
     </div>
   </section>
 </template>

@@ -4,14 +4,14 @@
       <router-link class="is-hidden-touch" :to="cover.streamRoute">
         <div class="block">
           <figure class="image cover">
-            <img :src="thumbnail" :alt="cover.title" loading="lazy" class="cover" />
+            <img :src="thumbnail" :title="cover.title" loading="lazy" class="cover" />
           </figure>
         </div>
       </router-link>
       <a class="is-hidden-desktop" :href="deepLink">
         <div class="block">
           <figure class="image cover">
-            <img :src="thumbnail" :alt="cover.title" loading="lazy" class="cover" />
+            <img :src="thumbnail" :title="cover.title" loading="lazy" class="cover" />
           </figure>
         </div>
       </a>

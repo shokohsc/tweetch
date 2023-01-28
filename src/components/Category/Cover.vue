@@ -4,7 +4,7 @@
       <router-link :to="cover.categoryRoute">
         <div class="block">
           <figure class="image cover">
-            <img :src="thumbnail" :alt="cover.category" loading="lazy" class="cover" />
+            <img :src="thumbnail" :title="cover.category" loading="lazy" class="cover" />
           </figure>
         </div>
       </router-link>
