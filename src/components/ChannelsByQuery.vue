@@ -1,5 +1,5 @@
 <template>
-  <h1 class="title has-text-light has-text-centered">Channels</h1>
+  <h1 class="title has-text-light has-text-centered">{{ formattedTitle }}</h1>
 
   <section >
     <div class="columns is-justify-content-center is-multiline">
@@ -49,12 +49,16 @@ const next = computed(() => {
     query: { after: cursor.value, query: route.query.query }
   }
 })
+const formattedTitle = computed(() => {
+  return `Channels`
+})
 
 watch(
   [() => route.query.query, () => route.query.after],
   async ([query, after]) => {
     await initAccessToken()
     await getChannels({query, after, type_only: true})
+    document.title = `Tweetch - ${formattedTitle.value}`
   },
   { immediate: true}
 )

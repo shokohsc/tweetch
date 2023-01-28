@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { storeToRefs } from 'pinia'
 import { useTwitchStore } from './stores/twitch'
 import Home from './components/Home.vue';
 import Category from './components/Category.vue';
@@ -64,18 +65,17 @@ const router = createRouter({
   routes
 })
 
-// router.beforeEach(async (to, from) => {
-//   if (
-//     // make sure the user is authenticated
-//     '' !== useTwitchStore.accessToken &&
-//     // ❗️ Avoid an infinite redirect
-//     to.name !== 'Home'
-//   ) {
-//     // redirect the user to the login page
-//     return { name: 'Home' }
-//   }
-//
-//   return true
-// })
+router.beforeEach(async (to, from) => {
+  const { authenticated } = storeToRefs(useTwitchStore())
+
+  if (
+    (to.name === 'FollowedGames' || to.name === 'FollowedStreams') &&
+    false === authenticated.value
+  ) {
+    return { name: 'Home' }
+  }
+
+  return true
+})
 
 export default router

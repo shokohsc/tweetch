@@ -1,5 +1,4 @@
 import { defineStore, acceptHMRUpdate } from 'pinia'
-import { useTwitchStore } from './twitch'
 
 const useSearchStore = defineStore('search', {
   state: () => ({
