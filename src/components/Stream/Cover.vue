@@ -15,17 +15,13 @@
           </figure>
         </div>
       </a>
-      <div class="block has-text-white has-text-centered">
-        <div style="width: 318px; margin: 0 auto;">
-          <p>
-            {{ cover.login }}
-          </p>
-          <p>
-            <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
-          </p>
-          <p>{{ cover.viewers }} viewer(s) / {{ cover.language }}</p>
-        </div>
-      </div>
+      <p class="has-text-white has-text-centered">
+        {{ cover.login }}
+      </p>
+      <p class="has-text-white has-text-centered">
+        <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
+      </p>
+      <p class="has-text-white has-text-centered">{{ cover.viewers }} viewer(s) / {{ cover.language }}</p>
     </div>
   </div>
 </template>

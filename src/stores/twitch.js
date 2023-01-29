@@ -32,6 +32,7 @@ const useTwitchStore = defineStore('twitch', {
       this.userId = ''
       this.accessToken = ''
       this.authenticated = false
+      this.users = []
       await this.initAccessToken()
     },
     async initAccessToken(){
@@ -76,6 +77,94 @@ const useTwitchStore = defineStore('twitch', {
             login: stream.user_login,
             language: stream.language,
             thumbnail: stream.thumbnail_url
+          })
+        });
+        this.loading = false
+      } catch (e) {
+        this.error = e
+        console.error(e);
+        this.loading = false
+      }
+    },
+    async getCategories(params = {}) {
+      this.categories = []
+      this.loading = true
+      const query = new URLSearchParams(params)
+      try {
+        const response = await axios.get('https://api.twitch.tv/helix/search/categories', {
+          params: params,
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+          }
+        })
+        this.cursor = response.data.pagination.cursor || ''
+        response.data.data.forEach((category, i) => {
+          this.categories.push({
+            categoryRoute: { name: 'Category', params: { category: category.id } },
+            categoryId: category.id,
+            category: category.name,
+            thumbnail: category.box_art_url
+          })
+        });
+        this.loading = false
+      } catch (e) {
+        this.error = e
+        console.error(e);
+        this.loading = false
+      }
+    },
+    async getChannels(params = {}) {
+      this.channels = []
+      this.loading = true
+      const query = new URLSearchParams(params)
+      try {
+        const response = await axios.get('https://api.twitch.tv/helix/search/channels', {
+          params: params,
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+          }
+        })
+        this.cursor = response.data.pagination.cursor || ''
+        response.data.data.forEach((channel, i) => {
+          this.channels.push({
+            streamRoute: { name: 'Stream', params: { stream: channel.broadcaster_login } },
+            categoryRoute: { name: 'Category', params: { category: channel.game_id } },
+            login : channel.broadcaster_login,
+            gameId : channel.game_id,
+            game : channel.game_name,
+            id : channel.id,
+            thumbnail : channel.thumbnail_url,
+            title : channel.title
+          })
+        });
+        this.loading = false
+      } catch (e) {
+        this.error = e
+        console.error(e);
+        this.loading = false
+      }
+    },
+    async getTopGames(params = {}) {
+      this.categories = []
+      this.loading = true
+      const query = new URLSearchParams(params)
+      try {
+        const response = await axios.get('https://api.twitch.tv/helix/games/top', {
+          params: params,
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+          }
+        })
+        this.cursor = response.data.pagination.cursor || ''
+        response.data.data.forEach((game, i) => {
+          this.categories.push({
+            categoryRoute: { name: 'Category', params: { category: game.id } },
+            categoryId: game.id,
+            category: game.name,
+            thumbnail: game.box_art_url
           })
         });
         this.loading = false
@@ -170,94 +259,6 @@ const useTwitchStore = defineStore('twitch', {
             categoryId: category.id,
             category: category.name,
             thumbnail: category.box_art_url
-          })
-        });
-        this.loading = false
-      } catch (e) {
-        this.error = e
-        console.error(e);
-        this.loading = false
-      }
-    },
-    async getCategories(params = {}) {
-      this.categories = []
-      this.loading = true
-      const query = new URLSearchParams(params)
-      try {
-        const response = await axios.get('https://api.twitch.tv/helix/search/categories', {
-          params: params,
-          headers: {
-            'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
-          }
-        })
-        this.cursor = response.data.pagination.cursor || ''
-        response.data.data.forEach((category, i) => {
-          this.categories.push({
-            categoryRoute: { name: 'Category', params: { category: category.id } },
-            categoryId: category.id,
-            category: category.name,
-            thumbnail: category.box_art_url
-          })
-        });
-        this.loading = false
-      } catch (e) {
-        this.error = e
-        console.error(e);
-        this.loading = false
-      }
-    },
-    async getChannels(params = {}) {
-      this.channels = []
-      this.loading = true
-      const query = new URLSearchParams(params)
-      try {
-        const response = await axios.get('https://api.twitch.tv/helix/search/channels', {
-          params: params,
-          headers: {
-            'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
-          }
-        })
-        this.cursor = response.data.pagination.cursor || ''
-        response.data.data.forEach((channel, i) => {
-          this.channels.push({
-            streamRoute: { name: 'Stream', params: { stream: channel.broadcaster_login } },
-            categoryRoute: { name: 'Category', params: { category: channel.game_id } },
-            login : channel.broadcaster_login,
-            gameId : channel.game_id,
-            game : channel.game_name,
-            id : channel.id,
-            thumbnail : channel.thumbnail_url,
-            title : channel.title
-          })
-        });
-        this.loading = false
-      } catch (e) {
-        this.error = e
-        console.error(e);
-        this.loading = false
-      }
-    },
-    async getTopGames(params = {}) {
-      this.categories = []
-      this.loading = true
-      const query = new URLSearchParams(params)
-      try {
-        const response = await axios.get('https://api.twitch.tv/helix/games/top', {
-          params: params,
-          headers: {
-            'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
-          }
-        })
-        this.cursor = response.data.pagination.cursor || ''
-        response.data.data.forEach((game, i) => {
-          this.categories.push({
-            categoryRoute: { name: 'Category', params: { category: game.id } },
-            categoryId: game.id,
-            category: game.name,
-            thumbnail: game.box_art_url
           })
         });
         this.loading = false

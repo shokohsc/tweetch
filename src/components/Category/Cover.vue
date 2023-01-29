@@ -8,13 +8,9 @@
           </figure>
         </div>
       </router-link>
-      <div class="block has-text-white has-text-centered">
-        <div style="width: 172px; margin: 0 auto;">
-          <p>
-            <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
-          </p>
-        </div>
-      </div>
+      <p class="cover has-text-white has-text-centered">
+        <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -32,6 +28,10 @@ const thumbnail = computed(() => {
 </script>
 
 <style scoped>
+p.cover {
+  width: 182px;
+  margin: 0 auto;
+}
 img.cover {
   width: 182px;
   height: 239px;

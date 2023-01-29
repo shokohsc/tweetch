@@ -4,17 +4,16 @@
       <router-link :to="cover.streamRoute">
         <div class="block">
           <figure class="image cover">
-            <img :src="thumbnail" :title="cover.channel" loading="lazy" class="cover" />
+            <img :src="thumbnail" :title="cover.title" loading="lazy" class="cover" />
           </figure>
         </div>
       </router-link>
-      <div class="block has-text-white has-text-centered">
-        <div style="width: 300px; margin: 0 auto;">
-          <p>
-            <router-link :to="cover.streamRoute">{{ cover.channel }}</router-link>
-          </p>
-        </div>
-      </div>
+      <p class="cover has-text-white has-text-centered">
+        <router-link :to="cover.streamRoute">{{ cover.login }}</router-link>
+      </p>
+      <p v-if="isStreaming" class="cover has-text-white has-text-centered">
+        <router-link :to="cover.categoryRoute">{{ cover.game }}</router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -26,12 +25,20 @@ const props = defineProps({
   cover: Object
 })
 
+const isStreaming = computed(() => {
+  return "" !== props.cover.gameId
+})
+
 const thumbnail = computed(() => {
   return props.cover.thumbnail
 })
 </script>
 
 <style scoped>
+p.cover {
+  width: 308px;
+  margin: 0 auto;
+}
 img.cover {
   width: 308px;
   height: 308px;
