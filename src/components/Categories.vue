@@ -17,12 +17,12 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
-const { cursor, error } = storeToRefs(useTwitchStore())
+const { loading, cursor, error } = storeToRefs(useTwitchStore())
 const { initAccessToken, getCategories } = useTwitchStore()
 const route = useRoute()
 
 const formattedTitle = computed(() => {
-  return `Categories`
+  return loading.value ? `Loading...` : `Categories`
 })
 const previousRoute = computed(() => {
   return {

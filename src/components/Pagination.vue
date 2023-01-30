@@ -2,10 +2,10 @@
   <div class="columns is-justify-content-center is-multiline">
     <div class="column is-narrow">
       <nav class="pagination" role="navigation" aria-label="pagination">
-        <router-link :class="previousClass" :to="previous">
+        <router-link :class="previousClass" :to="previousRoute">
           Previous
         </router-link>
-        <router-link :class="nextClass" :to="next">
+        <router-link :class="nextClass" :to="nextRoute">
           Next page
         </router-link>
       </nav>
@@ -34,21 +34,9 @@ const previousClass = computed(() => {
   const isDisabled = (undefined === routeCursor || cursor.value === routeCursor) ? 'is-disabled': ''
   return `has-text-white pagination-previous ${isDisabled}`
 })
-const previous = computed(() => {
-  return {
-    name: props.routeName,
-    query: { before: cursor.value }
-  }
-})
 const nextClass = computed(() => {
   const isDisabled = '' === cursor.value ? 'is-disabled': ''
   return `has-text-white pagination-next ${isDisabled}`
-})
-const next = computed(() => {
-  return {
-    name: props.routeName,
-    query: { after: cursor.value }
-  }
 })
 
 // const handleScroll = async () => {

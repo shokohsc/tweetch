@@ -10,7 +10,7 @@ const useTwitchStore = defineStore('twitch', {
     expiryTime: 0,
     streams: [],
     loading: false,
-    error: null,
+    error: false,
     cursor: '',
     categories: [],
     channels: [],
@@ -55,6 +55,7 @@ const useTwitchStore = defineStore('twitch', {
     async getStreams(params = {}) {
       this.streams = []
       this.loading = true
+      this.error = false
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/streams', {
@@ -81,7 +82,7 @@ const useTwitchStore = defineStore('twitch', {
         });
         this.loading = false
       } catch (e) {
-        this.error = e
+        this.error = e.message || 'Error happened'
         console.error(e);
         this.loading = false
       }
@@ -89,6 +90,7 @@ const useTwitchStore = defineStore('twitch', {
     async getCategories(params = {}) {
       this.categories = []
       this.loading = true
+      this.error = false
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/search/categories', {
@@ -109,7 +111,7 @@ const useTwitchStore = defineStore('twitch', {
         });
         this.loading = false
       } catch (e) {
-        this.error = e
+        this.error = e.message || 'Error happened'
         console.error(e);
         this.loading = false
       }
@@ -117,6 +119,7 @@ const useTwitchStore = defineStore('twitch', {
     async getChannels(params = {}) {
       this.channels = []
       this.loading = true
+      this.error = false
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/search/channels', {
@@ -141,7 +144,7 @@ const useTwitchStore = defineStore('twitch', {
         });
         this.loading = false
       } catch (e) {
-        this.error = e
+        this.error = e.message || 'Error happened'
         console.error(e);
         this.loading = false
       }
@@ -149,6 +152,7 @@ const useTwitchStore = defineStore('twitch', {
     async getTopGames(params = {}) {
       this.categories = []
       this.loading = true
+      this.error = false
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/games/top', {
@@ -169,7 +173,7 @@ const useTwitchStore = defineStore('twitch', {
         });
         this.loading = false
       } catch (e) {
-        this.error = e
+        this.error = e.message || 'Error happened'
         console.error(e);
         this.loading = false
       }
@@ -177,6 +181,7 @@ const useTwitchStore = defineStore('twitch', {
     async getUsers(params = {}) {
       this.users = []
       this.loading = true
+      this.error = false
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/users', {
@@ -200,7 +205,7 @@ const useTwitchStore = defineStore('twitch', {
         });
         this.loading = false
       } catch (e) {
-        this.error = e
+        this.error = e.message || 'Error happened'
         console.error(e);
         this.loading = false
       }
@@ -208,6 +213,7 @@ const useTwitchStore = defineStore('twitch', {
     async getFollowedStreams(params = {}) {
       this.streams = []
       this.loading = true
+      this.error = false
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/streams/followed', {
@@ -234,7 +240,7 @@ const useTwitchStore = defineStore('twitch', {
         });
         this.loading = false
       } catch (e) {
-        this.error = e
+        this.error = e.message || 'Error happened'
         console.error(e);
         this.loading = false
       }
@@ -242,6 +248,7 @@ const useTwitchStore = defineStore('twitch', {
     async getFollowedGames(params = {}) {
       this.categories = []
       this.loading = true
+      this.error = false
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/users/'+this.userId+'/follows/games', {
@@ -263,7 +270,7 @@ const useTwitchStore = defineStore('twitch', {
         });
         this.loading = false
       } catch (e) {
-        this.error = e
+        this.error = e.message || 'Error happened'
         console.error(e);
         this.loading = false
       }
