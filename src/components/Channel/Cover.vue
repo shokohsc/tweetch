@@ -9,7 +9,7 @@
         </div>
       </router-link>
       <p class="cover has-text-white has-text-centered">
-        <router-link :to="cover.streamRoute">{{ cover.login }}</router-link>
+        {{ cover.login }}
       </p>
       <p v-if="isStreaming" class="cover has-text-white has-text-centered">
         <router-link :to="cover.categoryRoute">{{ cover.game }}</router-link>

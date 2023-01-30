@@ -9,7 +9,7 @@
         </div>
       </router-link>
       <p class="cover has-text-white has-text-centered">
-        <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
+        {{ cover.category }}
       </p>
     </div>
   </div>

@@ -1,7 +1,9 @@
 <template>
-  <span @click="scrollTop" class="icon has-text-white">
-    <i class="fas fa-arrow-up"></i>
-  </span>
+  <button id="scrollTop" class="button is-hidden">
+    <span @click="scrollTop" class="icon">
+      <i class="fas fa-arrow-up"></i>
+    </span>
+  </button>
 </template>
 
 <script setup>
@@ -26,6 +28,8 @@ const handleScroll = async () => {
   if ((window.scrollY >= (document.body.offsetHeight - window.outerHeight)) && !loading.value && '' !== cursor.value) {
     await initAccessToken()
     await props.paginate(props.params, false)
+    const $target = document.getElementById('scrollTop')
+    $target.classList.remove('is-hidden')
   }
 }
 onMounted(() => {
@@ -37,10 +41,11 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-  span.icon {
+  button.button {
     position: fixed;
-    right: 50px;
-    bottom: 50px;
+    opacity: 60%;
+    right: 10%;
+    bottom: 10%;
     z-index: 100;
   }
 </style>
