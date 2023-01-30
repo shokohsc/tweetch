@@ -34,6 +34,7 @@ const useTwitchStore = defineStore('twitch', {
       this.authenticated = false
       this.users = []
       await this.initAccessToken()
+      window.location.reload()
     },
     async initAccessToken(){
       if ('' === this.accessToken) {
@@ -52,8 +53,9 @@ const useTwitchStore = defineStore('twitch', {
         }
       }
     },
-    async getStreams(params = {}) {
-      this.streams = []
+    async getStreams(params = {}, reset = true) {
+      if (reset)
+        this.streams = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -87,8 +89,9 @@ const useTwitchStore = defineStore('twitch', {
         this.loading = false
       }
     },
-    async getCategories(params = {}) {
-      this.categories = []
+    async getCategories(params = {}, reset = true) {
+      if (reset)
+        this.categories = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -116,8 +119,9 @@ const useTwitchStore = defineStore('twitch', {
         this.loading = false
       }
     },
-    async getChannels(params = {}) {
-      this.channels = []
+    async getChannels(params = {}, reset = true) {
+      if (reset)
+        this.channels = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -149,8 +153,9 @@ const useTwitchStore = defineStore('twitch', {
         this.loading = false
       }
     },
-    async getTopGames(params = {}) {
-      this.categories = []
+    async getTopGames(params = {}, reset = true) {
+      if (reset)
+        this.categories = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -178,8 +183,9 @@ const useTwitchStore = defineStore('twitch', {
         this.loading = false
       }
     },
-    async getUsers(params = {}) {
-      this.users = []
+    async getUsers(params = {}, reset = true) {
+      if (reset)
+        this.users = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -210,8 +216,9 @@ const useTwitchStore = defineStore('twitch', {
         this.loading = false
       }
     },
-    async getFollowedStreams(params = {}) {
-      this.streams = []
+    async getFollowedStreams(params = {}, reset = true) {
+      if (reset)
+        this.streams = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -245,8 +252,9 @@ const useTwitchStore = defineStore('twitch', {
         this.loading = false
       }
     },
-    async getFollowedGames(params = {}) {
-      this.categories = []
+    async getFollowedGames(params = {}, reset = true) {
+      if (reset)
+        this.categories = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)

@@ -3,7 +3,7 @@
     <h1 class="title has-text-light has-text-centered">{{ formattedTitle }}</h1>
     <section>
       <List />
-      <Pagination :nextRoute="nextRoute" :previousRoute="previousRoute"/>
+      <Pagination :paginate="paginate" :params="params"/>
     </section>
   </section>
 </template>
@@ -24,16 +24,14 @@ const route = useRoute()
 const formattedTitle = computed(() => {
   return loading.value ? `Loading...` : `Channels`
 })
-const previousRoute = computed(() => {
-  return {
-    name: 'Channels',
-    query: { before: cursor.value, query: route.query.query }
-  }
+const paginate = computed(() => {
+  return getChannels
 })
-const nextRoute = computed(() => {
+const params = computed(() => {
   return {
-    name: 'Channels',
-    query: { after: cursor.value, query: route.query.query }
+    query: route.query.query,
+    after: cursor.value,
+    live_only: true
   }
 })
 
@@ -44,6 +42,6 @@ watch(
     await getChannels({query, after, live_only: true})
     document.title = `Tweetch - ${formattedTitle.value}`
   },
-  { immediate: true}
+  { immediate: true }
 )
 </script>

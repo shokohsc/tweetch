@@ -42,6 +42,11 @@ profiles:
         - src: src/**/*.vue
           dest: .
       kaniko:
+        env:
+          - name: ORGANISATION
+            value: shokohsc
+          - name: PROJECT
+            value: tweetch
         cache:
           repo: shokohsc/tweetch
         dockerfile: Dockerfile.dev
@@ -66,6 +71,11 @@ profiles:
     artifacts:
     - image: shokohsc/tweetch
       kaniko:
+        env:
+          - name: ORGANISATION
+            value: shokohsc
+          - name: PROJECT
+            value: tweetch
         cache:
           repo: shokohsc/tweetch
         dockerfile: Dockerfile

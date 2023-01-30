@@ -1,8 +1,8 @@
-import "../node_modules/bulma/css/bulma.css";
-import "@fortawesome/fontawesome-free/css/all.css";
-import * as Sentry from "@sentry/vue";
-import { BrowserTracing } from "@sentry/tracing";
-import getEnv from './utils/env';
+import "../node_modules/bulma/css/bulma.css"
+import "@fortawesome/fontawesome-free/css/all.css"
+import * as Sentry from "@sentry/vue"
+import { BrowserTracing } from "@sentry/tracing"
+import getEnv from './utils/env'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
