@@ -34,7 +34,6 @@ const useTwitchStore = defineStore('twitch', {
       this.authenticated = false
       this.users = []
       await this.initAccessToken()
-      window.location.reload()
     },
     async initAccessToken(){
       if ('' === this.accessToken) {
