@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, defineProps } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'

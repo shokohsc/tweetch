@@ -2,20 +2,20 @@
   <div v-if="!loading" class="container fluid pt-6">
     <h1 class="title has-text-centered has-text-white">{{ stream.title }}</h1>
     <h2 class="subtitle has-text-centered has-text-white">{{ stream.user }}<small> plays <router-link :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / {{ stream.lang }}</small></h2>
-      <div class="box has-text-centered is-black">
-        <iframe
-          height="720px"
-          width="1280px"
-          allowfullscreen="true"
-          :src="source">
-        </iframe>
+      <div class="box">
+        <div>
+          <iframe
+            allowfullscreen="true"
+            :src="source">
+          </iframe>
+        </div>
       </div>
       <div v-if="authenticated" class="box has-text-centered is-black">
-        <iframe
-          height="720px"
-          width="1280px"
-          :src="chat">
-        </iframe>
+        <div>
+          <iframe
+            :src="chat">
+          </iframe>
+        </div>
       </div>
   </div>
 </template>
@@ -57,10 +57,21 @@ watch(
 )
 </script>
 
-<style scoped>
-.box {
-  width: 1320px;
-  height: 760px;
+<style scoped lang="less">
+div.container .box {
   background-color: #0a0a0a !important;
+  width: 100%;
+  div {
+    padding-top: 56.25%;
+    position: relative;
+    overflow: hidden;
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+  }
 }
-</style>
