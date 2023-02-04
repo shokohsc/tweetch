@@ -75,3 +75,4 @@ div.container .box {
     }
   }
 }
+</style>
