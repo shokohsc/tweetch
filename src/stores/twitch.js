@@ -1,6 +1,7 @@
 import axios from 'axios'
 import getEnv from '../utils/env'
 import { defineStore, acceptHMRUpdate } from 'pinia'
+import uniqBy from 'lodash/uniqBy'
 
 const useTwitchStore = defineStore('twitch', {
   state: () => ({
@@ -8,31 +9,43 @@ const useTwitchStore = defineStore('twitch', {
     userId: '',
     accessToken: '',
     expiryTime: 0,
-    streams: [],
+    _streams: [],
     loading: false,
     error: false,
     cursor: '',
-    categories: [],
-    channels: [],
-    users: []
+    _categories: [],
+    _channels: [],
+    _users: []
   }),
   persist: {
     storage: sessionStorage,
     debug: true
+  },
+  getters: {
+    streams: (state) => uniqBy(state._streams, stream => stream.login).sort((a, b) => {
+      if (a.viewers > b.viewers)
+        return -1
+      if (a.viewers < b.viewers)
+        return 1
+      return 0
+    }),
+    categories: (state) => uniqBy(state._categories, category => category.category),
+    channels: (state) => uniqBy(state._channels, channel => channel.login),
+    users: (state) => state._users,
   },
   actions: {
     async login(token) {
       this.accessToken = token
       this.authenticated = true
       await this.getUsers()
-      this.userId = this.users[0].id
+      this.userId = this._users[0].id
     },
     async logout(e) {
       e.preventDefault()
       this.userId = ''
       this.accessToken = ''
       this.authenticated = false
-      this.users = []
+      this._users = []
       await this.initAccessToken()
     },
     async initAccessToken(){
@@ -48,13 +61,13 @@ const useTwitchStore = defineStore('twitch', {
             this.expiryTime = response.data.expires_in
           }
         } catch (e) {
-          console.error(e);
+          console.error(e)
         }
       }
     },
     async getStreams(params = {}, reset = true) {
       if (reset)
-        this.streams = []
+        this._streams = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -68,7 +81,7 @@ const useTwitchStore = defineStore('twitch', {
         })
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((stream, i) => {
-          this.streams.push({
+          this._streams.push({
             streamRoute: { name: 'Stream', params: { stream: stream.user_login } },
             categoryRoute: { name: 'Category', params: { category: stream.game_id } },
             title: stream.title,
@@ -80,17 +93,17 @@ const useTwitchStore = defineStore('twitch', {
             language: stream.language,
             thumbnail: stream.thumbnail_url
           })
-        });
+        })
         this.loading = false
       } catch (e) {
         this.error = e.message || 'Error happened'
-        console.error(e);
+        console.error(e)
         this.loading = false
       }
     },
     async getCategories(params = {}, reset = true) {
       if (reset)
-        this.categories = []
+        this._categories = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -104,23 +117,23 @@ const useTwitchStore = defineStore('twitch', {
         })
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((category, i) => {
-          this.categories.push({
+          this._categories.push({
             categoryRoute: { name: 'Category', params: { category: category.id } },
             categoryId: category.id,
             category: category.name,
             thumbnail: category.box_art_url
           })
-        });
+        })
         this.loading = false
       } catch (e) {
         this.error = e.message || 'Error happened'
-        console.error(e);
+        console.error(e)
         this.loading = false
       }
     },
     async getChannels(params = {}, reset = true) {
       if (reset)
-        this.channels = []
+        this._channels = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -134,7 +147,7 @@ const useTwitchStore = defineStore('twitch', {
         })
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((channel, i) => {
-          this.channels.push({
+          this._channels.push({
             streamRoute: { name: 'Stream', params: { stream: channel.broadcaster_login } },
             categoryRoute: { name: 'Category', params: { category: channel.game_id } },
             login : channel.broadcaster_login,
@@ -144,17 +157,17 @@ const useTwitchStore = defineStore('twitch', {
             thumbnail : channel.thumbnail_url,
             title : channel.title
           })
-        });
+        })
         this.loading = false
       } catch (e) {
         this.error = e.message || 'Error happened'
-        console.error(e);
+        console.error(e)
         this.loading = false
       }
     },
     async getTopGames(params = {}, reset = true) {
       if (reset)
-        this.categories = []
+        this._categories = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -168,23 +181,23 @@ const useTwitchStore = defineStore('twitch', {
         })
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((game, i) => {
-          this.categories.push({
+          this._categories.push({
             categoryRoute: { name: 'Category', params: { category: game.id } },
             categoryId: game.id,
             category: game.name,
             thumbnail: game.box_art_url
           })
-        });
+        })
         this.loading = false
       } catch (e) {
         this.error = e.message || 'Error happened'
-        console.error(e);
+        console.error(e)
         this.loading = false
       }
     },
     async getUsers(params = {}, reset = true) {
       if (reset)
-        this.users = []
+        this._users = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -197,7 +210,7 @@ const useTwitchStore = defineStore('twitch', {
           }
         })
         response.data.data.forEach((user, i) => {
-          this.users.push({
+          this._users.push({
             id: user.id,
             login: user.login,
             displayName: user.display_name,
@@ -207,17 +220,17 @@ const useTwitchStore = defineStore('twitch', {
             offlineImage: user.offline_image_url,
             email: user.email
           })
-        });
+        })
         this.loading = false
       } catch (e) {
         this.error = e.message || 'Error happened'
-        console.error(e);
+        console.error(e)
         this.loading = false
       }
     },
     async getFollowedStreams(params = {}, reset = true) {
       if (reset)
-        this.streams = []
+        this._streams = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -231,7 +244,7 @@ const useTwitchStore = defineStore('twitch', {
         })
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((stream, i) => {
-          this.streams.push({
+          this._streams.push({
             streamRoute: { name: 'Stream', params: { stream: stream.user_login } },
             categoryRoute: { name: 'Category', params: { category: stream.game_id } },
             title: stream.title,
@@ -243,17 +256,17 @@ const useTwitchStore = defineStore('twitch', {
             language: stream.language,
             thumbnail: stream.thumbnail_url
           })
-        });
+        })
         this.loading = false
       } catch (e) {
         this.error = e.message || 'Error happened'
-        console.error(e);
+        console.error(e)
         this.loading = false
       }
     },
     async getFollowedGames(params = {}, reset = true) {
       if (reset)
-        this.categories = []
+        this._categories = []
       this.loading = true
       this.error = false
       const query = new URLSearchParams(params)
@@ -265,20 +278,19 @@ const useTwitchStore = defineStore('twitch', {
             'Client-Id': getEnv('TWITCH_CLIENT_ID')
           }
         })
-        console.log(response);
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((category, i) => {
-          this.categories.push({
+          this._categories.push({
             categoryRoute: { name: 'Category', params: { category: category.id } },
             categoryId: category.id,
             category: category.name,
             thumbnail: category.box_art_url
           })
-        });
+        })
         this.loading = false
       } catch (e) {
         this.error = e.message || 'Error happened'
-        console.error(e);
+        console.error(e)
         this.loading = false
       }
     }

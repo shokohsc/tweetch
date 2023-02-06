@@ -18,7 +18,7 @@
       <p class="has-text-white has-text-centered">
         {{ cover.login }}
       </p>
-      <p class="has-text-white has-text-centered">
+      <p class="has-text-white has-text-centered" v-if="cover.category">
         <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
       </p>
       <p class="has-text-white has-text-centered">{{ cover.viewers }} viewer(s) / {{ cover.language }}</p>
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { computed, defineProps } from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   cover: Object

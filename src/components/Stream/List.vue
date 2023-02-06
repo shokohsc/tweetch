@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-justify-content-center is-multiline">
-      <Cover :cover="cover" v-for="(cover, index) in covers" :key="index" />
+      <Cover :cover="cover" v-for="(cover, index) in streams" :key="index" />
     </div>
 </template>
 
@@ -12,12 +12,4 @@
   import { useTwitchStore } from '../../stores/twitch'
 
   const { streams } = storeToRefs(useTwitchStore())
-
-  const covers = computed(() => {
-    const results = []
-    streams.value.map(stream => {
-      results.push(stream)
-    })
-    return results
-  })
 </script>
