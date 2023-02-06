@@ -15,13 +15,13 @@
           </figure>
         </div>
       </a>
-      <p class="has-text-white has-text-centered">
+      <p class="cover has-text-white has-text-centered">
         {{ cover.login }}
       </p>
-      <p class="has-text-white has-text-centered" v-if="cover.category">
+      <p class="cover has-text-white has-text-centered" v-if="cover.category">
         <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
       </p>
-      <p class="has-text-white has-text-centered">{{ cover.viewers }} viewer(s) / {{ cover.language }}</p>
+      <p class="cover has-text-white has-text-centered">{{ cover.viewers }} viewer(s) / {{ cover.language }}</p>
     </div>
   </div>
 </template>
@@ -42,12 +42,15 @@ const thumbnail = computed(() => {
 </script>
 
 <style scoped>
-img.cover {
-  width: 328px;
-  height: 188px;
+p.cover {
+  width: 20.5rem;
   margin: 0 auto;
 }
-
+img.cover {
+  width: 20.5rem;
+  height: 11.75rem;
+  margin: 0 auto;
+}
 figure.cover img {
   padding: 4px;
   background-color: #0a0a0a;

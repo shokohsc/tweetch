@@ -29,15 +29,14 @@ const thumbnail = computed(() => {
 
 <style scoped>
 p.cover {
-  width: 182px;
+  width: 11.375rem;
   margin: 0 auto;
 }
 img.cover {
-  width: 182px;
-  height: 239px;
+  width: 11.375rem;
+  height: 14.938rem;
   margin: 0 auto;
 }
-
 figure.cover img {
   padding: 4px;
   background-color: #0a0a0a;
