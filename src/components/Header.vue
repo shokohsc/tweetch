@@ -85,7 +85,7 @@
 import getEnv from '../utils/env'
 
 import { watch, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useSearchStore } from '../stores/search'
 import { useTwitchStore } from '../stores/twitch'
@@ -93,8 +93,7 @@ import { useTwitchStore } from '../stores/twitch'
 const { query, entity } = storeToRefs(useSearchStore())
 const { onEntityChange, onQueryChange, validate } = useSearchStore()
 const { authenticated } = storeToRefs(useTwitchStore())
-const { getUsers, login, logout } = useTwitchStore()
-const route = useRoute()
+const { login, logout } = useTwitchStore()
 const router = useRouter()
 
 const paramsObj = {

@@ -43,12 +43,12 @@ const thumbnail = computed(() => {
 
 <style scoped>
 p.cover {
-  width: 20.5rem;
+  max-width: 20.5rem;
   margin: 0 auto;
 }
 img.cover {
-  width: 20.5rem;
-  height: 11.75rem;
+  max-width: 20.5rem;
+  max-height: 11.75rem;
   margin: 0 auto;
 }
 figure.cover img {
