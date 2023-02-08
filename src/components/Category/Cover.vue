@@ -2,11 +2,9 @@
   <div class="column is-narrow">
     <div class="box has-background-black">
       <router-link :to="cover.categoryRoute">
-        <div class="block">
-          <figure class="image cover">
-            <img :src="thumbnail" :title="cover.category" alt="" loading="lazy" />
-          </figure>
-        </div>
+        <figure class="image cover">
+          <img :src="thumbnail" :title="cover.category" alt="" loading="lazy" />
+        </figure>
       </router-link>
       <p class="cover has-text-white has-text-centered">
         {{ cover.category }}
@@ -29,13 +27,13 @@ const thumbnail = computed(() => {
 
 <style scoped lang="less">
 p.cover {
-  max-width: 11.375rem;
   margin: 0 auto;
+  max-width: 11.375rem;
 }
 figure.cover {
-  width: 11.375rem;
-  height: 14.938rem;
   margin: 0 auto;
+  max-width: 11.375rem;
+  max-height: 14.938rem;
   img {
     padding: 4px;
     background-color: #0a0a0a;

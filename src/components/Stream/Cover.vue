@@ -2,18 +2,14 @@
   <div class="column is-narrow">
     <div class="box has-background-black">
       <router-link class="is-hidden-touch" :to="cover.streamRoute">
-        <div class="block">
-          <figure class="image cover">
-            <img :src="thumbnail" :title="cover.title" alt="" loading="lazy" />
-          </figure>
-        </div>
+        <figure class="image">
+          <img :src="thumbnail" :title="cover.title" loading="lazy" />
+        </figure>
       </router-link>
       <a class="is-hidden-desktop" :href="deepLink">
-        <div class="block">
-          <figure class="image cover">
-            <img :src="thumbnail" :title="cover.title" alt="" loading="lazy" />
-          </figure>
-        </div>
+        <figure class="image">
+          <img :src="thumbnail" :title="cover.title" loading="lazy" />
+        </figure>
       </a>
       <p class="cover has-text-white has-text-centered">
         {{ cover.login }}
@@ -43,13 +39,13 @@ const thumbnail = computed(() => {
 
 <style scoped lang="less">
 p.cover {
+  margin: 0 auto;
   max-width: 20.5rem;
-  margin: 0 auto;
 }
-figure.cover {
-  width: 20.5rem;
-  height: 11.75rem;;
+figure {
   margin: 0 auto;
+  max-width: 20.5rem;
+  max-height: 11.75rem;
   img {
     padding: 4px;
     background-color: #0a0a0a;

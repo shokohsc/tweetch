@@ -2,11 +2,9 @@
   <div class="column is-narrow">
     <div class="box has-background-black">
       <router-link :to="cover.streamRoute">
-        <div class="block">
-          <figure class="image cover">
-            <img :src="thumbnail" :title="cover.title" alt="" loading="lazy" />
-          </figure>
-        </div>
+        <figure class="image cover">
+          <img :src="thumbnail" :title="cover.title" alt="" loading="lazy" />
+        </figure>
       </router-link>
       <p class="cover has-text-white has-text-centered">
         {{ cover.login }}
@@ -36,13 +34,13 @@ const thumbnail = computed(() => {
 
 <style scoped lang="less">
 p.cover {
-  max-width: 19.25rem;;
   margin: 0 auto;
+  max-width: 19.25rem;
 }
 figure.cover {
-  width: 19.25rem;;
-  height: 19.25rem;;
   margin: 0 auto;
+  max-width: 19.25rem;
+  max-height: 19.25rem;
   img {
     padding: 4px;
     background-color: #0a0a0a;
