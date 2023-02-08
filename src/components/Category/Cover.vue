@@ -4,7 +4,7 @@
       <router-link :to="cover.categoryRoute">
         <div class="block">
           <figure class="image cover">
-            <img :src="thumbnail" :title="cover.category" loading="lazy" class="cover" />
+            <img :src="thumbnail" :title="cover.category" alt="" loading="lazy" />
           </figure>
         </div>
       </router-link>
@@ -27,26 +27,26 @@ const thumbnail = computed(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="less">
 p.cover {
   max-width: 11.375rem;
   margin: 0 auto;
 }
-img.cover {
-  max-width: 11.375rem;
-  max-height: 14.938rem;
+figure.cover {
+  width: 11.375rem;
+  height: 14.938rem;
   margin: 0 auto;
-}
-figure.cover img {
-  padding: 4px;
-  background-color: #0a0a0a;
-  border: 1px solid #0a0a0a;
-  border-radius: 4px;
-  -webkit-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-}
-figure.cover img:hover {
-  background: #EB2025;
+  img {
+    padding: 4px;
+    background-color: #0a0a0a;
+    border: 1px solid #0a0a0a;
+    border-radius: 4px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      background: #EB2025;
+    }
+  }
 }
 </style>
