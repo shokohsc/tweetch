@@ -35,12 +35,12 @@ const thumbnail = computed(() => {
 <style scoped lang="less">
 p.cover {
   margin: 0 auto;
-  max-width: 19.25rem;
+  width: fit-content;
 }
 figure.cover {
   margin: 0 auto;
-  max-width: 19.25rem;
-  max-height: 19.25rem;
+  width: fit-content;
+  height: auto;
   img {
     padding: 4px;
     background-color: #0a0a0a;
