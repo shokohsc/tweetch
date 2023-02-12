@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import List from './Stream/List.vue'
+import List from './Video/List.vue'
 import Pagination from './Pagination.vue'
 
 import { computed, watch } from 'vue'
@@ -17,25 +17,26 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
-const { loading, cursor, error, userId } = storeToRefs(useTwitchStore())
-const { initAccessToken, getFollowedStreams } = useTwitchStore()
+const { loading, cursor, error } = storeToRefs(useTwitchStore())
+const { initAccessToken, getVideos } = useTwitchStore()
 const route = useRoute()
 
-const formattedTitle = computed(() => loading.value ? `Loading...` : `Followed Streams`)
-const paginate = computed(() => getFollowedStreams)
+const formattedTitle = computed(() => loading.value ? `Loading...` : `Videos`)
+const paginate = computed(() => getVideos)
 const params = computed(() => {
   return {
-    user_id: userId.value,
-    after: cursor.value,
-    type: 'live'
+    user_id: route.query.user_id,
+    game_id: route.query.game_id,
+    type: 'archive',
+    after: cursor.value
   }
 })
 
 watch(
-  [() => route.query.before, () => route.query.after],
-  async ([before, after]) => {
+  [() => route.query.user_id, () => route.query.game_id, () => route.query.after],
+  async ([user_id, game_id, after]) => {
     await initAccessToken()
-    await getFollowedStreams({user_id: userId.value, before, after, type: 'live'})
+    await getVideos({user_id, game_id, after, type: 'archive'})
     document.title = `Tweetch - ${formattedTitle.value}`
   },
   { immediate: true }

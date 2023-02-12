@@ -9,6 +9,9 @@
       <p class="cover has-text-white has-text-centered">
         {{ cover.category }}
       </p>
+      <p class="cover has-text-white has-text-centered">
+        <router-link :to="cover.videosRoute">Past broadcasts</router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -20,9 +23,7 @@ const props = defineProps({
   cover: Object
 })
 
-const thumbnail = computed(() => {
-  return `https://static-cdn.jtvnw.net/ttv-boxart/${props.cover.categoryId}-285x380.jpg`
-})
+const thumbnail = computed(() => `https://static-cdn.jtvnw.net/ttv-boxart/${props.cover.categoryId}-285x380.jpg`)
 </script>
 
 <style scoped lang="less">

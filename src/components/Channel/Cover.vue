@@ -23,13 +23,8 @@ const props = defineProps({
   cover: Object
 })
 
-const isStreaming = computed(() => {
-  return "" !== props.cover.gameId
-})
-
-const thumbnail = computed(() => {
-  return props.cover.thumbnail
-})
+const isStreaming = computed(() => "" !== props.cover.gameId)
+const thumbnail = computed(() => props.cover.thumbnail)
 </script>
 
 <style scoped lang="less">

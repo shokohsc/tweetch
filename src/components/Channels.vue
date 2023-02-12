@@ -21,12 +21,8 @@ const { loading, cursor, error } = storeToRefs(useTwitchStore())
 const { initAccessToken, getChannels } = useTwitchStore()
 const route = useRoute()
 
-const formattedTitle = computed(() => {
-  return loading.value ? `Loading...` : `Channels`
-})
-const paginate = computed(() => {
-  return getChannels
-})
+const formattedTitle = computed(() => loading.value ? `Loading...` : `Channels`)
+const paginate = computed(() => getChannels)
 const params = computed(() => {
   return {
     query: route.query.query,

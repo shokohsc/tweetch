@@ -21,12 +21,8 @@ const { loading, cursor, error } = storeToRefs(useTwitchStore())
 const { initAccessToken, getCategories } = useTwitchStore()
 const route = useRoute()
 
-const formattedTitle = computed(() => {
-  return loading.value ? `Loading...` : `Categories`
-})
-const paginate = computed(() => {
-  return getCategories
-})
+const formattedTitle = computed(() => loading.value ? `Loading...` : `Categories`)
+const paginate = computed(() => getCategories)
 const params = computed(() => {
   return {
     query: route.query.query,

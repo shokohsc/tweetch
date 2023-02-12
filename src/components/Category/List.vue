@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-  import { computed } from 'vue'
   import Cover from './Cover.vue'
 
   import { storeToRefs } from 'pinia'

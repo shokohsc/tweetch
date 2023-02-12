@@ -1,7 +1,7 @@
 <template>
   <div class="column is-narrow">
     <div class="box has-background-black">
-      <router-link class="is-hidden-touch" :to="cover.streamRoute">
+      <router-link class="is-hidden-touch" :to="cover.videoRoute">
         <figure class="image">
           <img :src="thumbnail" :title="cover.title" loading="lazy" />
         </figure>
@@ -12,28 +12,31 @@
         </figure>
       </a>
       <p class="cover has-text-white has-text-centered">
-        {{ cover.login }}
+        <router-link class="is-hidden-touch" :to="cover.streamRoute">
+          {{ cover.login }}
+        </router-link>
+        <a class="is-hidden-desktop" :href="streamDeepLink">
+          {{ cover.login }}
+        </a>
       </p>
-      <p class="cover has-text-white has-text-centered" v-if="cover.category">
-        <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
-      </p>
-      <p class="cover has-text-white has-text-centered">{{ cover.viewers }} viewer(s) / {{ cover.language }}</p>
-      <p class="cover has-text-white has-text-centered">
-        <router-link :to="cover.videosRoute">Past broadcasts</router-link>
-      </p>
+      <p class="cover has-text-white has-text-centered">{{ cover.duration }} on the {{ formattedDate }}</p>
+      <p class="cover has-text-white has-text-centered">{{ cover.views }} views / {{ cover.language }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
+import dayjs from 'dayjs'
 import { computed } from 'vue'
 
 const props = defineProps({
   cover: Object
 })
 
-const deepLink = computed(() => `twitch://open?stream=${props.cover.login}`)
-const thumbnail = computed(() => props.cover.thumbnail.replace('{width}', '320').replace('{height}', '180'))
+const deepLink = computed(() => `twitch://open?video=${props.cover.id}`)
+const streamDeepLink = computed(() => `twitch://open?stream=${props.cover.login}`)
+const thumbnail = computed(() => props.cover.thumbnail.replace('%{width}', '320').replace('%{height}', '180'))
+const formattedDate = computed(() => dayjs(props.cover.createdAt).format('MMM DD, YYYY'))
 </script>
 
 <style scoped lang="less">

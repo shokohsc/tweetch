@@ -10,6 +10,7 @@ const useTwitchStore = defineStore('twitch', {
     accessToken: '',
     expiryTime: 0,
     _streams: [],
+    _videos: [],
     loading: false,
     error: false,
     cursor: '',
@@ -29,6 +30,7 @@ const useTwitchStore = defineStore('twitch', {
         return 1
       return 0
     }),
+    videos: (state) => uniqBy(state._videos, video => video.createdAt),
     categories: (state) => uniqBy(state._categories, category => category.category),
     channels: (state) => uniqBy(state._channels, channel => channel.login),
     users: (state) => state._users,
@@ -82,7 +84,8 @@ const useTwitchStore = defineStore('twitch', {
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((stream, i) => {
           this._streams.push({
-            streamRoute: { name: 'Stream', params: { stream: stream.user_login } },
+            streamRoute: { name: 'Stream', params: { stream: stream.user_id } },
+            videosRoute: { name: 'Videos', query: { user_id: stream.user_id } },
             categoryRoute: { name: 'Category', params: { category: stream.game_id } },
             title: stream.title,
             viewers: stream.viewer_count,
@@ -90,8 +93,49 @@ const useTwitchStore = defineStore('twitch', {
             category: stream.game_name,
             categoryId: stream.game_id,
             login: stream.user_login,
+            loginId: stream.user_id,
             language: stream.language,
             thumbnail: stream.thumbnail_url
+          })
+        })
+        this.loading = false
+      } catch (e) {
+        this.error = e.message || 'Error happened'
+        console.error(e)
+        this.loading = false
+      }
+    },
+    async getVideos(params = {}, reset = true) {
+      if (reset)
+        this._videos = []
+      this.loading = true
+      this.error = false
+      const query = new URLSearchParams(params)
+      try {
+        const response = await axios.get('https://api.twitch.tv/helix/videos', {
+          params: params,
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Client-Id': getEnv('TWITCH_CLIENT_ID'),
+            'Accept-Language': ""
+          }
+        })
+        this.cursor = response.data.pagination.cursor || ''
+        response.data.data.forEach((video, i) => {
+          this._videos.push({
+            streamRoute: { name: 'Stream', params: { stream: video.user_id } },
+            videoRoute: { name: 'Video', params: { video: video.id } },
+            id: video.id,
+            title: video.title,
+            views: video.view_count,
+            createdAt: video.created_at,
+            type: video.type,
+            duration: video.duration,
+            user: video.user_name,
+            login: video.user_login,
+            loginId: video.user_id,
+            language: video.language,
+            thumbnail: video.thumbnail_url
           })
         })
         this.loading = false
@@ -119,6 +163,7 @@ const useTwitchStore = defineStore('twitch', {
         response.data.data.forEach((category, i) => {
           this._categories.push({
             categoryRoute: { name: 'Category', params: { category: category.id } },
+            videosRoute: { name: 'Videos', query: { game_id: category.id } },
             categoryId: category.id,
             category: category.name,
             thumbnail: category.box_art_url
@@ -148,7 +193,7 @@ const useTwitchStore = defineStore('twitch', {
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((channel, i) => {
           this._channels.push({
-            streamRoute: { name: 'Stream', params: { stream: channel.broadcaster_login } },
+            streamRoute: { name: 'Stream', params: { stream: channel.id } },
             categoryRoute: { name: 'Category', params: { category: channel.game_id } },
             login : channel.broadcaster_login,
             gameId : channel.game_id,
@@ -183,6 +228,7 @@ const useTwitchStore = defineStore('twitch', {
         response.data.data.forEach((game, i) => {
           this._categories.push({
             categoryRoute: { name: 'Category', params: { category: game.id } },
+            videosRoute: { name: 'Videos', query: { game_id: game.id } },
             categoryId: game.id,
             category: game.name,
             thumbnail: game.box_art_url
@@ -245,8 +291,9 @@ const useTwitchStore = defineStore('twitch', {
         this.cursor = response.data.pagination.cursor || ''
         response.data.data.forEach((stream, i) => {
           this._streams.push({
-            streamRoute: { name: 'Stream', params: { stream: stream.user_login } },
+            streamRoute: { name: 'Stream', params: { stream: stream.user_id } },
             categoryRoute: { name: 'Category', params: { category: stream.game_id } },
+            videosRoute: { name: 'Videos', query: { user_id: stream.user_id } },
             title: stream.title,
             viewers: stream.viewer_count,
             user: stream.user_name,
@@ -282,6 +329,7 @@ const useTwitchStore = defineStore('twitch', {
         response.data.data.forEach((category, i) => {
           this._categories.push({
             categoryRoute: { name: 'Category', params: { category: category.id } },
+            videosRoute: { name: 'Videos', query: { game_id: category.id } },
             categoryId: category.id,
             category: category.name,
             thumbnail: category.box_art_url

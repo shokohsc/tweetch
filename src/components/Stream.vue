@@ -4,21 +4,21 @@
     <h2 class="subtitle has-text-centered has-text-white">
       {{ stream.user }}<small> streams <router-link v-if="stream.category" :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / {{ stream.lang }}</small>
     </h2>
-      <div class="box">
-        <div>
-          <iframe
-            allowfullscreen="true"
-            :src="source">
-          </iframe>
-        </div>
+    <div class="box">
+      <div>
+        <iframe
+          allowfullscreen="true"
+          :src="source">
+        </iframe>
       </div>
-      <div v-if="authenticated" class="box has-text-centered is-black">
-        <div>
-          <iframe
-            :src="chat">
-          </iframe>
-        </div>
+    </div>
+    <div v-if="authenticated" class="box has-text-centered is-black">
+      <div>
+        <iframe
+          :src="chat">
+        </iframe>
       </div>
+    </div>
   </div>
 </template>
 
@@ -28,8 +28,8 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
-const { loading, error, streams, authenticated } = storeToRefs(useTwitchStore())
-const { initAccessToken, getStreams } = useTwitchStore()
+const { loading, cursor, error, streams, authenticated } = storeToRefs(useTwitchStore())
+const { initAccessToken, getStreams, getVideos } = useTwitchStore()
 const route = useRoute()
 
 const stream = computed(() => {
@@ -42,18 +42,15 @@ const stream = computed(() => {
     viewers: streams.value[0].viewers || 0
   }
 })
-const source = computed(() => {
-  return '//player.twitch.tv/?channel='+(streams.value[0].login || '')+`&parent=${window.location.host}`
-})
-const chat = computed(() => {
-  return '//www.twitch.tv/embed/'+(streams.value[0].login || '')+`/chat?parent=${window.location.host}`
-})
+const source = computed(() => '//player.twitch.tv/?channel='+(streams.value[0].login || '')+`&parent=${window.location.host}`)
+const chat = computed(() => '//www.twitch.tv/embed/'+(streams.value[0].login || '')+`/chat?parent=${window.location.host}`)
 
 watch(
   () => route.params.stream,
   async () => {
     await initAccessToken()
-    await getStreams({user_login: route.params.stream, type: 'live'})
+    await getStreams({user_id: route.params.stream, type: 'live'})
+    await getVideos({user_id: streams.value[0].loginId})
   },
   { immediate: true }
 )

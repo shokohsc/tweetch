@@ -1,6 +1,6 @@
 <template>
     <div class="columns is-justify-content-center is-multiline">
-      <Cover :cover="cover" v-for="(cover, index) in channels" :key="index" />
+      <Cover :cover="cover" v-for="(cover, index) in videos" :key="index" />
     </div>
 </template>
 
@@ -10,5 +10,5 @@
   import { storeToRefs } from 'pinia'
   import { useTwitchStore } from '../../stores/twitch'
 
-  const { channels } = storeToRefs(useTwitchStore())
+  const { videos } = storeToRefs(useTwitchStore())
 </script>

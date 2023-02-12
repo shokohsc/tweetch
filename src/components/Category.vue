@@ -21,12 +21,8 @@ const { loading, cursor, error } = storeToRefs(useTwitchStore())
 const { initAccessToken, getStreams } = useTwitchStore()
 const route = useRoute()
 
-const formattedTitle = computed(() => {
-  return loading.value ? `Loading...` : `Streams`
-})
-const paginate = computed(() => {
-  return getStreams
-})
+const formattedTitle = computed(() => loading.value ? `Loading...` : `Streams`)
+const paginate = computed(() => getStreams)
 const params = computed(() => {
   return {
     game_id: route.params.category,
