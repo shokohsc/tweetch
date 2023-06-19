@@ -3,6 +3,8 @@
     <h1 class="title has-text-centered has-text-white">{{ stream.title }}</h1>
     <h2 class="subtitle has-text-centered has-text-white">
       {{ stream.user }}<small> streams <router-link v-if="stream.category" :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / {{ stream.lang }}</small>
+      <br/>
+      <small><router-link :to="stream.videosRoute">past broadcasts</router-link></small>
     </h2>
     <div class="box">
       <div>
@@ -12,7 +14,12 @@
         </iframe>
       </div>
     </div>
-    <div v-if="authenticated" class="box has-text-centered is-black">
+    <button v-if="authenticated" class="button" @click="displayChat()">
+      <span class="icon">
+        <i class="fab fa-bubble"></i>
+      </span>
+    </button>
+    <div v-if="authenticated" class="box has-text-centered is-active is-black chat">
       <div>
         <iframe
           :src="chat">
@@ -39,11 +46,17 @@ const stream = computed(() => {
     lang: streams.value[0].language || '',
     category: streams.value[0].category || '',
     categoryRoute: streams.value[0].categoryRoute || '',
+    videosRoute: streams.value[0].videosRoute,
     viewers: streams.value[0].viewers || 0
   }
 })
 const source = computed(() => '//player.twitch.tv/?channel='+(streams.value[0].login || '')+`&parent=${window.location.host}`)
 const chat = computed(() => '//www.twitch.tv/embed/'+(streams.value[0].login || '')+`/chat?parent=${window.location.host}`)
+
+const displayChat = function() {
+  const chat = document.querySelector('.chat')
+  chat.classList.toggle('is-active')
+}
 
 watch(
   () => route.params.stream,
