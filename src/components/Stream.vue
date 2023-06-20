@@ -1,6 +1,11 @@
 <template>
   <div v-if="!loading" class="container fluid pt-6">
-    <h1 class="title has-text-centered has-text-white">{{ stream.title }}</h1>
+    <h1 class="title has-text-centered has-text-white">
+      {{ stream.title }}
+      <span v-if="authenticated" class="icon" @click="displayChat()">
+        <i class="fa-regular fa-comment"></i>
+      </span>
+    </h1>
     <h2 class="subtitle has-text-centered has-text-white">
       {{ stream.user }}<small> streams <router-link v-if="stream.category" :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / {{ stream.lang }}</small>
       <br/>
@@ -14,12 +19,8 @@
         </iframe>
       </div>
     </div>
-    <button v-if="authenticated" class="button" @click="displayChat()">
-      <span class="icon">
-        <i class="fab fa-bubble"></i>
-      </span>
-    </button>
-    <div v-if="authenticated" class="box has-text-centered is-active is-black chat">
+    
+    <div v-if="authenticated" class="box has-text-centered is-black chat">
       <div>
         <iframe
           :src="chat">
@@ -54,8 +55,8 @@ const source = computed(() => '//player.twitch.tv/?channel='+(streams.value[0].l
 const chat = computed(() => '//www.twitch.tv/embed/'+(streams.value[0].login || '')+`/chat?parent=${window.location.host}`)
 
 const displayChat = function() {
-  const chat = document.querySelector('.chat')
-  chat.classList.toggle('is-active')
+  const chat = document.querySelector('div.chat')
+  chat.classList.toggle('is-hidden')
 }
 
 watch(
