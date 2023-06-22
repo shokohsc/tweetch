@@ -2,9 +2,6 @@
   <div v-if="!loading" class="container fluid pt-6">
     <h1 class="title has-text-centered has-text-white">
       {{ stream.title }}
-      <span v-if="authenticated" class="icon" @click="displayChat()">
-        <i class="fa-regular fa-comment"></i>
-      </span>
     </h1>
     <h2 class="subtitle has-text-centered has-text-white">
       {{ stream.user }}<small> streams <router-link v-if="stream.category" :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / {{ stream.lang }}</small>
@@ -19,6 +16,12 @@
         </iframe>
       </div>
     </div>
+
+    <button v-if="authenticated" id="displayChat" class="button">
+      <span @click="displayChat()" class="icon">
+        <i class="fa-regular fa-comment"></i>
+      </span>
+    </button>
     
     <div v-if="authenticated" class="box has-text-centered is-black chat">
       <div>
@@ -89,6 +92,13 @@ div.container {
         border: none;
       }
     }
+  }
+  button.button {
+    position: fixed;
+    opacity: 60%;
+    right: 10%;
+    bottom: 10%;
+    z-index: 100;
   }
 }
 </style>
