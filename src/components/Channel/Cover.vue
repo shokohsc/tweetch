@@ -12,6 +12,9 @@
       <p v-if="isStreaming" class="cover has-text-white has-text-centered">
         <router-link :to="cover.categoryRoute">{{ cover.game }}</router-link>
       </p>
+      <p class="cover has-text-white has-text-centered">
+        <router-link :to="cover.videosRoute">Past broadcasts</router-link>
+      </p>
     </div>
   </div>
 </template>

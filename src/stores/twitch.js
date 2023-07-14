@@ -195,6 +195,7 @@ const useTwitchStore = defineStore('twitch', {
           this._channels.push({
             streamRoute: { name: 'Stream', params: { stream: channel.id } },
             categoryRoute: { name: 'Category', params: { category: channel.game_id } },
+            videosRoute: { name: 'Videos', query: { user_id: channel.id } },
             login : channel.broadcaster_login,
             gameId : channel.game_id,
             game : channel.game_name,

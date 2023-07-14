@@ -27,7 +27,7 @@ const params = computed(() => {
   return {
     query: route.query.query,
     after: cursor.value,
-    live_only: true
+    live_only: false
   }
 })
 
@@ -35,7 +35,7 @@ watch(
   [() => route.query.query, () => route.query.after],
   async ([query, after]) => {
     await initAccessToken()
-    await getChannels({query, after, live_only: true})
+    await getChannels({query, after, live_only: false})
     document.title = `Tweetch - ${formattedTitle.value}`
   },
   { immediate: true }
