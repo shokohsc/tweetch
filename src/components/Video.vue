@@ -1,8 +1,12 @@
 <template>
   <div v-if="!loading" class="container fluid pt-6">
-    <h1 class="title has-text-centered has-text-white">{{ video.title }}</h1>
+    <h1 class="title has-text-centered has-text-white">
+      {{ video.title }}
+    </h1>
     <h2 class="subtitle has-text-centered has-text-white">
       <router-link :to="video.streamRoute">{{ video.user }}</router-link><small> streamed on the {{ formattedDate }}</small>
+      <br/>
+      <small><router-link :to="video.videosRoute">past broadcasts</router-link></small>
     </h2>
     <div class="box">
       <div>
@@ -31,7 +35,8 @@ const video = computed(() => {
   return {
     title: videos.value[0].title || '',
     user: videos.value[0].login || '',
-    streamRoute: videos.value[0].streamRoute || ''
+    streamRoute: videos.value[0].streamRoute || '',
+    videosRoute: videos.value[0].videoRoute
   }
 })
 const source = computed(() => '//player.twitch.tv/?video=v'+(videos.value[0].id || '')+`&parent=${window.location.host}`)
