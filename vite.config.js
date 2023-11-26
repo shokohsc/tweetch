@@ -32,7 +32,7 @@ export default defineConfig({
       authToken: process.env.SENTRY_AUTH_TOKEN,
       url: "https://glitchtip.shokohsc.home",
       release: {
-        name: process.env.POD_NAME,
+        name: process.env.POD_NAME || '0.1.0',
       }
     }),
   ],
