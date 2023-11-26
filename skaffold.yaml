@@ -73,6 +73,8 @@ profiles:
         dockerfile: Dockerfile
         buildArgs:
           POD_NAME: '{{.GIT_COMMIT}}'
+          SENTRY_AUTH_TOKEN: db6ff5f7b002322a0b6800027fa823d5faa131dc2535e060375d902728ea8353
+          SENTRY_PROJECT: tweetch
     cluster:
       dockerConfig:
         secretName: kaniko-secret
