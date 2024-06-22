@@ -36,7 +36,7 @@ const video = computed(() => {
     title: videos.value[0].title || '',
     user: videos.value[0].login || '',
     streamRoute: videos.value[0].streamRoute || '',
-    videosRoute: videos.value[0].videoRoute
+    videosRoute: { name: 'Videos', query: { user_id: videos.value[0].loginId } }
   }
 })
 const source = computed(() => '//player.twitch.tv/?video=v'+(videos.value[0].id || '')+`&parent=${window.location.host}`)
