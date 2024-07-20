@@ -1,11 +1,16 @@
 <template>
   <div class="column is-narrow">
     <div class="box has-background-black">
-      <router-link :to="cover.categoryRoute">
+      <router-link class="is-hidden-touch" :to="cover.categoryRoute">
         <figure class="image cover">
           <img :src="thumbnail" :title="cover.category" alt="" loading="lazy" />
         </figure>
       </router-link>
+      <a class="is-hidden-desktop" :href="deepLink">
+        <figure class="image cover">
+          <img :src="thumbnail" :title="cover.category" alt="" loading="lazy" />
+        </figure>
+      </a>
       <p class="cover has-text-white has-text-centered">
         {{ cover.category }}
       </p>
@@ -23,6 +28,7 @@ const props = defineProps({
   cover: Object
 })
 
+const deepLink = computed(() => `twitch://open?stream=${props.cover.login}`)
 const thumbnail = computed(() => `https://static-cdn.jtvnw.net/ttv-boxart/${props.cover.categoryId}-285x380.jpg`)
 </script>
 

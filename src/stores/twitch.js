@@ -199,6 +199,7 @@ const useTwitchStore = defineStore('twitch', {
             login : channel.broadcaster_login,
             gameId : channel.game_id,
             game : channel.game_name,
+            is_live: channel.is_live,
             id : channel.id,
             thumbnail : channel.thumbnail_url,
             title : channel.title
@@ -303,6 +304,37 @@ const useTwitchStore = defineStore('twitch', {
             login: stream.user_login,
             language: stream.language,
             thumbnail: stream.thumbnail_url
+          })
+        })
+        this.loading = false
+      } catch (e) {
+        this.error = e.message || 'Error happened'
+        console.error(e)
+        this.loading = false
+      }
+    },
+    async getFollowedChannels(params = {}, reset = true) {
+      if (reset)
+        this._channels = []
+      this.loading = true
+      this.error = false
+      const query = new URLSearchParams(params)
+      try {
+        const response = await axios.get('https://api.twitch.tv/helix/channels/followed', {
+          params: params,
+          headers: {
+            'Authorization': `Bearer ${this.accessToken}`,
+            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+          }
+        })
+        this.cursor = response.data.pagination.cursor || ''
+        response.data.data.forEach((channel, i) => {
+          this._channels.push({
+            streamRoute: { name: 'Stream', params: { stream: channel.broadcaster_id } },
+            videosRoute: { name: 'Videos', query: { user_id: channel.broadcaster_id } },
+            login : channel.broadcaster_login,
+            id : channel.broadcaster_id,
+            title : channel.broadcaster_name
           })
         })
         this.loading = false

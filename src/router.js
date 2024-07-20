@@ -7,6 +7,7 @@ import Category from './components/Category.vue';
 import Categories from './components/Categories.vue';
 import TopGames from './components/TopGames.vue';
 import FollowedGames from './components/FollowedGames.vue';
+import FollowedChannels from './components/FollowedChannels.vue';
 import FollowedStreams from './components/FollowedStreams.vue';
 import Channels from './components/Channels.vue';
 import Videos from './components/Videos.vue';
@@ -54,6 +55,11 @@ const routes = [
     name: 'FollowedStreams',
     path: '/followed/streams',
     component: FollowedStreams
+  },
+  {
+    name: 'FollowedChannels',
+    path: '/followed/channels',
+    component: FollowedChannels
   },
   {
     name: 'Stream',

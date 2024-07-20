@@ -1,11 +1,16 @@
 <template>
   <div class="column is-narrow">
     <div class="box has-background-black">
-      <router-link :to="cover.streamRoute">
+      <router-link class="is-hidden-touch" :to="cover.streamRoute">
         <figure class="image cover">
           <img :src="thumbnail" :title="cover.title" alt="" loading="lazy" />
         </figure>
       </router-link>
+      <a class="is-hidden-desktop" :href="deepLink">
+        <figure class="image cover">
+          <img :src="thumbnail" :title="cover.title" alt="" loading="lazy" />
+        </figure>
+      </a>
       <p class="cover has-text-white has-text-centered">
         {{ cover.login }}
       </p>
@@ -20,14 +25,16 @@
 </template>
 
 <script setup>
+import defaultCover from '../../assets/images/default_channel_avatar.png'
 import { computed } from 'vue'
 
 const props = defineProps({
   cover: Object
 })
 
+const deepLink = computed(() => `twitch://open?stream=${props.cover.login}`)
 const isStreaming = computed(() => "" !== props.cover.gameId)
-const thumbnail = computed(() => props.cover.thumbnail)
+const thumbnail = computed(() => props.cover.thumbnail ? props.cover.thumbnail : defaultCover)
 </script>
 
 <style scoped lang="less">

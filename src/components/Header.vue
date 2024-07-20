@@ -69,6 +69,9 @@
         <router-link v-if="authenticated" class="navbar-item has-text-white" to="/followed/streams">
           My Streams
         </router-link>
+        <router-link v-if="authenticated" class="navbar-item has-text-white" to="/followed/channels">
+          My Channels
+        </router-link>
         <a v-if="!authenticated" class="navbar-item has-text-white" :href="twitchLogin">
           Login
         </a>
