@@ -26,7 +26,6 @@ const paginate = computed(() => getFollowedChannels)
 const params = computed(() => {
   return {
     user_id: userId.value,
-    query: route.query.query,
     after: cursor.value
   }
 })

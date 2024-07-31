@@ -33,7 +33,7 @@ const props = defineProps({
 })
 
 const deepLink = computed(() => `twitch://open?stream=${props.cover.login}`)
-const isStreaming = computed(() => "" !== props.cover.gameId)
+const isStreaming = computed(() => props.cover.gameId && "" !== props.cover.gameId)
 const thumbnail = computed(() => props.cover.thumbnail ? props.cover.thumbnail : defaultCover)
 </script>
 
