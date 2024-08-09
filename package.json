@@ -1,12 +1,14 @@
 {
   "name": "tweetch",
-  "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
+    "dev": "vite",
     "preview": "vite preview"
+  },
+  "dependencies": {
+    "register-service-worker": "^1.7.2"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.2.1",
@@ -17,6 +19,7 @@
     "@sentry/vite-plugin": "^2.10.1",
     "@sentry/vue": "^7.33.0",
     "@vitejs/plugin-vue": "^4.0.0",
+    "@vue/cli-plugin-pwa": "~5.0.0",
     "axios": "^1.2.3",
     "bulma": "^0.9.4",
     "dayjs": "^1.11.7",
@@ -27,7 +30,9 @@
     "pinia-plugin-persistedstate": "^3.0.2",
     "vite": "^4.0.0",
     "vite-plugin-fonts": "^0.7.0",
+    "vite-plugin-pwa": "^0.20.0",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6"
-  }
+  },
+  "type": "module"
 }
