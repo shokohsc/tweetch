@@ -39,7 +39,7 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
-const { loading, cursor, error, streams, authenticated } = storeToRefs(useTwitchStore())
+const { loading, streams, authenticated } = storeToRefs(useTwitchStore())
 const { initAccessToken, getStreams, getVideos } = useTwitchStore()
 const route = useRoute()
 
@@ -68,6 +68,7 @@ watch(
     await initAccessToken()
     await getStreams({user_id: route.params.stream, type: 'live'})
     await getVideos({user_id: streams.value[0].loginId})
+    document.title = `Tweetch - ${streams.value[0].user}`
   },
   { immediate: true }
 )

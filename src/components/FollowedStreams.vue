@@ -12,12 +12,12 @@
 import List from './Stream/List.vue'
 import Pagination from './Pagination.vue'
 
-import { computed, watch } from 'vue'
+import { computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
-const { loading, cursor, error, userId } = storeToRefs(useTwitchStore())
+const { loading, cursor, userId } = storeToRefs(useTwitchStore())
 const { initAccessToken, getFollowedStreams } = useTwitchStore()
 const route = useRoute()
 
@@ -40,4 +40,13 @@ watch(
   },
   { immediate: true }
 )
+
+onMounted(() => {
+  document.addEventListener("refreshFollowedStreams", async (e) => {
+    await getFollowedStreams({user_id: userId.value, before: route.query.before, after: route.query.after, type: 'live'})
+  })
+})
+onUnmounted(() => {
+  document.removeEventListener("refreshFollowedStreams", () => {})
+})
 </script>

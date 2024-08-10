@@ -1,5 +1,5 @@
 <template>
-  <div class="column is-narrow">
+  <div class="column is-narrow flash-animation">
     <div class="box has-background-black">
       <router-link class="is-hidden-touch" :to="cover.streamRoute">
         <figure class="image cover">

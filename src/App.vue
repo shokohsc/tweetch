@@ -21,4 +21,13 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+
+@keyframes flash {
+  0% { background-color: initial; }
+  50% { background-color: #0a0a0a; } /* Change this to the color you want for the flash */
+  100% { background-color: initial; }
+}
+.flash-animation {
+  animation: flash 1s;
+}
 </style>

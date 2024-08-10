@@ -27,7 +27,7 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
-const { loading, error, videos } = storeToRefs(useTwitchStore())
+const { loading, videos } = storeToRefs(useTwitchStore())
 const { initAccessToken, getVideos } = useTwitchStore()
 const route = useRoute()
 
@@ -47,6 +47,7 @@ watch(
   async () => {
     await initAccessToken()
     await getVideos({id: route.params.video})
+    document.title = `Tweetch - ${videos.value[0].user}`
   },
   { immediate: true }
 )

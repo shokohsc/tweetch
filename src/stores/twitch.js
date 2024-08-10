@@ -9,11 +9,12 @@ const useTwitchStore = defineStore('twitch', {
     userId: '',
     accessToken: '',
     expiryTime: 0,
-    _streams: [],
-    _videos: [],
     loading: false,
     error: false,
     cursor: '',
+
+    _streams: [],
+    _videos: [],
     _categories: [],
     _channels: [],
     _users: []
@@ -75,7 +76,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/streams', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID')
@@ -113,7 +114,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/videos', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID'),
@@ -153,7 +154,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/search/categories', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID')
@@ -184,7 +185,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/search/channels', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID')
@@ -220,7 +221,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/games/top', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID')
@@ -251,7 +252,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/users', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID')
@@ -284,7 +285,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/streams/followed', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID')
@@ -321,7 +322,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/channels/followed', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID')
@@ -352,7 +353,7 @@ const useTwitchStore = defineStore('twitch', {
       const query = new URLSearchParams(params)
       try {
         const response = await axios.get('https://api.twitch.tv/helix/users/'+this.userId+'/follows/games', {
-          params: params,
+          params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
             'Client-Id': getEnv('TWITCH_CLIENT_ID')

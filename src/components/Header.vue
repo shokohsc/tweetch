@@ -2,7 +2,7 @@
   <nav class="navbar is-black is-fixed-top is-spaced" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
 
-      <router-link class="navbar-item" to="/">
+      <router-link class="navbar-item" to="/" @click="emitRefreshStreams">
         <button class="button">
           <span class="icon">
             <i class="fas fa-home"></i>
@@ -20,10 +20,10 @@
     <div id="navbar" class="navbar-menu">
 
       <div class="navbar-start">
-        <router-link class="navbar-item has-text-white" to="/">
+        <router-link class="navbar-item has-text-white" to="/" @click="emitRefreshStreams">
           Tweetch
         </router-link>
-        <router-link class="navbar-item has-text-white" to="/top/games">
+        <router-link class="navbar-item has-text-white" to="/top/games" @click="emitRefreshTopGames">
           Top Games
         </router-link>
         <router-link class="navbar-item has-text-white" to="/about">
@@ -66,10 +66,10 @@
         <router-link v-if="authenticated" class="is-hidden navbar-item has-text-white" to="/followed/games">
           My Games
         </router-link>
-        <router-link v-if="authenticated" class="navbar-item has-text-white" to="/followed/streams">
+        <router-link v-if="authenticated" class="navbar-item has-text-white" to="/followed/streams" @click="emitRefreshFollowedStreams">
           My Streams
         </router-link>
-        <router-link v-if="authenticated" class="navbar-item has-text-white" to="/followed/channels">
+        <router-link v-if="authenticated" class="navbar-item has-text-white" to="/followed/channels"  @click="emitRefreshFollowedChannels">
           My Channels
         </router-link>
         <a v-if="!authenticated" class="navbar-item has-text-white" :href="twitchLogin">
@@ -88,7 +88,7 @@
 import getEnv from '../utils/env'
 
 import { watch, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useSearchStore } from '../stores/search'
 import { useTwitchStore } from '../stores/twitch'
@@ -98,6 +98,7 @@ const { onEntityChange, onQueryChange, validate } = useSearchStore()
 const { authenticated } = storeToRefs(useTwitchStore())
 const { login, logout } = useTwitchStore()
 const router = useRouter()
+const route = useRoute()
 
 const paramsObj = {
   client_id: getEnv('TWITCH_CLIENT_ID'),
@@ -107,6 +108,23 @@ const paramsObj = {
 }
 const searchParams = new URLSearchParams(paramsObj);
 const twitchLogin = `https://id.twitch.tv/oauth2/authorize?${searchParams.toString()}`
+
+const emitRefreshStreams = () => {
+  if (route.name === 'Home')
+    document.dispatchEvent(new CustomEvent('refreshStreams'))
+}
+const emitRefreshTopGames = () => {
+  if (route.name === 'TopGames')
+    document.dispatchEvent(new CustomEvent('refreshTopGames'))
+}
+const emitRefreshFollowedStreams = () => {
+  if (route.name === 'FollowedStreams')
+    document.dispatchEvent(new CustomEvent('refreshFollowedStreams'))
+}
+const emitRefreshFollowedChannels = () => {
+  if (route.name === 'FollowedChannels')
+    document.dispatchEvent(new CustomEvent('refreshFollowedChannels'))
+}
 
 watch(
   () => window.location.hash,

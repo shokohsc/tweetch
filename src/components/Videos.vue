@@ -17,7 +17,7 @@ import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
-const { loading, cursor, error } = storeToRefs(useTwitchStore())
+const { loading, cursor } = storeToRefs(useTwitchStore())
 const { initAccessToken, getVideos } = useTwitchStore()
 const route = useRoute()
 

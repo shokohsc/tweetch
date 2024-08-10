@@ -12,12 +12,12 @@
 import List from './Category/List.vue'
 import Pagination from './Pagination.vue'
 
-import { computed, watch } from 'vue'
+import { computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
-const { loading, cursor, error } = storeToRefs(useTwitchStore())
+const { loading, cursor } = storeToRefs(useTwitchStore())
 const { initAccessToken, getTopGames } = useTwitchStore()
 const route = useRoute()
 
@@ -38,4 +38,13 @@ watch(
   },
   { immediate: true }
 )
+
+onMounted(() => {
+  document.addEventListener("refreshTopGames", async (e) => {
+    await getTopGames({before: route.query.before, after: route.query.after})
+  })
+})
+onUnmounted(() => {
+  document.removeEventListener("refreshTopGames", () => {})
+})
 </script>

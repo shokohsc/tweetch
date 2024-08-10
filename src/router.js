@@ -87,7 +87,7 @@ router.beforeEach(async (to, from) => {
   const { authenticated } = storeToRefs(useTwitchStore())
 
   if (
-    (to.name === 'FollowedGames' || to.name === 'FollowedStreams') &&
+    (to.name === 'FollowedGames' || to.name === 'FollowedStreams' || to.name === 'FollowedChannels') &&
     false === authenticated.value
   ) {
     return { name: 'Home' }
