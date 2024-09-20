@@ -12,13 +12,11 @@
       <br/>
       <p class="title">Thanks</p>
       <p class="subtitle">
-        <ul>
-          <li><strong><a href="//twitch.tv">Twitch</a></strong> for providing an API that I can enjoy while coding.</li>
-          <li><strong><a href="//github.com/redpanda">Redpanda</a></strong> for his numerous tips and advices.</li>
-          <li><strong><a href="//vuejs.org/">VueJs</a></strong> for their tiny framework.</li>
-          <li><strong><a href="//bulma.io/">Bulma CSS</a></strong> for their framework.</li>
-          <li><strong><a href="//fontlibrary.org/">Open Font Library</a></strong> for this font.</li>
-        </ul>
+        <strong><a href="//twitch.tv">Twitch</a></strong> for providing an API that I can enjoy while coding.<br/>
+        <strong><a href="//github.com/redpanda">Redpanda</a></strong> for his numerous tips and advices.<br/>
+        <strong><a href="//vuejs.org/">VueJs</a></strong> for their tiny framework.<br/>
+        <strong><a href="//bulma.io/">Bulma CSS</a></strong> for their framework.<br/>
+        <strong><a href="//fontlibrary.org/">Open Font Library</a></strong> for this font.
       </p>
     </div>
   </section>
