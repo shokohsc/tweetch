@@ -23,7 +23,7 @@
       </span>
     </button>
     
-    <div v-if="authenticated" class="box has-text-centered is-black chat">
+    <div v-if="authenticated" class="box has-text-centered is-black chat is-hidden">
       <div>
         <iframe
           :src="chat">
