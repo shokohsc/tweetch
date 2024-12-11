@@ -9,6 +9,7 @@ import TopGames from './components/TopGames.vue';
 import FollowedGames from './components/FollowedGames.vue';
 import FollowedChannels from './components/FollowedChannels.vue';
 import FollowedStreams from './components/FollowedStreams.vue';
+import Language from './components/Language.vue';
 import Channels from './components/Channels.vue';
 import Videos from './components/Videos.vue';
 import Stream from './components/Stream.vue';
@@ -60,6 +61,11 @@ const routes = [
     name: 'FollowedChannels',
     path: '/followed/channels',
     component: FollowedChannels
+  },
+  {
+    name: 'Language',
+    path: '/language/:lang',
+    component: Language
   },
   {
     name: 'Stream',

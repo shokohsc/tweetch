@@ -20,7 +20,7 @@
         </a>
       </p>
       <p class="cover has-text-white has-text-centered">{{ cover.duration }} on the {{ formattedDate }}</p>
-      <p class="cover has-text-white has-text-centered">{{ cover.views }} views / {{ cover.language }}</p>
+      <p class="cover has-text-white has-text-centered">{{ cover.views }} views / <router-link :to="cover.languageRoute">{{ cover.language }}</router-link></p>
     </div>
   </div>
 </template>

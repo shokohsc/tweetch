@@ -17,7 +17,7 @@
       <p class="cover has-text-white has-text-centered" v-if="cover.category">
         <router-link :to="cover.categoryRoute">{{ cover.category }}</router-link>
       </p>
-      <p class="cover has-text-white has-text-centered">{{ cover.viewers }} viewer(s) / {{ cover.language }}</p>
+      <p class="cover has-text-white has-text-centered">{{ cover.viewers }} viewer(s) / <router-link :to="cover.languageRoute">{{ cover.language }}</router-link></p>
       <p class="cover has-text-white has-text-centered">
         <router-link :to="cover.videosRoute">Past broadcasts</router-link>
       </p>

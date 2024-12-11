@@ -88,6 +88,7 @@ const useTwitchStore = defineStore('twitch', {
             streamRoute: { name: 'Stream', params: { stream: stream.user_id } },
             videosRoute: { name: 'Videos', query: { user_id: stream.user_id } },
             categoryRoute: { name: 'Category', params: { category: stream.game_id } },
+            languageRoute: { name: 'Language', params: { lang: stream.language } },
             title: stream.title,
             viewers: stream.viewer_count,
             user: stream.user_name,
@@ -126,6 +127,7 @@ const useTwitchStore = defineStore('twitch', {
           this._videos.push({
             streamRoute: { name: 'Stream', params: { stream: video.user_id } },
             videoRoute: { name: 'Video', params: { video: video.id } },
+            languageRoute: { name: 'Language', params: { lang: video.language } },
             id: video.id,
             title: video.title,
             views: video.view_count,
@@ -297,6 +299,7 @@ const useTwitchStore = defineStore('twitch', {
             streamRoute: { name: 'Stream', params: { stream: stream.user_id } },
             categoryRoute: { name: 'Category', params: { category: stream.game_id } },
             videosRoute: { name: 'Videos', query: { user_id: stream.user_id } },
+            languageRoute: { name: 'Language', params: { lang: stream.language } },
             title: stream.title,
             viewers: stream.viewer_count,
             user: stream.user_name,

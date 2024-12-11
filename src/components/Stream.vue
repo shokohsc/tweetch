@@ -4,7 +4,7 @@
       {{ stream.title }}
     </h1>
     <h2 class="subtitle has-text-centered has-text-white">
-      {{ stream.user }}<small> streams <router-link v-if="stream.category" :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / {{ stream.lang }}</small>
+      {{ stream.user }}<small> streams <router-link v-if="stream.category" :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / <router-link :to="stream.languageRoute">{{ stream.lang }}</router-link></small>
       <br/>
       <small><router-link :to="stream.videosRoute">past broadcasts</router-link></small>
     </h2>
