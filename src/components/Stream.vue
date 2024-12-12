@@ -4,7 +4,7 @@
       {{ stream.title }}
     </h1>
     <h2 class="subtitle has-text-centered has-text-white">
-      {{ stream.user }}<small> streams <router-link v-if="stream.category" :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / <router-link :to="stream.languageRoute">{{ stream.language }}</router-link></small>
+      {{ stream.user }}<small> streams <router-link v-if="stream.category" :to="stream.categoryRoute">{{ stream.category }}</router-link> for {{ stream.viewers }} viewers / <router-link :to="stream.languageRoute">{{ stream.lang }}</router-link></small>
       <br/>
       <small><router-link :to="stream.videosRoute">past broadcasts</router-link></small>
     </h2>
@@ -40,7 +40,7 @@ import { storeToRefs } from 'pinia'
 import { useTwitchStore } from '../stores/twitch'
 
 const { loading, streams, authenticated } = storeToRefs(useTwitchStore())
-const { initAccessToken, getStreams, getVideos } = useTwitchStore()
+const { initAccessToken, getStreams } = useTwitchStore()
 const route = useRoute()
 
 const stream = computed(() => {
@@ -48,6 +48,7 @@ const stream = computed(() => {
     title: streams.value[0].title || '',
     user: streams.value[0].login || '',
     lang: streams.value[0].language || '',
+    languageRoute: streams.value[0].languageRoute || '',
     category: streams.value[0].category || '',
     categoryRoute: streams.value[0].categoryRoute || '',
     videosRoute: streams.value[0].videosRoute,
@@ -67,7 +68,6 @@ watch(
   async () => {
     await initAccessToken()
     await getStreams({user_id: route.params.stream, type: 'live'})
-    await getVideos({user_id: streams.value[0].loginId})
     document.title = `Tweetch - ${streams.value[0].user}`
   },
   { immediate: true }
