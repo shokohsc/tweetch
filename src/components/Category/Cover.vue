@@ -28,7 +28,7 @@ const props = defineProps({
   cover: Object
 })
 
-const deepLink = computed(() => `twitch://open?stream=${props.cover.login}`)
+const deepLink = computed(() => `twitch://open?game=${props.cover.category}`)
 const thumbnail = computed(() => `https://static-cdn.jtvnw.net/ttv-boxart/${props.cover.categoryId}-285x380.jpg`)
 </script>
 
