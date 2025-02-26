@@ -46,6 +46,12 @@ export default defineConfig({
     port: 80,
     hmr: {
       clientPort: 443
-    }
+    },
+    allowedHosts: [
+      "localhost",
+      "dev.tweetch.shokohsc.home",
+      "preview.tweetch.shokohsc.home",
+      "tweetch.dev-tweetch"
+    ]
   }
 })

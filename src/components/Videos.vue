@@ -1,6 +1,9 @@
 <template>
   <section class="section">
     <h1 class="title has-text-light has-text-centered">{{ formattedTitle }}</h1>
+    <h2 class="subtitle has-text-centered">
+      <small><router-link :to="streamsRoute">live streams</router-link></small>
+    </h2>
     <section>
       <List />
       <Pagination :paginate="paginate" :params="params"/>
@@ -31,6 +34,7 @@ const params = computed(() => {
     after: cursor.value
   }
 })
+const streamsRoute = { name: 'Category', params: { category: route.query.game_id } }
 
 watch(
   [() => route.query.user_id, () => route.query.game_id, () => route.query.after],

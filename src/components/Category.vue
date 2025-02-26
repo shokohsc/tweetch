@@ -1,6 +1,9 @@
 <template>
   <section class="section">
     <h1 class="title has-text-light has-text-centered">{{ formattedTitle }}</h1>
+    <h2 class="subtitle has-text-centered">
+      <small><router-link :to="videosRoute">past broadcasts</router-link></small>
+    </h2>
     <section>
       <List />
       <Pagination :paginate="paginate" :params="params"/>
@@ -30,6 +33,7 @@ const params = computed(() => {
     type: 'live'
   }
 })
+const videosRoute = { name: 'Videos', query: { game_id: route.params.category } }
 
 watch(
   [() => route.query.before, () => route.query.after, () => route.params.category],

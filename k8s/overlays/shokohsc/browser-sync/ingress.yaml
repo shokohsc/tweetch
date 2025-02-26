@@ -22,8 +22,8 @@ spec:
             port:
               number: 3000
       - path: /browser-sync/socket.io
-        # pathType: ImplementationSpecific # Does not trigger warning
-        pathType: Prefix
+        pathType: ImplementationSpecific # Does not trigger warning
+        # pathType: Prefix
         backend:
           service:
             name: browser-sync
