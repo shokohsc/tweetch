@@ -1,89 +1,91 @@
-apiVersion: skaffold/v2beta28
+apiVersion: skaffold/v4beta14
 kind: Config
 metadata:
   name: tweetch
 build:
   artifacts:
-  - image: shokohsc/tweetch
-    context: .
-    sync:
-      manual:
-      - src: src/**/*.js
-        dest: .
-      - src: src/**/*.vue
-        dest: .
-    docker:
-      dockerfile: Dockerfile.dev
-deploy:
+    - image: shokohsc/tweetch
+      context: .
+      sync:
+        infer:
+          - src/**/*.js
+          - src/**/*.vue
+      docker:
+        dockerfile: Dockerfile.dev
+manifests:
   kustomize:
     paths:
-    - k8s/base
+      - k8s/base
+deploy:
+  kubectl: {}
 profiles:
-- name: dev
-  activation:
-  - command: dev
-  build:
-    artifacts:
-    - image: shokohsc/tweetch
-      sync:
-        manual:
-        - src: src/**/*.js
-          dest: .
-        - src: src/**/*.vue
-          dest: .
-- name: shokohsc
-  build:
-    artifacts:
-    - image: shokohsc/tweetch
-      sync:
-        manual:
-        - src: src/**/*.js
-          dest: .
-        - src: src/**/*.vue
-          dest: .
-      kaniko:
-        useNewRun: true
-        cache:
-          repo: shokohsc/tweetch
-        dockerfile: Dockerfile.dev
-    cluster:
-      dockerConfig:
-        secretName: kaniko-secret
-      namespace: kaniko
-      pullSecretName: kaniko-secret
-      resources:
-        limits:
-          cpu: "2"
-          memory: 2Gi
-        requests:
-          cpu: "1"
-          memory: 1Gi
-  deploy:
-    kustomize:
-      paths:
-      - k8s/overlays/shokohsc
-- name: prod
-  build:
-    artifacts:
-    - image: shokohsc/tweetch
-      kaniko:
-        useNewRun: true
-        cache:
-          repo: shokohsc/tweetch
-        dockerfile: Dockerfile
-        buildArgs:
-          POD_NAME: '{{.GIT_COMMIT}}'
-          SENTRY_AUTH_TOKEN: db6ff5f7b002322a0b6800027fa823d5faa131dc2535e060375d902728ea8353
-          SENTRY_PROJECT: tweetch
-    cluster:
-      dockerConfig:
-        secretName: kaniko-secret
-      namespace: kaniko
-      pullSecretName: kaniko-secret
-      resources:
-        limits:
-          cpu: "2"
-          memory: 2Gi
-        requests:
-          cpu: "1"
-          memory: 1Gi
+  - name: dev
+    activation:
+      - command: dev
+    build:
+      artifacts:
+        - image: shokohsc/tweetch
+          sync:
+            infer:
+              - src/**/*.js
+              - src/**/*.vue
+  - name: shokohsc
+    build:
+      artifacts:
+        - image: shokohsc/tweetch
+          sync:
+            infer:
+              - src/**/*.js
+              - src/**/*.vue
+          kaniko:
+            cache:
+              repo: shokohsc/tweetch
+            dockerfile: Dockerfile.dev
+            useNewRun: true
+      cluster:
+        dockerConfig:
+          secretName: kaniko-secret
+        namespace: kaniko
+        pullSecretName: kaniko-secret
+        labels:
+          policy.gatekeeper.sh/ignore-psp-pods-allowed-user-ranges: "true"
+          policy.gatekeeper.sh/ignore-psp-readonlyrootfilesystem: "true"
+          policy.gatekeeper.sh/ignore-psp-allow-privilege-escalation-container: "true"
+        resources:
+          limits:
+            cpu: "2"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 1Gi
+    manifests:
+      kustomize:
+        paths:
+          - k8s/overlays/shokohsc
+    deploy:
+      kubectl: {}
+  - name: prod
+    build:
+      artifacts:
+        - image: shokohsc/tweetch
+          kaniko:
+            cache:
+              repo: shokohsc/tweetch
+            dockerfile: Dockerfile
+            useNewRun: true
+      cluster:
+        dockerConfig:
+          secretName: kaniko-secret
+        namespace: kaniko
+        pullSecretName: kaniko-secret
+        labels:
+          policy.gatekeeper.sh/ignore-psp-pods-allowed-user-ranges: "true"
+          policy.gatekeeper.sh/ignore-psp-readonlyrootfilesystem: "true"
+          policy.gatekeeper.sh/ignore-psp-allow-privilege-escalation-container: "true"
+        resources:
+          limits:
+            cpu: "2"
+            memory: 2Gi
+          requests:
+            cpu: "1"
+            memory: 1Gi

@@ -3,9 +3,9 @@ kind: Kustomization
 namespace: dev-tweetch
 resources:
   - browser-sync/
-  - secret.yaml
 bases:
   - ../../base
 patchesStrategicMerge:
-  - ingress.yaml
+  - http-route.yaml
+  - listener-set.yaml
   - deployment.yaml

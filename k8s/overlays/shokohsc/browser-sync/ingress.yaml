@@ -6,12 +6,12 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: ca-cluster-issuer
-    dashboard.shokohsc.home/name: preview-tweetch
-    dashboard.shokohsc.home/url: https://preview.tweetch.shokohsc.home
-    dashboard.shokohsc.home/icon: wrench
+    tweetch.home.arpa/name: preview-tweetch
+    tweetch.home.arpa/url: https://preview.tweetch.home.arpa
+    tweetch.home.arpa/icon: wrench
 spec:
   rules:
-  - host: preview.tweetch.shokohsc.home
+  - host: preview.tweetch.home.arpa
     http:
       paths:
       - path: /
@@ -22,8 +22,8 @@ spec:
             port:
               number: 3000
       - path: /browser-sync/socket.io
-        pathType: ImplementationSpecific # Does not trigger warning
-        # pathType: Prefix
+        # pathType: ImplementationSpecific # Does not trigger warning
+        pathType: Prefix
         backend:
           service:
             name: browser-sync
@@ -31,7 +31,7 @@ spec:
               number: 443
   tls:
   - hosts:
-    - preview.tweetch.shokohsc.home
+    - preview.tweetch.home.arpa
     secretName: preview-cert
 ---
 apiVersion: networking.k8s.io/v1
@@ -41,12 +41,12 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
     cert-manager.io/cluster-issuer: ca-cluster-issuer
-    dashboard.shokohsc.home/name: browser-sync-tweetch
-    dashboard.shokohsc.home/url: https://browser-sync.tweetch.shokohsc.home
-    dashboard.shokohsc.home/icon: wrench
+    tweetch.home.arpa/name: browser-sync-tweetch
+    tweetch.home.arpa/url: https://browser-sync.tweetch.home.arpa
+    tweetch.home.arpa/icon: wrench
 spec:
   rules:
-  - host: browser-sync.tweetch.shokohsc.home
+  - host: browser-sync.tweetch.home.arpa
     http:
       paths:
       - path: /
@@ -65,5 +65,5 @@ spec:
               number: 443
   tls:
   - hosts:
-    - browser-sync.tweetch.shokohsc.home
+    - browser-sync.tweetch.home.arpa
     secretName: browser-sync-cert

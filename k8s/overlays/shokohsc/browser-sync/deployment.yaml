@@ -13,11 +13,29 @@ spec:
     metadata:
       labels:
         app: browser-sync
+        policy.gatekeeper.sh/ignore-psp-readonlyrootfilesystem: "true"
+        policy.gatekeeper.sh/ignore-psp-pods-allowed-user-ranges: "true"
     spec:
+      securityContext:
+        # runAsNonRoot: true
+        # runAsUser: 1000
+        # runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: browser-sync
           image: shokohsc/browser-sync:latest
           imagePullPolicy: Always
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            # readOnlyRootFilesystem: true
+            # runAsNonRoot: true
+            # runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
           args:
             - start
             - --config
@@ -39,13 +57,6 @@ spec:
                   - /bin/sh
                   - -c
                   - /bin/init-browser-sync.sh
-          # lifecycle:
-          #   postStart:
-          #     exec:
-          #       command:
-          #         - /bin/sh
-          #         - -c
-          #         - update-ca-certificates
           startupProbe:
             tcpSocket:
               port: http
@@ -70,18 +81,8 @@ spec:
             - name: config
               mountPath: /bin/init-browser-sync.sh
               subPath: init.sh
-      #     - mountPath: /usr/local/share/ca-certificates
-      #       name: tls
       volumes:
         - name: config
           configMap:
             name: config
             defaultMode: 0755
-      #   - name: tls
-      #     csi:
-      #       readOnly: true
-      #       driver: csi.cert-manager.io
-      #       volumeAttributes:
-      #             csi.cert-manager.io/issuer-name: ca-cluster-issuer
-      #             csi.cert-manager.io/issuer-kind: ClusterIssuer
-      #             csi.cert-manager.io/is-ca: "true"
