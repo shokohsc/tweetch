@@ -12,6 +12,9 @@ build:
           - src/**/*.vue
       docker:
         dockerfile: Dockerfile.dev
+        buildArgs:
+          VITE_TWITCH_CLIENT_ID: 9f05rnp1cbk59gk0xdhsew7xe8p3ds4
+          VITE_TWITCH_CLIENT_SECRET: dr59o45ttbn87e4580r3ttf0wg1a2t
 manifests:
   kustomize:
     paths:
@@ -42,6 +45,9 @@ profiles:
               repo: shokohsc/tweetch
             dockerfile: Dockerfile.dev
             useNewRun: true
+            buildArgs:
+              VITE_TWITCH_CLIENT_ID: 9f05rnp1cbk59gk0xdhsew7xe8p3ds4
+              VITE_TWITCH_CLIENT_SECRET: dr59o45ttbn87e4580r3ttf0wg1a2t
       cluster:
         dockerConfig:
           secretName: kaniko-secret
@@ -51,6 +57,7 @@ profiles:
           policy.gatekeeper.sh/ignore-psp-pods-allowed-user-ranges: "true"
           policy.gatekeeper.sh/ignore-psp-readonlyrootfilesystem: "true"
           policy.gatekeeper.sh/ignore-psp-allow-privilege-escalation-container: "true"
+          policy.gatekeeper.sh/ignore-psp-seccomp-baseline: "true"
         resources:
           limits:
             cpu: "2"
@@ -73,6 +80,9 @@ profiles:
               repo: shokohsc/tweetch
             dockerfile: Dockerfile
             useNewRun: true
+            buildArgs:
+              VITE_TWITCH_CLIENT_ID: 9f05rnp1cbk59gk0xdhsew7xe8p3ds4
+              VITE_TWITCH_CLIENT_SECRET: dr59o45ttbn87e4580r3ttf0wg1a2t
       cluster:
         dockerConfig:
           secretName: kaniko-secret
@@ -82,6 +92,7 @@ profiles:
           policy.gatekeeper.sh/ignore-psp-pods-allowed-user-ranges: "true"
           policy.gatekeeper.sh/ignore-psp-readonlyrootfilesystem: "true"
           policy.gatekeeper.sh/ignore-psp-allow-privilege-escalation-container: "true"
+          policy.gatekeeper.sh/ignore-psp-seccomp-baseline: "true"
         resources:
           limits:
             cpu: "2"

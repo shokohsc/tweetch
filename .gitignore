@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Local env (see .env.example). Vite inlines VITE_* at build time.
+.env
+.env.*.local
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

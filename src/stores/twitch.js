@@ -1,5 +1,4 @@
 import axios from 'axios'
-import getEnv from '../utils/env'
 import { defineStore, acceptHMRUpdate } from 'pinia'
 import uniqBy from 'lodash/uniqBy'
 
@@ -55,8 +54,8 @@ const useTwitchStore = defineStore('twitch', {
       if ('' === this.accessToken) {
         try {
           const response = await axios.post('https://id.twitch.tv/oauth2/token', {
-            client_id: getEnv('TWITCH_CLIENT_ID'),
-            client_secret: getEnv('TWITCH_CLIENT_SECRET'),
+            client_id: import.meta.env.VITE_TWITCH_CLIENT_ID,
+            client_secret: import.meta.env.VITE_TWITCH_CLIENT_SECRET,
             grant_type: 'client_credentials'
           })
           if (200 === response.status){
@@ -79,7 +78,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID
           }
         })
         this.cursor = response.data.pagination.cursor || ''
@@ -118,7 +117,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID'),
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID,
             'Accept-Language': ""
           }
         })
@@ -159,7 +158,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID
           }
         })
         this.cursor = response.data.pagination.cursor || ''
@@ -190,7 +189,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID
           }
         })
         this.cursor = response.data.pagination.cursor || ''
@@ -226,7 +225,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID
           }
         })
         this.cursor = response.data.pagination.cursor || ''
@@ -257,7 +256,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID
           }
         })
         response.data.data.forEach((user, i) => {
@@ -290,7 +289,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID
           }
         })
         this.cursor = response.data.pagination.cursor || ''
@@ -328,7 +327,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID
           }
         })
         this.cursor = response.data.pagination.cursor || ''
@@ -359,7 +358,7 @@ const useTwitchStore = defineStore('twitch', {
           params,
           headers: {
             'Authorization': `Bearer ${this.accessToken}`,
-            'Client-Id': getEnv('TWITCH_CLIENT_ID')
+            'Client-Id': import.meta.env.VITE_TWITCH_CLIENT_ID
           }
         })
         this.cursor = response.data.pagination.cursor || ''

@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { VitePluginFonts } from 'vite-plugin-fonts'
 import { fileURLToPath, URL } from "node:url";
-import { sentryVitePlugin } from "@sentry/vite-plugin"
 
 
 // https://vitejs.dev/config/
@@ -33,14 +32,14 @@ export default defineConfig({
   },
   server: {
     host: true,
-    port: 80,
+    port: 8000,
     hmr: {
       clientPort: 443
     },
     allowedHosts: [
       "localhost",
-      "dev.tweetch.shokohsc.home",
-      "preview.tweetch.shokohsc.home",
+      "dev.tweetch.home.arpa",
+      "preview.tweetch.home.arpa",
       "tweetch.dev-tweetch"
     ]
   }

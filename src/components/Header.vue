@@ -85,8 +85,6 @@
 </template>
 
 <script setup>
-import getEnv from '../utils/env'
-
 import { watch, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
@@ -101,7 +99,7 @@ const router = useRouter()
 const route = useRoute()
 
 const paramsObj = {
-  client_id: getEnv('TWITCH_CLIENT_ID'),
+  client_id: import.meta.env.VITE_TWITCH_CLIENT_ID,
   redirect_uri: `https://${window.location.host}/`,
   response_type: 'token',
   scope: 'user:read:follows user:read:subscriptions'

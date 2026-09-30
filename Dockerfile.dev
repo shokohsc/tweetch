@@ -5,5 +5,13 @@ COPY package*.json ./
 RUN apk add --no-cache bash gettext ca-certificates && \
     npm install && npm cache clean --force
 COPY --chown=1000:1000 ./ ./
+
+# .dockerignore excludes .env, so pass the values in at build time instead.
+# Vite's dev server reads VITE_* from process.env.
+ARG VITE_TWITCH_CLIENT_ID
+ARG VITE_TWITCH_CLIENT_SECRET
+ENV VITE_TWITCH_CLIENT_ID=$VITE_TWITCH_CLIENT_ID
+ENV VITE_TWITCH_CLIENT_SECRET=$VITE_TWITCH_CLIENT_SECRET
+
 EXPOSE 3000
 CMD ["npm", "run", "dev"]
